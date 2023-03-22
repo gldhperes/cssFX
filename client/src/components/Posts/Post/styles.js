@@ -1,61 +1,95 @@
 import { makeStyles } from '@material-ui/core/styles';
 
+const postCreatorDim = "50px";
+const contentPadding = '5px auto';
 export default makeStyles({
+  flex:{
+    display: 'flex',
+    flexFlow: 'row wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  post: {
+    width: '300px',
+    
+    flexFlow: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+
+    borderRadius: '15px',
+    background: '#1E001E',
+  },
+
+
   media: {
-    height: 0,
-    paddingTop: '56.25%',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    width: '100%',
+    height: '180px',
+    backgroundColor: '#650065',
     backgroundBlendMode: 'darken',
   },
-  border: {
-    border: 'solid',
+  
+  // POST DETAILS ============================
+  postDetails: {
+    padding: '0 6px',
+    flexFlow: 'column',
+    alignItems: 'flex-start',
+    // color: 'black',
   },
-  fullHeightCard: {
-    height: '100%',
-  },
-  card: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    borderRadius: '15px',
-    height: '100%',
-    position: 'relative',
-  },
-  overlay: {
-    position: 'absolute',
-    top: '20px',
-    left: '20px',
-    color: 'white',
-  },
-  overlay2: {
-    position: 'absolute',
-    top: '20px',
-    right: '20px',
-    color: 'white',
-  },
-  grid: {
-    display: 'flex',
-  },
-  details: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    margin: '20px',
-  },
-  title: {
-    padding: '0 16px',
-  },
-  cardActions: {
+
+  
+  tags: {
     width: '100%',
-    padding: '0',
-    display: 'flex',
+    padding: contentPadding,
+    paddingLeft: '55px',
+
+    justifyContent: 'flex-start',
+    gap: '8px',
+   
+  },
+
+
+  // POST INFO =============================
+
+  postInfo: {
+    padding: contentPadding,
+    flexFlow: 'row',
+    gap: '5px',
+  },
+
+  postCreator: {
+    width: postCreatorDim,
+    height: postCreatorDim,
+    borderRadius: '8px',
+
+    background: 'black',
+  },
+
+  // POST CONTENT =================================
+  postContent: {
+    flexFlow: 'column',
+    alignItems: 'flex-start',
+    // background: 'red',
+  },
+
+
+  postActions: {
+    width: '100%',
+    padding: contentPadding,
     flexFlow: 'row',
     justifyContent: 'flex-start',
-    alignItems: 'center'
+    // background: 'green',
   },
 
   likeBtn: {
-    width: '0',
-    padding: '0',
+ 
+  
+  },
 
-  }
+
+
+  deleteBtn:{
+    marginLeft: '50px',
+  },
+
 });

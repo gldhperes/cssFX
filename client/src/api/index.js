@@ -24,6 +24,8 @@ export const deletePost = (id) => API.delete(`/posts/${id}`)
 
 export const signIn = (formData) => API.post(`/user/signin`, formData)
 export const signUp = (formData) => API.post(`/user/signup`, formData)
+export const googleSignIn = (profileObj) => API.post(`/user/googlesignin`, profileObj)
 
 export const favoritePost = (userId , postId) => API.patch(`/user/${userId}/favoritePost`, postId)
 export const getFavoritePosts = (userId) => API.get(`/user/${userId}/favoritePosts`)
+export const getUserPosts = (userId) => API.get(`/user/${userId}/userPosts`)

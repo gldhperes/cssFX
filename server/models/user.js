@@ -5,8 +5,8 @@ const userSchema = mongoose.Schema({
     email: { type: String, required: true },
     password: { type: String, required: true },
     id: { type: String },
-    favoritedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'postmessages' }],
-    
+    favoritedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'PostMessage' }],
+    following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'UserMessage' }]
 })
 
 const UserMessage = mongoose.model('User', userSchema)

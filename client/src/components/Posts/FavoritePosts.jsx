@@ -1,37 +1,24 @@
-import React, { useEffect, useState, useCallback } from "react"
-import { Grid, CircularProgress, Button } from '@material-ui/core'
-import { useDispatch, useSelector } from "react-redux";
+import React from "react"
 
-import { getFavoritePosts } from "../../actions/user"
+import { useSelector } from "react-redux";
+
 import Posts from "./Posts";
-import Post from "./Post/Post";
 
-import useStyles from './styles';
+import { FAVORITES } from "../../constants/pagesTypes";
 
-const FavoritePosts = () => {
-    const classes = useStyles();
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
-    const dispatch = useDispatch();
-    
-    const favoritedPosts = useSelector( (state) => state.user.favoritedPosts );
-    
-
-    const getFavoritedPostsBtn = async() =>{
-        dispatch( getFavoritePosts() )
-    }
- 
-
-    useEffect(() => {
-        console.log(favoritedPosts);
-    }, [favoritedPosts] ) 
-
+const FavoritePosts = ( ) => {
    
+    const favoritedPosts = useSelector((state) => state.user.favoritedPosts);
+
+    // console.log('FAVORITED');
+
     return (
         <>
-            <Button variant="contained" color="secondary" onClick={getFavoritedPostsBtn}>
-                Favorited Posts
-            </Button>
-           
+            {
+                favoritedPosts && (
+                    <Posts posts={favoritedPosts} category={FAVORITES} />
+                )
+            }
         </>
 
     )

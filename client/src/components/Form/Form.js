@@ -64,9 +64,10 @@ const Form = ( {currentId, setCurrentId} ) => {
                 <TextField name="title" variant="outlined" label="Title" fullWidth value={postData.title} onChange={(e) => setPostData({ ...postData, title: e.target.value })} />
                 <TextField name="html" variant="outlined" label="Html" fullWidth value={postData.htmlCode} onChange={(e) => setPostData({ ...postData, htmlCode: e.target.value })} />
                 <TextField name="css" variant="outlined" label="Css" fullWidth value={postData.cssCode} onChange={(e) => setPostData({ ...postData, cssCode: e.target.value })} />
+                <TextField name="Backend" variant="outlined" label="Backend" fullWidth value={postData.backendCode} onChange={(e) => setPostData({ ...postData, backendCode: e.target.value })} />
                 <TextField name="tag" variant="outlined" label="Tag" fullWidth value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })} />
                 
-                <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>
+                <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>{ currentId ? 'Edit' :'Create'}</Button>
                 <Button variant="contained" color="secondary" size="small" onClick={clear} fullWidth>Clear</Button>
             </form>
         </Paper>

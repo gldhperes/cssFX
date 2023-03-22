@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { gapi } from 'gapi-script';
+import { useDispatch } from 'react-redux'
 
 import { Avatar, Button, Paper, Grid, Typography, Container } from '@material-ui/core'
-import { GoogleLogin } from 'react-google-login'
-import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+
+import { GoogleLogin } from 'react-google-login'
+import { useNavigate } from 'react-router-dom';
+import { gapi } from 'gapi-script';
+
 import Icon from './Icon'
-import useStyles from './styles'
 import Input from './Input'
-import { signin, signup } from '../../actions/auth.js'
+import { signin, signup, googleSignIn } from '../../actions/auth.js'
 
-import { AUTH } from '../../constants/actionTypes'
-
-
+import useStyles from './styles'
 const initalState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: ''}
 
 const Auth = () => {
@@ -46,10 +45,13 @@ const Auth = () => {
         e.preventDefault()
 
         if ( isSignup ) {
-            dispatch( signup (formData, navigate))
+            dispatch( signup (formData) )
+            navigate('/')
         }else{
-            dispatch( signin (formData, navigate))
+            dispatch( signin (formData) )
+            navigate('/')
         }
+        
     }
 
     const handleChange = (e) => {
@@ -63,10 +65,12 @@ const Auth = () => {
 
     const googleSuccess = async ( res ) => {
         const result = res?.profileObj;
-        const token = res?.tokenId;
+        // console.log(res);
 
         try {
-            dispatch({ type: AUTH, data: { result, token } })
+            
+            dispatch( googleSignIn(result) )
+
             navigate('/')
         } catch (error) {
             console.log( error );
@@ -121,7 +125,7 @@ const Auth = () => {
                                 disabled={renderProps.disabled} 
                                 startIcon={<Icon />} 
                                 variant='contained' > 
-                                    Google Sign In
+                                   Google Sign In
                             </Button>
                         )}
                         onSuccess={ googleSuccess }

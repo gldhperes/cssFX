@@ -1,17 +1,17 @@
 import React from "react";
 import { Container } from '@material-ui/core';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
-import PostDetails from "./components/PostDetails/PostDetails";
 
 import Home from "./components/Home/Home";
 import Auth from "./components/Auth/Auth";
-import FavoritePosts from "./components/Posts/FavoritePosts.jsx"
+import PostDetails from "./components/PostDetails/PostDetails";
+
 const App = () => {
     const user = JSON.parse( localStorage.getItem('profile') ) 
 
     return (
         <BrowserRouter>
-            <Container maxWidth="xl">
+            <Container maxWidth="xl" disableGutters={true}>
                 
                 <Routes>
                     <Route path="/" exact element={ <Navigate to='/posts' /> }  />
@@ -20,8 +20,9 @@ const App = () => {
                     <Route path="/posts/:id" element={ <PostDetails/> } />
 
                     <Route path="/user/:userId/favoritePosts" element={ <Home/> } />
+                    <Route path="/user/:userId/userPosts" element={ <Home/> } />
 
-                    <Route path="/auth" exact element={ !user ? <Auth /> : <Navigate to="/posts" /> } />
+                    <Route path="/auth" exact element={ !user ? <Auth /> : <Navigate to="/" /> } />
                 </Routes>
             </Container>
         </BrowserRouter>

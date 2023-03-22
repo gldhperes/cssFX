@@ -1,4 +1,4 @@
-import { CREATE, FETCH_POST, FETCH_ALL, FETCH_BY_SEARCH, START_LOADING, END_LOADING, UPDATE, DELETE, LIKE, FAVORITE, GET_FAVORITE } from '../constants/actionTypes';
+import { CREATE, FETCH_POST, FETCH_ALL, FETCH_BY_SEARCH, START_LOADING, END_LOADING, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
 
 export default (state = { isLoading: true, posts: [] }, action) => {
     // const reducer = ( state = [], actions)
