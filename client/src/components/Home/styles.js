@@ -8,6 +8,21 @@ export default makeStyles((theme) => ({
     alignItems: 'center',
   },
 
+  // MAIN ==============
+  mainContainer: {
+    width: '100%',
+    padding: '20px',
+
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+  },
+
+  // POSTS ================
+  postsContainer: {
+    gap: '25px',
+  },
+
+  // PAGINATION ============
 
   pagination: {
     borderRadius: 4,

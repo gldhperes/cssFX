@@ -10,7 +10,7 @@ const FavoritePosts = ( ) => {
    
     const favoritedPosts = useSelector((state) => state.user.favoritedPosts);
 
-    // console.log('FAVORITED');
+    console.log('FAVORITED');
 
     return (
         <>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Grow, Grid, Paper } from '@material-ui/core';
+import { Paper } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from "react-router-dom";
 // import ChipInput from 'material-ui-chip-input';
@@ -10,14 +10,18 @@ import { LOGOUT } from '../../constants/actionTypes'
 
 // import { getPostsBySearch } from '../../actions/posts'
 import Pagination from "../Pagination"
-import FavoritePosts from "../Posts/FavoritePosts";
 import MostLikeds from "../Posts/MostLikeds";
+import FavoritePosts from "../Posts/FavoritePosts";
+import Following from "../Posts/Following"
 import Header from "../Header/Header";
 import SearchSection from "./SearchSection";
 import CategorySection from "./CategorySection";
 import UserPostsSection from "./UserPostsSection"
 
-import { getFavoritePosts, getUserPosts } from "../../actions/user";
+import { getPosts } from "../../actions/posts";
+import { getFavoritePosts, getUserPosts, getFollowing } from "../../actions/user";
+import { favorites, mostLikeds, myPosts, following } from "../../constants/routes";
+
 
 import useStyles from './styles';
 
@@ -45,7 +49,7 @@ const Home = () => {
 
     const userLogged = useSelector((state) => state.auth.authData);
 
-    function logout() {
+    const logout = () => {
         dispatch({ type: LOGOUT })
         setUser(null)
         navigate('/')
@@ -73,22 +77,21 @@ const Home = () => {
         }
     }, [userLogged]) // eslint-disable-line react-hooks/exhaustive-deps
 
-
-    const userPath = (`/user/${user?.result?._id}`);
-    const isFavoriteRoute = location.pathname.match(`${userPath}/favoritePosts`);
-    const isMostLikedsRoute = location.pathname.match('/posts');
-    const isUserPostsRoute = location.pathname.match(`${userPath}/userPosts`)
+    const isMostLikedsRoute = location.pathname.match(mostLikeds);
+    const isFavoriteRoute = location.pathname.match(favorites);
+    const isFollowingRoute = location.pathname.match(following)
+    const isUserPostsRoute = location.pathname.match(myPosts)
     let route = ''
-    // if (isFavoriteRoute) setRoute(isFavoriteRoute) 
-    // if (isMostLikedsRoute) setRoute(isMostLikedsRoute)
-    // if (isUserPostsRoute) setRoute(isUserPostsRoute)
-    if (isFavoriteRoute) route = isFavoriteRoute
+
     if (isMostLikedsRoute) route = isMostLikedsRoute
+    if (isFavoriteRoute) route = isFavoriteRoute
+    if (isFollowingRoute) route = isFollowingRoute
     if (isUserPostsRoute) route = isUserPostsRoute
 
 
     console.log(`ROTA NA HOME: ${location.pathname}`);
     console.log(`route: ${route}`);
+    // console.log(`user: ${user}`);
     // if (route) console.log(`ROTA NA HOME: ${route}`);
     // const handleAdd = (tag) => setTags([...tags, tag]);
 
@@ -102,83 +105,65 @@ const Home = () => {
 
             <SearchSection />
 
-            <Grow in>
-                <Container maxWidth='xl'>
-                    <Grid className={classes.gridContainer} container justifyContent="space-between" alignItems="stretch" spacing={3}>
-                        <Grid item xs={12} sm={6} md={9}>
-                            {/* {currentPath === '/posts' ? <Posts setCurrentId={setCurrentId} /> : <FavoritePosts setCurrentId={setCurrentId} />} */}
-                            {/* {currentPath === `/user/:userId/favoritePosts` && <FavoritePosts />} */}
+            <div className={`${classes.flex} ${classes.mainContainer}`}>
+                <div className={`${classes.flex} ${classes.postsContainer}`}>
+                    {/* {currentPath === '/posts' ? <Posts setCurrentId={setCurrentId} /> : <FavoritePosts setCurrentId={setCurrentId} />} */}
+                    {/* {currentPath === `/user/:userId/favoritePosts` && <FavoritePosts />} */}
 
-                            {/* <Posts setCurrentId={setCurrentId} /> */}
+                    {/* <Posts setCurrentId={setCurrentId} /> */}
 
-                            {/* {isFavoriteRoute ? <FavoritePosts setCurrentId={setCurrentId} /> : <Posts setCurrentId={setCurrentId} />} */}
+                    {/* {isFavoriteRoute ? <FavoritePosts setCurrentId={setCurrentId} /> : <Posts setCurrentId={setCurrentId} />} */}
 
-                            {
-                                isFavoriteRoute && (
-                                    dispatch( getFavoritePosts(user.result._id) ),
-                                    <FavoritePosts setCurrentId={setCurrentId} />
-                                )
-                            }
+                    {
+                        isFavoriteRoute && (
+                            user && (dispatch(getFavoritePosts(user.result._id))),
+                            <FavoritePosts />
 
-                            {
-                                isMostLikedsRoute && (
-                                    dispatch( getFavoritePosts(user.result._id) ),
-                                    <MostLikeds setCurrentId={setCurrentId} />
-                                )
-                            }
+                        )
+                    }
 
-                            {
-                                isUserPostsRoute && (
-                                    dispatch(getUserPosts(user.result._id)),
-                                    <UserPostsSection currentId={currentId} setCurrentId={setCurrentId} />
-                                )
-                            }
-                        </Grid>
+                    {
+                        isMostLikedsRoute && (
+                            user && (
+                                dispatch(getFavoritePosts(user.result._id)),
+                                dispatch(getPosts(page))
 
-                        <Grid item xs={12} sm={6} md={3}>
-                            {/* <AppBar className={classes.appBarSearch} position="static" color="inherit">
-                                <TextField
-                                    name="earch"
-                                    variant="outlined"
-                                    label="Search"
-                                    onKeyPress={handleKeyPress}
-                                    fullWidth
-                                    value={search}
-                                    onChange={(e) => setSearch(e.target.value)}
-                                />
+                            ),
+                            <MostLikeds />
+                        )
+                    }
 
-                                <ChipInput
-                                    style={{ margin: '10px 0' }}
-                                    value={tags}
-                                    onAdd={handleAdd}
-                                    onDelete={handleDelete}
-                                    label="Search Tags"
-                                    variant="outlined"
-                                />
+                    {
+                        isFollowingRoute && (
+                            user && ( 
+                                dispatch( getFollowing(user.result._id)) 
+                            ),
+                            <Following />
+                        )
+                    }
 
-                                <Button onClick={searchPost} className={classes.searchButton} variant="contained" color="primary" >
-                                    Search
-                                </Button>
-                            </AppBar> */}
+                    {
+                        isUserPostsRoute && (
+                            user && (dispatch(getUserPosts(user.result._id))),
+                            <UserPostsSection currentId={currentId} setCurrentId={setCurrentId} />
+                        )
+                    }
+                </div>
 
 
+                <Paper>
+                    {/* SE NAO TIVERMOS UMA PESQUISA OU TAG ENTAO RENDERIZA A PAGINAÇÃO */}
+                    {(!searchQuery && !tags.length) && (
 
+                        <Paper className={classes.pagination} elevation={6}>
 
+                            <Pagination page={page} />
 
-                            {/* SE NAO TIVERMOS UMA PESQUISA OU TAG ENTAO RENDERIZA A PAGINAÇÃO */}
-                            {(!searchQuery && !tags.length) && (
+                        </Paper>
+                    )}
+                </Paper>
 
-                                <Paper className={classes.pagination} elevation={6}>
-
-                                    <Pagination page={page} />
-
-                                </Paper>
-                            )}
-
-                        </Grid>
-                    </Grid>
-                </Container>
-            </Grow>
+            </div>
         </>
 
     )

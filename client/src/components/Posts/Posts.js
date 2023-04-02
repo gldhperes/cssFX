@@ -1,19 +1,17 @@
 import React from "react"
-import { Grid, CircularProgress } from '@material-ui/core'
+import { CircularProgress } from '@material-ui/core'
 import { useSelector } from "react-redux";
 
 import Post from "./Post/Post";
 
-import useStyles from './styles';
 import { FAVORITES, MOST_LIKEDS } from "../../constants/pagesTypes";
 
-const Posts = ({ posts, favPosts, category, setCurrentId }) => {
-    const classes = useStyles();
+const Posts = ({ posts, favPosts, followed, category, setCurrentId }) => {
     const user = JSON.parse(localStorage.getItem('profile'))
 
     const { isLoading } = useSelector((state) => state.posts)
 
-
+    console.log(category);
     if (!posts && !isLoading) { return 'No Posts' }
 
     if (!posts) { return 'No Posts' }
@@ -32,16 +30,19 @@ const Posts = ({ posts, favPosts, category, setCurrentId }) => {
         }
     }
 
-    function getPosts(post) {
-        switch (category) {
+    const getPosts = (cat, post) => {
+        console.log(cat);
+        switch (cat) {
             case FAVORITES:
                 // console.log(FAVORITES);
+                if (!user) return
                 return (
                     <>
                         <Post
                             post={post}
                             favorited={post}
                             setCurrentId={setCurrentId}
+                            followed={followed}
                         />
                     </>
                 )
@@ -51,67 +52,44 @@ const Posts = ({ posts, favPosts, category, setCurrentId }) => {
                     <>
                         <Post
                             post={post}
-                            favorited={ getFavorited(post._id) }
+                            favorited={getFavorited(post._id)}
                             setCurrentId={setCurrentId}
+                            followed={followed}
                         />
                     </>
                 )
 
-            default: return "NO POSTS"
+            default:
+                return (
+                    <>
+                        {"NO POSTS"}
+                    </>
+                )
         }
     }
 
 
     return (
-        // <Grid item xs={12} sm={6} md={9}>
-        //     <Grid className={classes.container} container alignItems="stretch" spacing={3}>
 
-        //     </Grid>
-        // </Grid>
 
         isLoading ? <CircularProgress /> : (
-            <Grid className={classes.container} container alignItems="stretch" spacing={3}>
+            <>
                 {
-                    (posts && user) ? (
+                    (posts) ? (
 
                         posts.map((post) => (
                             // getPost(post._id),
 
-                            <Grid key={post?._id} item xs={12} sm={6} md={6} lg={3}>
-                                {getPosts(post)}
-                            </Grid>
+                            <>
+                                {getPosts(category, post)}
+                            </>
                         ))
                     ) : (
                         "No posts"
                     )
                 }
-            </Grid>
+            </>
         )
-        // isFavoriteRoute ? (
-        //     <Grid className={classes.container} container alignItems="stretch" spacing={3}>
-        //         {
-        //             favoritedPosts.map((post) => (
-        //                 console.log(`post: ${post._id}`),
-        //                 <Grid key={post} item xs={12} sm={6} md={6} lg={3}>
-        //                     <Post post={post} setCurrentId={setCurrentId}/>
-        //                 </Grid>
-        //             ))
-        //         }
-        //     </Grid>
-
-        // ) : (
-        //     isLoading ? <CircularProgress /> : (
-        //         <Grid className={classes.container} container alignItems="stretch" spacing={3}>
-        //             {
-        //                 posts.map((post) => (
-        //                     <Grid key={post._id} item xs={12} sm={6} md={6} lg={3}>
-        //                         <Post post={post} setCurrentId={setCurrentId}/>
-        //                     </Grid>
-        //                 ))
-        //             }
-        //         </Grid>
-        //     )
-        // )
     )
 }
 

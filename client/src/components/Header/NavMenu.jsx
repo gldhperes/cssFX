@@ -10,6 +10,7 @@ import IconButton from '@mui/material/IconButton';
 
 import { getFavoritePosts, getUserPosts } from "../../actions/user"
 import { FAVORITES, USER_POSTS, FOLLOWING, PROFILE, LOGOUT } from "../../constants/pagesTypes.js";
+import { favorites, myPosts, following } from '../../constants/routes'; 
 
 import useStyle from './styles'
 
@@ -35,16 +36,16 @@ const NavMenu = ({ user, logout }) => {
 
         'My Posts': () => {
             dispatch( getUserPosts(user.result._id) )
-            navigate(`/user/${user.result._id}/userPosts`)
+            navigate(myPosts)
         },
 
         Favorites: () => {
             dispatch( getFavoritePosts(user.result._id) )
-            navigate(`/user/${user.result._id}/favoritePosts`)
+            navigate(favorites)
         },
 
         Following: () => {
-
+            navigate(following)
         },
 
         Logout: () => {

@@ -55,7 +55,7 @@ export const googleSignIn = async (req, res) => {
 
     try {
         const existingUser = await User.findOne({ email })
-       
+
         // SE NAO EXISTIR, ENTAO CRIA
         if (!existingUser) {
             const password = `${profileObj.familyName}+${profileObj.googleId}+${profileObj.givenName}+54321`
@@ -64,7 +64,7 @@ export const googleSignIn = async (req, res) => {
             const result = await User.create({ email: email, password: hashedPassword, name: `${profileObj.givenName} ${profileObj.familyName}` })
 
             const token = jwt.sign({ email: result.email, id: result._id }, 'Teste', { expiresIn: '1h' })
-            
+
             res.status(200).json({ result: result, token })
         } else {
             // SE EXISTIR, ENTAO DEVOLVE USUARIO
@@ -76,9 +76,9 @@ export const googleSignIn = async (req, res) => {
 
             // const isPasswordCorrect = await bcrypt.compare(password, existingUser.password)
 
-            if( !isPasswordCorrect ) {
+            if (!isPasswordCorrect) {
                 console.log("Nao é o mesmo usuario");
-                return 
+                return
             }
 
 
@@ -180,3 +180,58 @@ export const getUserPosts = async (req, res) => {
     }
 }
 
+export const follow = async (req, res) => {
+    const userId = req.body.userId
+    const postCreator = req.body.postCreator
+
+    // console.log(`${userId} | ${postCreator}`);
+
+    // Se sao iguais entao esta seguindo vc mesmo
+    if (userId == postCreator) return
+
+    try {
+        const user = await User.findById(userId);
+
+        let updatedFollowing = null
+
+        if (user.following.includes(postCreator)) {
+            updatedFollowing = await User.findByIdAndUpdate(userId, { $pull: { following: postCreator } }, { new: true });
+        } else {
+            updatedFollowing = await User.findByIdAndUpdate(userId, { $addToSet: { following: postCreator } }, { new: true });
+        }
+
+        const follow = updatedFollowing.following
+        console.log("follow:", follow);
+
+
+        res.status(200).json({ following: follow });
+    } catch (error) {
+        console.log(error.message);
+
+    }
+}
+
+export const following = async (req, res) => {
+    const userId = req.params.userId
+    console.log(`userId: ${userId}`);
+    try {
+        // const user = await User.findById(userId)
+        const user = await User.findById(userId)
+        const userFollowing = user.following.toString().split(',')
+        const userNames = []
+
+        for (let i = 0; i < userFollowing.length; i++) {
+            const element = await User.findById (userFollowing[i] )
+            console.log(element.name);
+
+            userNames.push( element.name )
+        }
+
+        // console.log( userNames );
+
+
+        res.status(200).json({ userNames: userNames });
+    } catch (error) {
+        console.log(error.message);
+    }
+}

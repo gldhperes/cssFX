@@ -1,16 +1,17 @@
 import express from "express";
-import { signin, signup, googleSignIn, getFavoritePosts, favoritePost, getUserPosts } from '../controllers/user.js';
+import * as userController from '../controllers/user.js';
 import auth from "../middleware/auth.js";
 
 const router = express.Router()
 
-router.post('/signin', signin)
-router.post('/signup', signup)
-router.post('/googlesignin', googleSignIn)
+router.post('/signin', userController.signin)
+router.post('/signup', userController.signup)
+router.post('/googlesignin', userController.googleSignIn)
 
+router.patch('/:userId/favoritePost', auth, userController.favoritePost)  
+router.get('/:userId/favoritePosts', auth, userController.getFavoritePosts)
+router.get('/:userId/userPosts', auth, userController.getUserPosts)
 
-router.patch('/:userId/favoritePost', auth, favoritePost)  
-router.get('/:userId/favoritePosts', auth, getFavoritePosts)
-router.get('/:userId/userPosts', auth, getUserPosts)
-
+router.post('/follow', auth, userController.follow)
+router.get('/:userId/following', auth, userController.following)
 export default router

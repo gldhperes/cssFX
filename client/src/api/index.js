@@ -29,3 +29,5 @@ export const googleSignIn = (profileObj) => API.post(`/user/googlesignin`, profi
 export const favoritePost = (userId , postId) => API.patch(`/user/${userId}/favoritePost`, postId)
 export const getFavoritePosts = (userId) => API.get(`/user/${userId}/favoritePosts`)
 export const getUserPosts = (userId) => API.get(`/user/${userId}/userPosts`)
+export const followUser = ( followData ) => API.post(`/user/follow`, followData)
+export const getFollowing = (userId) => API.get(`/user/${userId}/following`)

@@ -5,24 +5,27 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Home from "./components/Home/Home";
 import Auth from "./components/Auth/Auth";
 import PostDetails from "./components/PostDetails/PostDetails";
+import { auth, mostLikeds, myPosts, favorites, following } from './constants/routes' 
 
 const App = () => {
     const user = JSON.parse( localStorage.getItem('profile') ) 
-
+   
     return (
         <BrowserRouter>
             <Container maxWidth="xl" disableGutters={true}>
                 
                 <Routes>
                     <Route path="/" exact element={ <Navigate to='/posts' /> }  />
-                    <Route path="/posts" exact element={ <Home/> } />
-                    <Route path="/posts/search" exact element={ <Home/> } />
-                    <Route path="/posts/:id" element={ <PostDetails/> } />
+                    <Route path={mostLikeds} exact element={ <Home/> } />
+                    
+                    <Route path={`${mostLikeds}/search`} exact element={ <Home/> } />
+                    <Route path={`${mostLikeds}/:id`} element={ <PostDetails/> } />
 
-                    <Route path="/user/:userId/favoritePosts" element={ <Home/> } />
-                    <Route path="/user/:userId/userPosts" element={ <Home/> } />
+                    <Route path={favorites} exact element={ <Home/> } />
+                    <Route path={following} exact element={ <Home/> } />
+                    <Route path={myPosts} exact element={ <Home/> } />
 
-                    <Route path="/auth" exact element={ !user ? <Auth /> : <Navigate to="/" /> } />
+                    <Route path={auth} exact element={ !user ? <Auth /> : <Navigate to="/" /> } />
                 </Routes>
             </Container>
         </BrowserRouter>

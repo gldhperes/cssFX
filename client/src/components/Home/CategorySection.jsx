@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import {Paper, Button } from '@material-ui/core';
 
 import { FAVORITES, FOLLOWING, MOST_LIKEDS } from '../../constants/pagesTypes.js'
+import { favorites, mostLikeds, following } from '../../constants/routes.js';
+
 
 import useStyle from './styles'
 
@@ -16,7 +18,7 @@ const CategorySection = ({ user }) => {
 
         "Most Likeds": () => {
             console.log('MostLikeds clicked');
-            navigate(`/posts`)
+            navigate(mostLikeds)
         },
         
         Favorites: () => {
@@ -26,7 +28,7 @@ const CategorySection = ({ user }) => {
                 return
             }
 
-            navigate(`/user/${user.result._id}/favoritePosts`)
+            navigate(favorites)
         },
 
         Following: () => {
@@ -37,7 +39,7 @@ const CategorySection = ({ user }) => {
             }
 
             console.log('Following clicked');
-          
+            navigate(following)
         },
        
     };

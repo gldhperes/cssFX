@@ -11,4 +11,12 @@ export default makeStyles((theme) => ({
   actionDiv: {
     textAlign: 'center',
   },
+
+
+  // FOLLOWING ===================
+  postCard: {
+    width: "150px",
+    height: "150px",
+    background: "white",
+  },
 }));
