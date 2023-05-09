@@ -235,3 +235,19 @@ export const following = async (req, res) => {
         console.log(error.message);
     }
 }
+
+export const getUserProfile = async (req, res) => {
+    const userId = req.params.userId
+    
+    console.log(`userId: ${userId}`);
+    try {
+
+        const user = await User.findById(userId)
+
+        res.status(200).json({ user: user});
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+
+

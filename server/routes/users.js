@@ -14,4 +14,6 @@ router.get('/:userId/userPosts', auth, userController.getUserPosts)
 
 router.post('/follow', auth, userController.follow)
 router.get('/:userId/following', auth, userController.following)
+router.get('/:userId/profile', auth, userController.getUserProfile)
+
 export default router

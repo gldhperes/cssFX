@@ -6,7 +6,7 @@ const userSchema = mongoose.Schema({
     password: { type: String, required: true },
     id: { type: String },
     favoritedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'PostMessage' }],
-    following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'UserMessage' }]
+    following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 })
 
 const UserMessage = mongoose.model('User', userSchema)

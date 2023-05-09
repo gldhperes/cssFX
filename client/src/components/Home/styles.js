@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
+
 export default makeStyles((theme) => ({
   flex: {
     display: 'flex',
@@ -26,7 +27,7 @@ export default makeStyles((theme) => ({
 
   pagination: {
     borderRadius: 4,
-    marginTop: '1rem',
+
     padding: '16px',
   },
   gridContainer: {
@@ -37,21 +38,28 @@ export default makeStyles((theme) => ({
 
 
 
-  // SEARCH SECTION
+  // SEARCH SECTION ============
   searchSection: {
-    width: "95%",
+    width: "100%",
 
-    padding: "5px 25px",
-    margin: "10px auto",
+    padding: "10px 25px",
 
-    gap: "8px",
+    justifyContent: "space-between",
 
-    borderRadius: "30px",
+
     backgroundColor: "#1E001E",
 
   },
 
+  searchArea: {
+    gap: "8px",
+  },
+
   textField: {
+    "&.MuiOutlinedInput-notchedOutline-45": {
+      borderColor: "rgb(255, 255, 255)",
+    },
+
     "&.MuiOutlinedInput-root": {
       position: 'relative',
       borderRadius: '25px',
@@ -77,16 +85,11 @@ export default makeStyles((theme) => ({
     gap: '10px',
 
     borderRadius: "0px",
-    
+
     backgroundColor: "#470047",
   },
 
-  categoryBtn:{
+  categoryBtn: {
     color: 'white',
-  }
-
-
-
-
-
+  },
 }));

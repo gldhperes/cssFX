@@ -31,3 +31,5 @@ export const getFavoritePosts = (userId) => API.get(`/user/${userId}/favoritePos
 export const getUserPosts = (userId) => API.get(`/user/${userId}/userPosts`)
 export const followUser = ( followData ) => API.post(`/user/follow`, followData)
 export const getFollowing = (userId) => API.get(`/user/${userId}/following`)
+export const getUserProfile = (userId) => API.get(`/user/${userId}/profile`)
+

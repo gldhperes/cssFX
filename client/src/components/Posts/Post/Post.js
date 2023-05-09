@@ -1,7 +1,8 @@
 import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Card, CardActions, CardMedia, Button, Typography, IconButton } from '@material-ui/core'
+import { Navigate } from "react-router-dom";
 
+import { Card, CardActions, CardMedia, Button, Typography, IconButton } from '@material-ui/core'
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 
@@ -16,18 +17,16 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 // import { FAVORITES, MOST_LIKEDS, USER_POSTS } from "../../../constants/pagesTypes";
 // import red from "@material-ui/core/colors/red";
 // import moment from 'moment'
-// import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { deletePost, likePost, favoritePost } from "../../../actions/posts"
-import { followUser } from "../../../actions/user"
-
-import memories from '../../../images/memories.png'
+import { followUser, getUserProfile } from "../../../actions/user"
 
 import useStyles from './styles'
 
 const Post = ({ post, favorited, followed }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
-    // const navigate = useNavigate()
+    const navigate = useNavigate()
 
     const [user] = useState(JSON.parse(localStorage.getItem('profile')))
 
@@ -40,6 +39,14 @@ const Post = ({ post, favorited, followed }) => {
     const postCreator = post?.creator
 
     const hasLikedPost = likes?.find((like) => like === userId)
+
+
+
+    // UserPage ================================
+    const callUserPage = async (user_id) => {
+        dispatch( getUserProfile(user_id) )
+    }
+
 
 
     // HANDLE LIKES =========================
@@ -152,9 +159,9 @@ const Post = ({ post, favorited, followed }) => {
 
     // FUNCTIONS =============================
 
-    // const openPost = () => {
-    //     navigate(`/posts/${post._id}`)
-    // }
+    const openPostDetails = () => {
+        navigate(`/posts/${post._id}`)
+    }
 
     // CALL AUTHOR PAGE
 
@@ -163,7 +170,9 @@ const Post = ({ post, favorited, followed }) => {
         <Card className={`${classes.post} ${classes.flex}`} raised elevation={6}>
 
 
-            <CardMedia className={classes.media} src={memories} title={post.title} />
+            {/* <CardMedia className={classes.media} src={memories} title={post.title} /> */}
+
+            <Button className={classes.media} onClick={()=> openPostDetails()}/>
 
             <div className={`${classes.postDetails} ${classes.flex}`}>
 
@@ -180,7 +189,7 @@ const Post = ({ post, favorited, followed }) => {
                     <div className={`${classes.postContent} ${classes.flex}`}>
                         <Typography variant="h6"> {post?.title} </Typography>
 
-                        <Typography className={classes.postCreator} variant="h6" onClick={() => console.log("CALL AUTHOR PAGE")}> {post.name} </Typography>
+                        <Typography className={classes.postCreator} variant="h6" onClick={() => callUserPage()}> {post.name} </Typography>
                     </div>
 
 

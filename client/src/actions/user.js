@@ -1,5 +1,6 @@
-import { FOLLOWING, GET_FOLLOWING, GET_FAVORITE, GET_USER_POSTS } from '../constants/actionTypes';
+import { FOLLOWING, GET_FOLLOWING, GET_FAVORITE, GET_USER_POSTS, GET_USER_PROFILE } from '../constants/actionTypes';
 import * as api from '../api'
+import { Navigate } from 'react-router-dom';
 
 export const getFavoritePosts = (userId) => async (dispatch) => {
 
@@ -47,4 +48,17 @@ export const getFollowing = (userId) => async (dispatch) => {
     }
 }
 
+export const getUserProfile = (userId) => async (dispatch) => {
+    try {
+        console.log (`userId: ${userId}`);
+
+        const { data } = await api.getUserProfile( userId )
+
+        dispatch({ type: GET_USER_PROFILE, payload: data})
+
+        Navigate(`${userId}/profile`)
+    } catch (error) {
+        console.log('GetUserProfile Error: ', error);
+    }
+}
 // export default getFavoritePosts

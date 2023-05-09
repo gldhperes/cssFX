@@ -6,10 +6,9 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 // IMPORTS TESTE DO HEADER
 import decode from 'jwt-decode'
-import { LOGOUT } from '../../constants/actionTypes'
 
 // import { getPostsBySearch } from '../../actions/posts'
-import Pagination from "../Pagination"
+// import Pagination from "../Pagination"
 import MostLikeds from "../Posts/MostLikeds";
 import FavoritePosts from "../Posts/FavoritePosts";
 import Following from "../Posts/Following"
@@ -18,6 +17,7 @@ import SearchSection from "./SearchSection";
 import CategorySection from "./CategorySection";
 import UserPostsSection from "./UserPostsSection"
 
+import { logout } from "../../actions/auth.js"; 
 import { getPosts } from "../../actions/posts";
 import { getFavoritePosts, getUserPosts, getFollowing } from "../../actions/user";
 import { favorites, mostLikeds, myPosts, following } from "../../constants/routes";
@@ -35,10 +35,10 @@ const Home = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const query = useQuery()
-
-    const [currentId, setCurrentId] = useState(null)
     const searchQuery = query.get('searchQuery')
     const page = query.get('page') || 1
+
+    const [currentId, setCurrentId] = useState(null)
     const [tags, setTags] = useState([])
     // const [route, setRoute] = useState(null)
     // const [search, setSearch] = useState("")
@@ -49,13 +49,15 @@ const Home = () => {
 
     const userLogged = useSelector((state) => state.auth.authData);
 
-    const logout = () => {
-        dispatch({ type: LOGOUT })
+    
+
+    const logoutUser = () => {
+        dispatch( logout() )
         setUser(null)
         navigate('/')
     }
 
-    useEffect(() => {
+    useEffect(() => {    
 
         if (userLogged && !user) {
 
@@ -70,11 +72,12 @@ const Home = () => {
                 const decodedToken = decode(token)
 
                 if (decodedToken.exp * 1000 < new Date().getTime()) {
-                    logout()
+                    logoutUser()
                 }
             }
 
         }
+
     }, [userLogged]) // eslint-disable-line react-hooks/exhaustive-deps
 
     const isMostLikedsRoute = location.pathname.match(mostLikeds);
@@ -99,11 +102,11 @@ const Home = () => {
 
     return (
         <>
-            <Header logout={logout} user={user} setUser={setUser} setTags={setTags} />
+            <Header logoutUser={logoutUser} user={user} setUser={setUser} setTags={setTags} />
 
             <CategorySection user={user} />
 
-            <SearchSection />
+            <SearchSection searchQuery={searchQuery} page={page} />
 
             <div className={`${classes.flex} ${classes.mainContainer}`}>
                 <div className={`${classes.flex} ${classes.postsContainer}`}>
@@ -136,6 +139,7 @@ const Home = () => {
                     {
                         isFollowingRoute && (
                             user && ( 
+                                console.log("DISPARANDO GETFOLLOWING"),
                                 dispatch( getFollowing(user.result._id)) 
                             ),
                             <Following />
@@ -151,8 +155,8 @@ const Home = () => {
                 </div>
 
 
-                <Paper>
-                    {/* SE NAO TIVERMOS UMA PESQUISA OU TAG ENTAO RENDERIZA A PAGINAÇÃO */}
+                {/* <Paper>
+                    SE NAO TIVERMOS UMA PESQUISA OU TAG ENTAO RENDERIZA A PAGINAÇÃO
                     {(!searchQuery && !tags.length) && (
 
                         <Paper className={classes.pagination} elevation={6}>
@@ -161,7 +165,7 @@ const Home = () => {
 
                         </Paper>
                     )}
-                </Paper>
+                </Paper> */}
 
             </div>
         </>

@@ -1,6 +1,6 @@
-import { FAVORITE, GET_FAVORITE, GET_USER_POSTS, FOLLOWING, GET_FOLLOWING } from '../constants/actionTypes';
+import { FAVORITE, GET_FAVORITE, GET_USER_POSTS, FOLLOWING, GET_FOLLOWING, GET_USER_PROFILE } from '../constants/actionTypes';
 
-const userReducer = (state = { favoritedPosts: [], userPosts: [], following: [] }, action) => {
+const userReducer = (state = { favoritedPosts: [], userPosts: [], following: [], userProfile: [], }, action) => {
     switch (action.type) {
         case GET_FAVORITE:
             // console.log("GET_FAVORITE REDUX:", action.payload.favPost);
@@ -35,17 +35,26 @@ const userReducer = (state = { favoritedPosts: [], userPosts: [], following: [] 
             }
 
         case FOLLOWING:
-            console.log(`FOLLOWING REDUX: ${ action.payload.following }`);
+            console.log(`FOLLOWING REDUX: ${action.payload.following}`);
             return {
                 ...state,
                 following: action.payload.following,
             }
 
         case GET_FOLLOWING:
-            console.log(`${GET_FOLLOWING} REDUX: ${ action.payload.userNames }`);
+            console.log(`${GET_FOLLOWING} REDUX: ${action.payload.userNames}`);
             return {
                 ...state,
                 following: action.payload.userNames,
+            }
+
+
+        case GET_USER_PROFILE:
+
+            console.log(`GET_USER_PROFILE: ${GET_USER_PROFILE} REDUX: ${action.payload.user}`);
+            return {
+                ...state,
+                userProfile: action.payload.user,
             }
 
         default:

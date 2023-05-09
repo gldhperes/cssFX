@@ -1,6 +1,8 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 
+import { Button, IconButton, Paper, Typography } from '@material-ui/core'
+
 import useStyles from "./styles"
 
 const Following = () => {
@@ -9,10 +11,23 @@ const Following = () => {
 
     console.log(`FOLLOWING: ${following}`);
 
-    const FollowingUsers = () => {
-        return(
-            <>
-            </>
+    const FollowingUsers = ({ creator }) => {
+        return (
+            <Paper className={`${classes.flex} ${classes.CreatorCard}`} elevation={6} onClick={ () => { console.log("CALL AUTHOR PAGE"); } }>
+
+                <div className={classes.CreatorIcon}>
+                    <Typography variant="h6"> {creator.charAt(0)} </Typography>
+                </div>
+
+
+                <Typography className={`${classes.flex} ${classes.CreatorName}`} variant="h6"> {creator} </Typography>
+
+                {/* <IconButton style={{ color: "white" }} size="small">
+
+                    
+                </IconButton> */}
+
+            </Paper>
         )
 
     }
@@ -24,11 +39,10 @@ const Following = () => {
                     <>
                         {
                             (following) ? (
-
-                                following.map((post) => (
-
+                                
+                                following.map((creator) => (
                                     <>
-                                        <FollowingUsers key={1} className={classes.postCard} />
+                                        <FollowingUsers key={creator} creator={creator} />
                                     </>
                                 ))
                             ) : (

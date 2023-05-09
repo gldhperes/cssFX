@@ -1,6 +1,15 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles((theme) => ({
+
+  flex: {
+    display: "flex",
+    flexFlow: "row wrap",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  // =========================
   mainContainer: {
     display: 'flex',
     alignItems: 'center',
@@ -14,9 +23,35 @@ export default makeStyles((theme) => ({
 
 
   // FOLLOWING ===================
-  postCard: {
-    width: "150px",
-    height: "150px",
-    background: "white",
+  CreatorCard: {
+    cursor: "pointer",
+
+    width: "200px",
+    height: "200px",
+
+    flexFlow: 'column',
+
+    borderRadius: "20px",
+    background: "#656565",
+
   },
+
+  CreatorIcon:{
+    // width: '50px',
+    // height: '50px',
+
+    padding: '20px',
+
+    borderRadius: "50%",
+
+    color: 'white',
+    background: "black",
+  },
+
+  CreatorName:{
+    color: 'white',
+  },
+
+
+
 }));

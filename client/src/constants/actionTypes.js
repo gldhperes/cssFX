@@ -10,7 +10,8 @@ export const FAVORITE = 'FAVORITE'
 export const GET_FAVORITE = 'GET_FAVORITE'
 export const GET_USER_POSTS = "GET_USER_POSTS"
 export const FOLLOWING = "FOLLOWING"
-export const GET_FOLLOWING= "GET_FOLLOWING"
+export const GET_FOLLOWING = "GET_FOLLOWING"
+export const GET_USER_PROFILE = "GET_USER_PROFILE"
 
 export const START_LOADING = 'START_LOADING'
 export const END_LOADING = 'END_LOADING'

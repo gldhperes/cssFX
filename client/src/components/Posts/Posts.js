@@ -80,9 +80,9 @@ const Posts = ({ posts, favPosts, followed, category, setCurrentId }) => {
                         posts.map((post) => (
                             // getPost(post._id),
 
-                            <>
+                            <div key={post._id}>
                                 {getPosts(category, post)}
-                            </>
+                            </div>
                         ))
                     ) : (
                         "No posts"
