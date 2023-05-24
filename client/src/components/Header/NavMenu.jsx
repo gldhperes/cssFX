@@ -8,49 +8,52 @@ import Tooltip from '@mui/material/Tooltip';
 import Menu from '@mui/material/Menu';
 import IconButton from '@mui/material/IconButton';
 
-import { getFavoritePosts, getUserPosts } from "../../actions/user"
-import { FAVORITES, USER_POSTS, FOLLOWING, PROFILE, LOGOUT } from "../../constants/pagesTypes.js";
-import { favorites, myPosts, following } from '../../constants/routes'; 
+import { getFavoritePosts, getUserPosts, getUserProfile } from "../../actions/user"
+import { FAVORITES, CREATE_A_POST, FOLLOWING, PROFILE, LOGOUT } from "../../constants/pagesTypes.js";
+import { favorites, createPost, following, profile } from '../../constants/routes'; 
+
+import { FETCH_POST } from '../../constants/actionTypes';
 
 import useStyle from './styles'
 
 const NavMenu = ({ user, logout }) => {
     // MENU SETTINGS
     const classes = useStyle()
-    const settings = [PROFILE, USER_POSTS, FAVORITES, FOLLOWING, LOGOUT];
-
+    const settings = [PROFILE, CREATE_A_POST, FAVORITES, FOLLOWING, LOGOUT];
+    
     const dispatch = useDispatch()
     const navigate = useNavigate()
-
+    
     // const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
-
-
+    
+    const base64Image = 'data:image/png;base64,'+user.result.photo // Substitua com sua string Base64
 
     const handlers = {
-       
-        'Profile': () => {
-            console.log('Profile clicked');
-            // TODO: Implement Profile handler
+        
+        [[PROFILE]]: () => {
+            console.log(user.result._id);
+            dispatch( getUserProfile(user.result._id) )
+            navigate(profile)
         },
 
-        'My Posts': () => {
-            dispatch( getUserPosts(user.result._id) )
-            navigate(myPosts)
+        [[CREATE_A_POST]]: () => {
+            dispatch( { type: FETCH_POST, payload: null } ) ;
+            navigate(createPost)
         },
 
-        Favorites: () => {
+        [[FAVORITES]]: () => {
             dispatch( getFavoritePosts(user.result._id) )
             navigate(favorites)
         },
 
-        Following: () => {
+        [[FOLLOWING]]: () => {
             navigate(following)
         },
 
-        Logout: () => {
-            logout()
+        [[LOGOUT]]: () => {
             console.log('Logout clicked');
+            logout()
             // TODO: Implement Logout handler
         },
     };
@@ -78,8 +81,9 @@ const NavMenu = ({ user, logout }) => {
             <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
 
-                    <Avatar className={classes.purple} alt={user.result.name} src={user.result.imageUrl}>
-                        {user.result.name.charAt(0)}
+                    <Avatar className={`${classes.flex} ${classes.avatar}`} alt={user.result.name} src={user.result.imageUrl}>
+                        {/* {user.result.name.charAt(0)} */}
+                        <img className={classes.userImg} src={base64Image} alt="Imagem" />
                     </Avatar>
                 </IconButton>
 

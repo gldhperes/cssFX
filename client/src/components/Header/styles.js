@@ -1,6 +1,8 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { deepPurple } from '@material-ui/core/colors';
 
+const dimUserPhoto = '50px'
+
 export default makeStyles((theme) => ({
   flex: {
     display: 'flex',
@@ -69,19 +71,33 @@ export default makeStyles((theme) => ({
     textAlign: 'center',
   },
 
- 
+  avatar: {
+    width: dimUserPhoto,
+    height: dimUserPhoto,
+    borderRadius: '50%',
 
-  purple: {
+    
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],
   },
+  
+  userImg: {
+    width: '100%',
+    heigth: '100%',
+  },
+
 
   navMenu: {
     "&.MuiPaper-root": {
       color: 'white',
       backgroundColor: 'black',
-    }
+      border: '1px solid white',
+    },
     
+    "&.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root:hover": {
+      color: '#990099',
+    },
+
   }
 
 }));

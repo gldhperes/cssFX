@@ -1,7 +1,9 @@
+export const profile = '/user/profile'
+export const recentPosts = '/posts'
 export const favorites = '/favorites'
-export const myPosts = '/myPosts'
-export const mostLikeds = '/posts'
+export const following = '/following'
+export const likeds = '/likeds'
+export const createPost = '/create'
+export const updatePost = '/update'
 export const auth = '/auth'
 
-export const profile = '/profile'
-export const following = '/following'

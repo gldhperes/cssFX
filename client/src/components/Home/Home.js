@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Paper } from '@material-ui/core';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useLocation } from "react-router-dom";
 // import ChipInput from 'material-ui-chip-input';
@@ -9,18 +9,20 @@ import decode from 'jwt-decode'
 
 // import { getPostsBySearch } from '../../actions/posts'
 // import Pagination from "../Pagination"
-import MostLikeds from "../Posts/MostLikeds";
+import RecentPosts from "../Posts/RecentPosts";
 import FavoritePosts from "../Posts/FavoritePosts";
-import Following from "../Posts/Following"
+import Following from "../Posts/Following";
+import LikedsPosts from "../Posts/LikedsPosts";
 import Header from "../Header/Header";
 import SearchSection from "./SearchSection";
 import CategorySection from "./CategorySection";
-import UserPostsSection from "./UserPostsSection"
+import UserProfile from "../UserProfile/UserProfile";
+import Form from "../Form/Form";
 
-import { logout } from "../../actions/auth.js"; 
+import { logout } from "../../actions/auth.js";
 import { getPosts } from "../../actions/posts";
-import { getFavoritePosts, getUserPosts, getFollowing } from "../../actions/user";
-import { favorites, mostLikeds, myPosts, following } from "../../constants/routes";
+import { getFavoritePosts, getUserPosts, getFollowing, getLikedsPosts } from "../../actions/user";
+import { favorites, recentPosts, createPost, updatePost, following, profile, likeds } from "../../constants/routes";
 
 
 import useStyles from './styles';
@@ -49,15 +51,15 @@ const Home = () => {
 
     const userLogged = useSelector((state) => state.auth.authData);
 
-    
+
 
     const logoutUser = () => {
-        dispatch( logout() )
+        dispatch(logout())
         setUser(null)
         navigate('/')
     }
 
-    useEffect(() => {    
+    useEffect(() => {
 
         if (userLogged && !user) {
 
@@ -80,16 +82,22 @@ const Home = () => {
 
     }, [userLogged]) // eslint-disable-line react-hooks/exhaustive-deps
 
-    const isMostLikedsRoute = location.pathname.match(mostLikeds);
-    const isFavoriteRoute = location.pathname.match(favorites);
+    const isPostsRoute = location.pathname.match(recentPosts)
+    const isFavoriteRoute = location.pathname.match(favorites)
+    const isLikedsRoute = location.pathname.match(likeds);
     const isFollowingRoute = location.pathname.match(following)
-    const isUserPostsRoute = location.pathname.match(myPosts)
+    const isCreatePostRoute = location.pathname.match(createPost)
+    const isUpdatePostRoute = location.pathname.match(updatePost)
+    const isProfile = location.pathname.match(profile)
     let route = ''
 
-    if (isMostLikedsRoute) route = isMostLikedsRoute
+    if (isPostsRoute) route = isPostsRoute
     if (isFavoriteRoute) route = isFavoriteRoute
     if (isFollowingRoute) route = isFollowingRoute
-    if (isUserPostsRoute) route = isUserPostsRoute
+    if (isLikedsRoute) route = isLikedsRoute
+    if (isCreatePostRoute) route = isCreatePostRoute
+    if (isUpdatePostRoute) route = isUpdatePostRoute
+    if (isProfile) route = isProfile
 
 
     console.log(`ROTA NA HOME: ${location.pathname}`);
@@ -102,57 +110,88 @@ const Home = () => {
 
     return (
         <>
-            <Header logoutUser={logoutUser} user={user} setUser={setUser} setTags={setTags} />
+            <Header logout={logoutUser} user={user} setUser={setUser} setTags={setTags} />
 
             <CategorySection user={user} />
 
             <SearchSection searchQuery={searchQuery} page={page} />
 
             <div className={`${classes.flex} ${classes.mainContainer}`}>
-                <div className={`${classes.flex} ${classes.postsContainer}`}>
-                    {/* {currentPath === '/posts' ? <Posts setCurrentId={setCurrentId} /> : <FavoritePosts setCurrentId={setCurrentId} />} */}
-                    {/* {currentPath === `/user/:userId/favoritePosts` && <FavoritePosts />} */}
 
-                    {/* <Posts setCurrentId={setCurrentId} /> */}
+                {/* {currentPath === '/posts' ? <Posts setCurrentId={setCurrentId} /> : <FavoritePosts setCurrentId={setCurrentId} />} */}
+                {/* {currentPath === `/user/:userId/favoritePosts` && <FavoritePosts />} */}
 
-                    {/* {isFavoriteRoute ? <FavoritePosts setCurrentId={setCurrentId} /> : <Posts setCurrentId={setCurrentId} />} */}
+                {/* <Posts setCurrentId={setCurrentId} /> */}
 
-                    {
-                        isFavoriteRoute && (
-                            user && (dispatch(getFavoritePosts(user.result._id))),
-                            <FavoritePosts />
+                {/* {isFavoriteRoute ? <FavoritePosts setCurrentId={setCurrentId} /> : <Posts setCurrentId={setCurrentId} />} */}
 
-                        )
-                    }
+                {
+                    (isPostsRoute && user) &&
 
-                    {
-                        isMostLikedsRoute && (
-                            user && (
-                                dispatch(getFavoritePosts(user.result._id)),
-                                dispatch(getPosts(page))
+                    (
+                        dispatch(getFavoritePosts(user.result._id)),
+                        dispatch(getPosts(page)),
+                        dispatch(getFollowing(user.result._id)),
+                        <RecentPosts />
+                    )
+                }
 
-                            ),
-                            <MostLikeds />
-                        )
-                    }
+                {
+                    (isFavoriteRoute && user) &&
 
-                    {
-                        isFollowingRoute && (
-                            user && ( 
-                                console.log("DISPARANDO GETFOLLOWING"),
-                                dispatch( getFollowing(user.result._id)) 
-                            ),
-                            <Following />
-                        )
-                    }
+                    (
+                        dispatch(getFavoritePosts(user.result._id)),
 
-                    {
-                        isUserPostsRoute && (
-                            user && (dispatch(getUserPosts(user.result._id))),
-                            <UserPostsSection currentId={currentId} setCurrentId={setCurrentId} />
-                        )
-                    }
-                </div>
+                        <FavoritePosts />
+                    )
+                }
+
+                {
+                    (isLikedsRoute && user) &&
+
+                    (
+                        dispatch(getLikedsPosts(user.result._id)),
+
+                        <LikedsPosts />
+                    )
+                }
+
+
+                {
+                    (isFollowingRoute && user) &&
+
+                    (
+                        console.log("DISPARANDO GETFOLLOWING"),
+                        dispatch(getFollowing(user.result._id)),
+
+                        < Following />
+                    )
+                }
+
+                {
+                    (isCreatePostRoute && user) &&
+
+                    (
+                        <Form />
+                    )
+                }
+
+                {
+                    (isUpdatePostRoute && user) &&
+
+                    (
+                        <Form />
+                    )
+                }
+
+                {
+                    (isProfile && user) &&
+
+                    (
+                        <UserProfile />
+                    )
+                }
+
 
 
                 {/* <Paper>

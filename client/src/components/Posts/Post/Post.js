@@ -1,29 +1,32 @@
 import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { Navigate } from "react-router-dom";
 
-import { Card, CardActions, CardMedia, Button, Typography, IconButton } from '@material-ui/core'
+import { Card, CardActions, Button, Typography, IconButton, Avatar } from '@material-ui/core'
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 
-import DeleteIcon from '@material-ui/icons/Delete'
-
-import CheckCircleOutlineRoundedIcon from '@mui/icons-material/CheckCircleOutlineRounded';
-import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
 
 // import { FAVORITES, MOST_LIKEDS, USER_POSTS } from "../../../constants/pagesTypes";
 // import red from "@material-ui/core/colors/red";
 // import moment from 'moment'
 import { useNavigate } from 'react-router-dom'
+import { getUserPosts } from "../../../api";
 import { deletePost, likePost, favoritePost } from "../../../actions/posts"
 import { followUser, getUserProfile } from "../../../actions/user"
+import { profile } from "../../../constants/routes";
+
 
 import useStyles from './styles'
+import EditPostMenu from "./EditPostMenu";
+import Following from "../Following";
 
-const Post = ({ post, favorited, followed }) => {
+const Post = ({ post, favorited }) => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const navigate = useNavigate()
@@ -40,11 +43,14 @@ const Post = ({ post, favorited, followed }) => {
 
     const hasLikedPost = likes?.find((like) => like === userId)
 
-
+    const base64creatorImg = 'data:image/png;base64,' + post?.creatorImg // Substitua com sua string Base64
+    const base64codeImg = post?.codeImg // Substitua com sua string Base64
 
     // UserPage ================================
     const callUserPage = async (user_id) => {
-        dispatch( getUserProfile(user_id) )
+        console.log(user_id);
+        dispatch(getUserProfile(user_id))
+        navigate(profile)
     }
 
 
@@ -129,31 +135,63 @@ const Post = ({ post, favorited, followed }) => {
 
     const handleFollow = async () => {
 
-        setFollow(!follow)
+        setFollow(follow)
         dispatch(followUser(userId, postCreator))
     }
 
     const Follow = () => {
-        let _follow = false
 
-        return (follow) ?
-            (
-                <>
-                    <CheckCircleRoundedIcon fontSize="small" />
+        // return (follow) ?
+        //     (
+        //         <>
+        //             <PersonAddAlt1Icon fontSize="small" />
 
-                    <Typography variant="body2" component="h2">
-                        &nbsp;{"Following"}
-                    </Typography>
-                </>
-            ) : (
-                <>
-                    <CheckCircleOutlineRoundedIcon fontSize="small" />
+        //             <Typography variant="body2" component="h2">
+        //                 &nbsp;{"Following"}
+        //             </Typography>
+        //         </>
+        //     ) : (
+        //         <>
+        //             <PersonAddAltIcon fontSize="small" />
 
-                    <Typography variant="body2" component="h2">
-                        &nbsp;{"Follow"}
-                    </Typography>
-                </>
-            )
+        //             <Typography variant="body2" component="h2">
+        //                 &nbsp;{"Follow"}
+        //             </Typography>
+        //         </>
+        //     )
+
+        if (follow) console.log("PC: ", follow)
+
+        return (
+            <div className={`${classes.flex}`} key={postCreator}>
+                {
+                    (follow.size > 0) ? (
+                        follow.map((following) =>
+
+                            (following.id === postCreator) && (
+                                <>
+                                    <PersonAddAlt1Icon fontSize="small" />
+
+                                    <Typography variant="body2" component="h2">
+                                        &nbsp;{"Following"}
+                                    </Typography>
+                                </>
+                            )
+
+                        )
+                    ) : (
+                        <>
+                            <PersonAddAltIcon fontSize="small" />
+
+                            <Typography variant="body2" component="h2">
+                                &nbsp;{"Follow"}
+                            </Typography>
+                        </>
+                    )
+                }
+
+            </div>
+        )
     }
 
 
@@ -163,33 +201,32 @@ const Post = ({ post, favorited, followed }) => {
         navigate(`/posts/${post._id}`)
     }
 
-    // CALL AUTHOR PAGE
-
 
     return (
         <Card className={`${classes.post} ${classes.flex}`} raised elevation={6}>
 
-
-            {/* <CardMedia className={classes.media} src={memories} title={post.title} /> */}
-
-            <Button className={classes.media} onClick={()=> openPostDetails()}/>
+            <Button className={`${classes.flex} ${classes.postImg}`} onClick={() => openPostDetails()} >
+                <img className={`${classes.flex} ${classes.PostCodeImg}`} src={base64codeImg} />
+            </Button>
 
             <div className={`${classes.postDetails} ${classes.flex}`}>
 
                 <div className={`${classes.tags} ${classes.flex}`}>
                     <Typography variant="body2" component="h2">
-                        {post?.tags?.map((tag) => `#${tag} `)}
+                        {
+                            post?.tags?.map((tag) => `#${tag} `)
+                        }
                     </Typography>
                 </div>
 
                 <div className={`${classes.postInfo} ${classes.flex}`}>
 
-                    <div className={classes.postCreatorIcon}></div>
+                    <Avatar className={`${classes.flex} ${classes.postCreatorIcon}`} src={base64creatorImg} onClick={() => callUserPage(postCreator)} />
 
                     <div className={`${classes.postContent} ${classes.flex}`}>
                         <Typography variant="h6"> {post?.title} </Typography>
 
-                        <Typography className={classes.postCreator} variant="h6" onClick={() => callUserPage()}> {post.name} </Typography>
+                        <Typography className={classes.postCreator} variant="h6" onClick={() => callUserPage(postCreator)}> {post.name} </Typography>
                     </div>
 
 
@@ -227,9 +264,11 @@ const Post = ({ post, favorited, followed }) => {
                 {/* SE NAO FOR A PESSOA QUE CRIOU O POST, ENTAO NAO PODERA VER O BOTAO */}
                 {(user?.result?.googleId || user?.result?._id) === post?.creator && (
 
-                    <Button className={classes.deleteBtn} size="small" onClick={() => dispatch(deletePost(post._id))}>
-                        <DeleteIcon style={{ color: "white" }} fontSize='small' />
-                    </Button>
+                    <EditPostMenu id={post._id} />
+
+                    // <Button className={classes.deleteBtn} size="small" onClick={() => dispatch(deletePost(post._id))}>
+                    //     <DeleteIcon style={{ color: "white" }} fontSize='small' />
+                    // </Button>
 
                 )}
 

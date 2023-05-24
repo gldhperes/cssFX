@@ -1,14 +1,14 @@
 import React from "react"
 import { CircularProgress } from '@material-ui/core'
 import { useSelector } from "react-redux";
-
 import Post from "./Post/Post";
 
-import { FAVORITES, MOST_LIKEDS } from "../../constants/pagesTypes";
+import useStyle from './styles'
+import { FAVORITES, POSTS, LIKEDS } from "../../constants/pagesTypes";
 
 const Posts = ({ posts, favPosts, followed, category, setCurrentId }) => {
     const user = JSON.parse(localStorage.getItem('profile'))
-
+    const classes = useStyle()
     const { isLoading } = useSelector((state) => state.posts)
 
     console.log(category);
@@ -46,7 +46,7 @@ const Posts = ({ posts, favPosts, followed, category, setCurrentId }) => {
                         />
                     </>
                 )
-            case MOST_LIKEDS:
+            case POSTS:
                 // console.log(MOST_LIKEDS);
                 return (
                     <>
@@ -55,6 +55,16 @@ const Posts = ({ posts, favPosts, followed, category, setCurrentId }) => {
                             favorited={getFavorited(post._id)}
                             setCurrentId={setCurrentId}
                             followed={followed}
+                        />
+                    </>
+                )
+
+            case LIKEDS:
+                // console.log(MOST_LIKEDS);
+                return (
+                    <>
+                        <Post
+                            post={post}
                         />
                     </>
                 )
@@ -73,7 +83,7 @@ const Posts = ({ posts, favPosts, followed, category, setCurrentId }) => {
 
 
         isLoading ? <CircularProgress /> : (
-            <>
+            <div className={`${classes.flex} ${classes.postsContainer}`} >
                 {
                     (posts) ? (
 
@@ -88,7 +98,7 @@ const Posts = ({ posts, favPosts, followed, category, setCurrentId }) => {
                         "No posts"
                     )
                 }
-            </>
+            </div>
         )
     )
 }

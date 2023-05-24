@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Home from "./components/Home/Home";
 import Auth from "./components/Auth/Auth";
 import PostDetails from "./components/PostDetails/PostDetails";
-import { auth, mostLikeds, myPosts, favorites, following } from './constants/routes'
+import { auth, recentPosts, createPost, updatePost, favorites, following, profile, likeds } from './constants/routes'
 
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from './colorTheme';
@@ -20,14 +20,17 @@ const App = () => {
 
                     <Routes>
                         <Route path="/" exact element={<Navigate to='/posts' />} />
-                        <Route path={mostLikeds} exact element={<Home />} />
+                        <Route path={recentPosts} exact element={<Home />} />
 
-                        <Route path={`${mostLikeds}/search`} exact element={<Home />} />
-                        <Route path={`${mostLikeds}/:id`} element={<PostDetails />} />
+                        <Route path={`${recentPosts}/search`} exact element={<Home />} />
+                        <Route path={`${recentPosts}/:id`} element={<PostDetails />} />
 
                         <Route path={favorites} exact element={<Home />} />
                         <Route path={following} exact element={<Home />} />
-                        <Route path={myPosts} exact element={<Home />} />
+                        <Route path={likeds} exact element={<Home />} />
+                        <Route path={createPost} exact element={<Home />} />
+                        <Route path={updatePost} exact element={<Home />} />
+                        <Route path={profile} exact element={<Home />} />
 
                         <Route path={auth} exact element={!user ? <Auth /> : <Navigate to="/" />} />
                     </Routes>

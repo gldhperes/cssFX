@@ -2,6 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const postCreatorDim = "50px";
 const contentPadding = '5px auto';
+
 export default makeStyles({
   flex: {
     display: 'flex',
@@ -23,12 +24,27 @@ export default makeStyles({
   },
 
 
-  media: {
+  postImg: 
+  {
     width: '100%',
     height: '180px',
+
+    padding: 0,
+
+    overflow: 'hidden',
+
     backgroundColor: '#650065',
     backgroundBlendMode: 'darken',
   },
+
+  PostCodeImg:
+  {
+    height: '180px',
+
+    backgroundSize: 'contain',
+    backgroundPosition: "center",
+  },
+ 
 
   // POST DETAILS ============================
   postDetails: {
@@ -60,6 +76,7 @@ export default makeStyles({
   },
 
   postCreatorIcon: {
+    cursor: 'pointer',
     width: postCreatorDim,
     height: postCreatorDim,
     borderRadius: '8px',
@@ -91,8 +108,33 @@ export default makeStyles({
   },
  
   deleteBtn: {
-    marginLeft: '50px',
+    marginRight: '0px',
     color: "white",
   },
+
+  // USER POST MENU ========================
+  navMenu: 
+  {
+    "&.MuiPaper-root": {
+      top: '415px !important',
+
+      color: 'white',
+      backgroundColor: 'black',
+      border: '1px solid white',
+    },
+
+    
+    
+  },
+  
+  navMenuItem:
+  {
+    "&.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root:hover": {
+      
+      color: '#990099',
+      
+    },
+
+  }
 
 });

@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
+const dimCreatorIcon = '80px'
 export default makeStyles((theme) => ({
 
   flex: {
@@ -14,15 +15,31 @@ export default makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
   },
+
   smMargin: {
     margin: theme.spacing(1),
   },
+
   actionDiv: {
     textAlign: 'center',
   },
 
+  // POSTS ================
+  postsContainer: {
+    width: '100%',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    gap: '25px',
+  },
 
-  // FOLLOWING ===================
+
+  // FOLLOWING ===================  
+  CreatorCardContent: {
+    width: '100%',
+    justifyContent: 'flex-start',
+    gap: '20px',
+  },
+
   CreatorCard: {
     cursor: "pointer",
 
@@ -30,25 +47,35 @@ export default makeStyles((theme) => ({
     height: "200px",
 
     flexFlow: 'column',
+    gap: '10px',
 
     borderRadius: "20px",
-    background: "#656565",
+
+    background: "#650065",
+    color: 'white',
 
   },
 
-  CreatorIcon:{
-    // width: '50px',
-    // height: '50px',
+  CreatorIcon: {
+    width: dimCreatorIcon,
+    height: dimCreatorIcon,
 
-    padding: '20px',
+    // padding: 0,
 
     borderRadius: "50%",
 
     color: 'white',
     background: "black",
+    backgroundSize: '100% 100%',
+    backgroundPosition: 'center',
   },
 
-  CreatorName:{
+  CreatorPhoto: {
+    width: '100%',
+    height: '100%',
+  },
+
+  CreatorName: {
     color: 'white',
   },
 

@@ -1,6 +1,7 @@
-export const MOST_LIKEDS = 'Most Likeds'
+export const POSTS = 'Posts'
 export const FAVORITES = 'Favorites'
-export const USER_POSTS = 'My Posts'
+export const LIKEDS = 'Likeds'
+export const CREATE_A_POST = 'Create a Post'
 export const FOLLOWING = 'Following'
 
 export const PROFILE = 'Profile'

@@ -2,8 +2,8 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import {Paper, Button } from '@material-ui/core';
 
-import { FAVORITES, FOLLOWING, MOST_LIKEDS } from '../../constants/pagesTypes.js'
-import { favorites, mostLikeds, following } from '../../constants/routes.js';
+import { FAVORITES, FOLLOWING, LIKEDS, POSTS } from '../../constants/pagesTypes.js'
+import { favorites, recentPosts, likeds, following } from '../../constants/routes.js';
 
 
 import useStyle from './styles'
@@ -12,13 +12,13 @@ const CategorySection = ({ user }) => {
     const classes = useStyle()
     const navigate = useNavigate()
 
-    const categorys = [MOST_LIKEDS, FAVORITES, FOLLOWING ];
+    const categorys = [POSTS, FAVORITES, LIKEDS, FOLLOWING ];
 
     const handlers = {
 
-        "Most Likeds": () => {
-            console.log('MostLikeds clicked');
-            navigate(mostLikeds)
+        "Posts": () => {
+            // console.log('Posts clicked');
+            navigate(recentPosts)
         },
         
         Favorites: () => {
@@ -30,6 +30,18 @@ const CategorySection = ({ user }) => {
 
             navigate(favorites)
         },
+
+        Likeds: () => {
+            if( !user ){
+                // PAGINA DIZENDO PARA CRIAR UMA CONTA E TER ACESSO
+                console.log("Cria uma conta");
+                return
+            }
+
+            navigate(likeds)
+        },
+
+
 
         Following: () => {
             if( !user ){

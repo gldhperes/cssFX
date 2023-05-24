@@ -1,33 +1,46 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
-import { Button, IconButton, Paper, Typography } from '@material-ui/core'
+import { Avatar, Typography } from '@material-ui/core'
+
+import { profile } from '../../constants/routes'
+import { getUserProfile } from '../../actions/user'
 
 import useStyles from "./styles"
 
 const Following = () => {
     const classes = useStyles()
+    const dispatch = useDispatch();
     const following = useSelector((state) => state.user.following)
+    const navigate = useNavigate()
 
     console.log(`FOLLOWING: ${following}`);
 
-    const FollowingUsers = ({ creator }) => {
+    function callUserProfile(creatorId) {
+        dispatch(getUserProfile(creatorId))
+        navigate(profile);
+    }
+
+    const FollowingUsers = ({ creatorName, creatorId, creatorPhoto }) => {
+
+        const base64creatorPhoto = 'data:image/png;base64,' + creatorPhoto
+
         return (
-            <Paper className={`${classes.flex} ${classes.CreatorCard}`} elevation={6} onClick={ () => { console.log("CALL AUTHOR PAGE"); } }>
+            <div className={`${classes.flex} ${classes.CreatorCard}`} onClick={() => { callUserProfile(creatorId) }}>
 
-                <div className={classes.CreatorIcon}>
-                    <Typography variant="h6"> {creator.charAt(0)} </Typography>
-                </div>
+                <Avatar className={`${classes.flex} ${classes.CreatorIcon}`} src={base64creatorPhoto}>
+                    {/* {user.result.name.charAt(0)} */}
+                    {/* <img className={classes.CreatorPhoto} src={base64creatorPhoto} alt="Imagem" /> */}
+                </Avatar>
 
-
-                <Typography className={`${classes.flex} ${classes.CreatorName}`} variant="h6"> {creator} </Typography>
+                <Typography className={`${classes.flex} ${classes.CreatorName}`} variant="h6"> {creatorName} </Typography>
 
                 {/* <IconButton style={{ color: "white" }} size="small">
 
-                    
                 </IconButton> */}
 
-            </Paper>
+            </div>
         )
 
     }
@@ -36,20 +49,20 @@ const Following = () => {
         <>
             {
                 following && (
-                    <>
+                    <div className={`${classes.flex} ${classes.CreatorCardContent}`}>
                         {
                             (following) ? (
-                                
+
                                 following.map((creator) => (
-                                    <>
-                                        <FollowingUsers key={creator} creator={creator} />
-                                    </>
+                                    <div key={creator['id']} >
+                                        <FollowingUsers creatorName={creator['name']} creatorId={creator['id']} creatorPhoto={creator['photo']} />
+                                    </div>
                                 ))
                             ) : (
                                 "You are not following anyone"
                             )
                         }
-                    </>
+                    </div>
                 )
             }
         </>

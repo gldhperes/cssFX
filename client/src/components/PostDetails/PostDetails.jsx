@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Paper, Typography, CircularProgress, Divider } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux'
 // import moment from 'moment' // biblioteca JS que lida com o tempo
@@ -7,17 +7,49 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { getPost, getPostsBySearch } from '../../actions/posts'
 import useStyles from './styles.js'
 import CodeEditors from './CodeEditors'
+import { profile } from '../../constants/routes'
+import { getUserProfile } from '../../actions/user'
 
 const PostDetails = () => {
   const { post, posts, isLoading } = useSelector((state) => state.posts)
+  const [htmlCode, setHtmlCode] = useState(null)
+  const [cssCode, setCssCode] = useState(null)
+
+
+  const [codeExemple, setCodeExemple] = useState(null)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { id } = useParams()
 
   const classes = useStyles()
-  const htmlCode = post?.htmlCode
 
-  // console.log(typeof(htmlCode));
+  function HTMLRenderer({ html }) {
+    return <div id="htmlRenderer" dangerouslySetInnerHTML={{ __html: html }} />;
+  }
+
+  function CSSRenderer({ css }) {
+    useEffect(() => {
+      const styleElement = document.createElement("style");
+      styleElement.innerText = css;
+      const htmlRenderer = document.getElementById("htmlRenderer")
+
+      htmlRenderer.appendChild(styleElement);
+      return () => {
+        htmlRenderer.removeChild(styleElement);
+      };
+    }, [css]);
+
+    return null;
+  }
+
+  useEffect(() => {
+    if (htmlCode !== null && cssCode !== null && codeExemple === null) {
+      console.log(cssCode);
+      // console.log(typeof (htmlCode));
+      setCodeExemple(htmlCode)
+    }
+  }, [htmlCode, cssCode, codeExemple]);
+
 
   useEffect(() => {
     dispatch(getPost(id))
@@ -26,8 +58,10 @@ const PostDetails = () => {
   useEffect(() => {
     if (post) {
       dispatch(getPostsBySearch({ search: 'none', tags: post?.tags.join(',') }))
+      setHtmlCode(post?.htmlCode)
+      setCssCode(post?.cssCode)
     }
-  }, [post, dispatch])
+  }, [post, dispatch, htmlCode, cssCode])
 
   if (!post) return null
 
@@ -35,6 +69,7 @@ const PostDetails = () => {
     return (
       <Paper elevation={6} className={classes.loadingPaper}>
         <CircularProgress size='7em' />
+
       </Paper>
     )
   }
@@ -46,46 +81,54 @@ const PostDetails = () => {
     navigate(`/posts/${_id}`)
   }
 
-  function codeExemple() {
-    const elemento = document.getElementById("codeExemplo");
-    console.log(elemento);
-    elemento.appendChild(htmlCode);
-
+  function callAuthorPage(creatorId) {
+    dispatch(getUserProfile(creatorId))
+    navigate(profile)
   }
 
   return (
-
-    <Paper style={{ padding: '20px' }} elevation={6}>
+    <Paper style={{ color: 'white', backgroundColor: '#470047', padding: '20px' }} elevation={6}>
       <div className={`${classes.card} ${classes.flex}`}>
         <div className={classes.section}>
           <Typography variant="h3" component="h2">{post.title}</Typography>
-          <Typography gutterBottom variant="h6" color="textSecondary" component="h2">{post.tags.map((tag) => `#${tag} `)}</Typography>
+          <Typography gutterBottom variant="h6" component="h2">{post.tags.map((tag) => `#${tag}, `)}</Typography>
           <Typography gutterBottom variant="body1" component="p">{post.message}</Typography>
-          <Typography variant="h6">Created by: {post.name}</Typography>
+          <Typography style={{ width: 'auto', cursor: 'pointer' }} variant="h6" component="h2" onClick={() => callAuthorPage(post?.creator)}>Created by: {post.name}</Typography>
 
-          <Divider style={{ margin: '20px 0' }} />
+          {/* COLOCAR BOTOES DE FOLLOW, LIKE, FAVORITE */}
         </div>
+        
+        <Divider style={{ width: '100%', backgroundColor: 'white', margin: '20px 0' }} />
 
         <CodeEditors post={post} />
 
-        <div id="codeExemplo" className={classes.imageSection}>
-          <Divider style={{ margin: '20px 0' }} />
-          {/* <img className={classes.media} src={post.selectedFile || 'https://user-images.githubusercontent.com/194400/49531010-48dad180-f8b1-11e8-8d89-1e61320e1d82.png'} alt={post.title} /> */}
-          {/* {htmlCode } */}
+        <Divider style={{ width: '100%', backgroundColor: 'white', margin: '20px 0' }} />
 
+        <div id="codeExemple" className={`${classes.codeExemple} ${classes.flex}`} >
+
+
+          {(codeExemple !== null && cssCode !== null) &&
+            <>
+              <HTMLRenderer html={codeExemple} />
+              <CSSRenderer css={cssCode} />
+            </>
+          }
         </div>
 
-       
+
+
       </div>
 
       {recommendedPosts.length && (
         <div className={classes.section}>
           <Typography gutterBottom variant='h5'> You might also like:</Typography>
-          <Divider />
-          <div className={classes.recommendedPosts}>
+
+          <Divider style={{ backgroundColor: 'white', margin: '20px 0' }} />
+
+          <div className={`${classes.recommendedPosts} ${classes.flex}`}>
             {recommendedPosts.map(({ title, message, name, likes, _id }) => (
               // KEY serve para
-              <div style={{ margin: '20px', cursor: 'pointer' }} onClick={() => openPost(_id)} key={_id}>
+              <div className={`${classes.recommendedPostsCard} ${classes.flex}`} onClick={() => openPost(_id)} key={_id}>
                 <Typography gutterBottom variant="h6"> {title} </Typography>
                 <Typography gutterBottom variant="subtitle2"> {name} </Typography>
                 <Typography gutterBottom variant="subtitle2"> {message} </Typography>

@@ -61,7 +61,7 @@ const SearchSection = ({ searchQuery, page }) => {
                             ),
                         }}
 
-                        inputProps={"primary"}
+                        inputProps={theme.primary}
 
                         type="search"
                         value={search}
@@ -77,7 +77,7 @@ const SearchSection = ({ searchQuery, page }) => {
 
 
                     <ChipInput
-                        color="primary"
+                        color={theme.primary}
                         defaultValue={[]}
                         value={tags}
                         onAdd={handleAdd}
@@ -97,7 +97,7 @@ const SearchSection = ({ searchQuery, page }) => {
                 {/* SE NAO TIVERMOS UMA PESQUISA OU TAG ENTAO RENDERIZA A PAGINAÇÃO */}
                 {(!searchQuery && !tags.length) && (
 
-                    <Paper className={classes.pagination} elevation={6}>
+                    <Paper className={classes.pagination} elevation={4}>
 
                         <Pagination page={page} />
 

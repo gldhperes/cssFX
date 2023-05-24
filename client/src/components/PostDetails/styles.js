@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const monokaiBackgroundColor = 'rgb(46, 46, 46)' 
+const monokaiBackgroundColor = 'rgb(46, 46, 46)'
 const editorRadius = '5px'
 
 export default makeStyles((theme) => ({
@@ -22,27 +22,43 @@ export default makeStyles((theme) => ({
   card: {
     width: '100%',
     flexFlow: 'column',
+    alignItems: 'flex-start',
   },
 
   section: {
-    width: '100%',
+    width: 'auto',
     borderRadius: '20px',
     margin: '10px',
-   
   },
 
-  imageSection: {
+  codeExemple: {
     width: '100%',
+    height: '400px',
+    margin: '20px 0',
+
+    backgroundColor: 'white',
+    border: '1px solid white',
+    borderRadius: '8px',
   },
 
   recommendedPosts: {
-    display: 'flex',
-   
+    padding: '8px',
+    justifyContent: 'flex-start',
+    gap: '10px',
+  },
+
+  recommendedPostsCard: {
+    padding: '10px',
+    flexFlow: 'column',
+    cursor: 'pointer',
+    border: '1px solid white',
+    borderRadius: '8px',
+
   },
 
   loadingPaper: {
-    padding: '20px', 
-    borderRadius: '15px', 
+    padding: '20px',
+    borderRadius: '15px',
   },
 
   codeContainer:
@@ -60,9 +76,16 @@ export default makeStyles((theme) => ({
 
   },
 
+  editorTabs:
+  {
+    width: '100%',
+    justifyContent: 'space-between',
+    margin: '0',
+  },
+  
   editorName:
   {
-    fontSize:'14px',
+    fontSize: '14px',
     padding: '5px 15px',
     color: 'white',
     backgroundColor: monokaiBackgroundColor,
@@ -71,6 +94,14 @@ export default makeStyles((theme) => ({
     borderTopRightRadius: editorRadius,
   },
   
- 
+  copyTab:{
+    cursor: 'pointer',
+    padding: '5px 5px',
+
+    flexFlow : 'row',
+    gap: '8px',
+  },
+
+
 
 }));

@@ -5,6 +5,8 @@ import mongoose from 'mongoose';
 import User from '../models/user.js'
 import PostMessage from '../models/postMessage.js'
 
+const expireTokenTime = '12h'
+
 export const signin = async (req, res) => {
     const { email, password } = req.body
 
@@ -14,7 +16,7 @@ export const signin = async (req, res) => {
 
         if (!existingUser || !isPasswordCorrect) return res.status(404).json({ message: "Invalid user or password." })
 
-        const token = jwt.sign({ email: existingUser.email, id: existingUser._id }, 'Teste', { expiresIn: '1h' })
+        const token = jwt.sign({ email: existingUser.email, id: existingUser._id }, 'Teste', { expiresIn: expireTokenTime })
 
         res.status(200).json({ result: existingUser, token })
 
@@ -38,7 +40,7 @@ export const signup = async (req, res) => {
 
         const result = await User.create({ email, password: hashedPassword, name: `${firstName} ${lastName}` })
 
-        const token = jwt.sign({ email: result.email, id: result._id }, 'Teste', { expiresIn: '1h' })
+        const token = jwt.sign({ email: result.email, id: result._id }, 'Teste', { expiresIn: expireTokenTime })
 
         res.status(200).json({ result: result, token })
 
@@ -63,7 +65,7 @@ export const googleSignIn = async (req, res) => {
 
             const result = await User.create({ email: email, password: hashedPassword, name: `${profileObj.givenName} ${profileObj.familyName}` })
 
-            const token = jwt.sign({ email: result.email, id: result._id }, 'Teste', { expiresIn: '1h' })
+            const token = jwt.sign({ email: result.email, id: result._id }, 'Teste', { expiresIn: expireTokenTime })
 
             res.status(200).json({ result: result, token })
         } else {
@@ -82,7 +84,7 @@ export const googleSignIn = async (req, res) => {
             }
 
 
-            const token = jwt.sign({ email: existingUser.email, id: existingUser._id }, 'Teste', { expiresIn: '1h' })
+            const token = jwt.sign({ email: existingUser.email, id: existingUser._id }, 'Teste', { expiresIn: expireTokenTime })
 
             res.status(200).json({ result: existingUser, token })
         }
@@ -218,36 +220,101 @@ export const following = async (req, res) => {
         // const user = await User.findById(userId)
         const user = await User.findById(userId)
         const userFollowing = user.following.toString().split(',')
-        const userNames = []
+        console.log(`User Following: ${userFollowing}`);
+        let followingUsers = []
 
-        for (let i = 0; i < userFollowing.length; i++) {
-            const element = await User.findById (userFollowing[i] )
-            console.log(element.name);
+        if (userFollowing) {
 
-            userNames.push( element.name )
+            for (let i = 0; i < userFollowing.length; i++) {
+                // const element = await User.findById(userFollowing[i])
+                // console.log(element.name);
+
+                // followingUsers.push(element.name)
+
+                console.log(userFollowing[i]);
+                const followingUserId = userFollowing[i];
+
+
+                const followingUser = await User.findById(followingUserId);
+
+                console.log(`Following User: ${followingUser.name}`);
+
+                followingUsers.push({
+                    name: followingUser.name,
+                    id: followingUser._id,
+                    photo: followingUser.photo
+                });
+            }
         }
 
-        // console.log( userNames );
+        // console.log( followingUsers );
 
 
-        res.status(200).json({ userNames: userNames });
+        res.status(200).json({ followingUsers: followingUsers });
     } catch (error) {
+        console.log(error);
         console.log(error.message);
     }
 }
 
 export const getUserProfile = async (req, res) => {
     const userId = req.params.userId
-    
-    console.log(`userId: ${userId}`);
+
+    // console.log(`userId: ${userId}`);
     try {
 
         const user = await User.findById(userId)
+        const userPosts = await PostMessage.find({ creator: userId.toString() })
+        const userPostsCount = userPosts.length
 
-        res.status(200).json({ user: user});
+        const user_id = user._id
+        const userName = user.name
+        const userPhoto = user.photo
+        const following = user.following
+        const followingCount = user.following.length
+
+        // PEGAR A FOTO DE PERFIL
+
+        const userProfile = { user_id: user_id, userName: userName, userPhoto: userPhoto, following: following, followingCount: followingCount, userPosts: userPosts, userPostsCount: userPostsCount }
+        // console.log(userProfile);
+        // console.log(userPosts);
+        // console.log(user.name+"|||"+user.following);
+
+        res.status(200).json({ user: userProfile });
     } catch (error) {
         console.log(error.message);
     }
 }
 
+export const getLikedsPosts = async (req, res) => {
+    const userId = req.params.userId
 
+    try {
+        console.log(`userId: ${userId}`);
+        const user = await User.findById(userId)
+
+        const postsLikeds = user.likedPosts
+        let userLikedPosts = []
+
+        // console.log(user);
+        // console.log(`postsLikeds: ${postsLikeds}`);
+        if (postsLikeds)
+        {
+            for (let i = 0; i < postsLikeds.length; i++) {
+                const post =await PostMessage.findById(postsLikeds[i])
+                console.log(post);
+                userLikedPosts.push(
+                    post
+                );
+            }
+
+        }
+
+        // console.log(`userLikedPosts: ${userLikedPosts}`);
+        // console.log(user.name+"|||"+user.following);
+
+        res.status(200).json({ userLikedPosts: userLikedPosts });
+    } catch (error) {
+        console.log(error.message);
+    }
+}

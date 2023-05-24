@@ -18,15 +18,12 @@ export default makeStyles((theme) => ({
     alignItems: 'flex-start',
   },
 
-  // POSTS ================
-  postsContainer: {
-    gap: '25px',
-  },
+
 
   // PAGINATION ============
 
   pagination: {
-    borderRadius: 4,
+    borderRadius: '4px',
 
     padding: '16px',
   },
@@ -53,6 +50,11 @@ export default makeStyles((theme) => ({
 
   searchArea: {
     gap: "8px",
+
+    "&.WAMuiChipInput-label-85.WAMuiChipInput-outlined-81.WAMuiChipInput-label-85:not(.WAMuiChipInput-labelShrink-86)":
+    {
+      color: 'white !important',
+    },
   },
 
   textField: {

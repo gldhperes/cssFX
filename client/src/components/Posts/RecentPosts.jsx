@@ -4,10 +4,10 @@ import { useSelector } from "react-redux";
 
 import Posts from "./Posts";
 
-import { MOST_LIKEDS } from "../../constants/pagesTypes";
+import { POSTS } from "../../constants/pagesTypes";
 
 
-const MostLikeds = ( ) => {
+const RecentPosts = ( ) => {
 
     const favoritedPosts = useSelector((state) => state.user.favoritedPosts);
     const { posts } = useSelector((state) => state.posts)
@@ -17,7 +17,7 @@ const MostLikeds = ( ) => {
         <>
             {
                 (posts || favoritedPosts) && (
-                    <Posts posts={posts} favPosts={favoritedPosts} category={MOST_LIKEDS}  />
+                    <Posts posts={posts} favPosts={favoritedPosts} category={POSTS}  />
                 )
             }
 
@@ -25,4 +25,4 @@ const MostLikeds = ( ) => {
     )
 }
 
-export default MostLikeds;
+export default RecentPosts;
