@@ -11,6 +11,7 @@ import { profile } from '../../constants/routes'
 import { getUserProfile } from '../../actions/user'
 
 const PostDetails = () => {
+  
   const { post, posts, isLoading } = useSelector((state) => state.posts)
   const [htmlCode, setHtmlCode] = useState(null)
   const [cssCode, setCssCode] = useState(null)
@@ -78,6 +79,7 @@ const PostDetails = () => {
   const recommendedPosts = posts.filter(({ _id }) => _id !== post._id)
 
   const openPost = (_id) => {
+    dispatch(getPost(_id))
     navigate(`/posts/${_id}`)
   }
 

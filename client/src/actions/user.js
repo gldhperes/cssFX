@@ -1,4 +1,4 @@
-import { FOLLOWING, GET_FOLLOWING, GET_USER_LIKED_POSTS, GET_FAVORITE, GET_USER_POSTS, GET_USER_PROFILE } from '../constants/actionTypes';
+import { START_LOADING, END_LOADING, FOLLOWING, GET_FOLLOWING, FETCH_USERS_BY_SEARCH, GET_USER_LIKED_POSTS, GET_FAVORITE, GET_USER_POSTS, GET_USER_PROFILE } from '../constants/actionTypes';
 import * as api from '../api'
 
 export const getFavoritePosts = (userId) => async (dispatch) => {
@@ -72,4 +72,18 @@ export const getUserProfile = (userId) => async (dispatch) => {
         console.log('GetUserProfile Error: ', error);
     }
 }
-// export default getFavoritePosts
+
+export const getUsersBySearch = (searchQuery) => async(dispatch) => {
+
+    try {
+        dispatch({ type: START_LOADING })
+        const { data: { data } } = await api.fetchUsersBySearch(searchQuery) 
+
+        dispatch( { type: FETCH_USERS_BY_SEARCH, payload: data } ) ;
+
+        dispatch({ type: END_LOADING })
+        console.log( "users found: ", data );  
+    } catch (error) {
+        console.log( error );       
+    }
+}

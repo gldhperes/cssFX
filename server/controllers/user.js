@@ -8,9 +8,10 @@ import PostMessage from '../models/postMessage.js'
 const expireTokenTime = '12h'
 
 export const signin = async (req, res) => {
-    const { email, password } = req.body
 
     try {
+        const { email, password } = req.body
+
         const existingUser = await User.findOne({ email })
         const isPasswordCorrect = await bcrypt.compare(password, existingUser.password)
 
@@ -26,9 +27,10 @@ export const signin = async (req, res) => {
 }
 
 export const signup = async (req, res) => {
-    const { email, password, confirmPassword, firstName, lastName } = req.body
 
     try {
+        const { email, password, confirmPassword, firstName, lastName } = req.body
+
         const existingUser = await User.findOne({ email })
         // const isPasswordCorrect = await bcrypt.compare( password, existingUser.password )
 
@@ -50,12 +52,14 @@ export const signup = async (req, res) => {
 }
 
 export const googleSignIn = async (req, res) => {
-    const profileObj = req.body
-    const email = profileObj.email
-
-    // console.log(`profileObj: ${ JSON.stringify(profileObj)}`);
 
     try {
+        const profileObj = req.body
+        const email = profileObj.email
+
+        // console.log(`profileObj: ${ JSON.stringify(profileObj)}`);
+
+
         const existingUser = await User.findOne({ email })
 
         // SE NAO EXISTIR, ENTAO CRIA
@@ -96,18 +100,20 @@ export const googleSignIn = async (req, res) => {
 }
 
 export const favoritePost = async (req, res) => {
-    const userId = req.params.userId
-    const postId = req.body.postId
-
-    // console.log(`userId: ${userId}`);
-    // console.log(`postId: ${postId}`);
-    // console.log(typeof(postId));
-
-    if (!userId) return res.json({ message: 'Unauthenticated' })
-
-    if (!mongoose.Types.ObjectId.isValid(postId)) return res.status(404).send('No post with that id')
 
     try {
+        const userId = req.params.userId
+        const postId = req.body.postId
+
+        // console.log(`userId: ${userId}`);
+        // console.log(`postId: ${postId}`);
+        // console.log(typeof(postId));
+
+        if (!userId) return res.json({ message: 'Unauthenticated' })
+
+        if (!mongoose.Types.ObjectId.isValid(postId)) return res.status(404).send('No post with that id')
+
+
         const user = await User.findById(userId);
         // console.log(`user: ${user}`);
 
@@ -138,11 +144,12 @@ export const favoritePost = async (req, res) => {
 }
 
 export const getFavoritePosts = async (req, res) => {
-    const userId = req.params.userId
-    // console.log(`userId: ${userId}`);
-    if (!userId) return res.json({ message: 'Unauthenticated' })
 
     try {
+        const userId = req.params.userId
+        // console.log(`userId: ${userId}`);
+        if (!userId) return res.json({ message: 'Unauthenticated' })
+
         const user = await User.findById(userId);
 
         const posts = user.favoritedPosts
@@ -164,11 +171,12 @@ export const getFavoritePosts = async (req, res) => {
 }
 
 export const getUserPosts = async (req, res) => {
-    const userId = req.params.userId
-    // console.log(`userId: ${userId}`);
-    if (!userId) return res.json({ message: 'Unauthenticated' })
 
     try {
+        const userId = req.params.userId
+        // console.log(`userId: ${userId}`);
+        if (!userId) return res.json({ message: 'Unauthenticated' })
+
         const user = await User.findById(userId);
 
         const posts = await PostMessage.find({ creator: userId.toString() })
@@ -183,15 +191,17 @@ export const getUserPosts = async (req, res) => {
 }
 
 export const follow = async (req, res) => {
-    const userId = req.body.userId
-    const postCreator = req.body.postCreator
-
-    // console.log(`${userId} | ${postCreator}`);
-
-    // Se sao iguais entao esta seguindo vc mesmo
-    if (userId == postCreator) return
 
     try {
+        const userId = req.body.userId
+        const postCreator = req.body.postCreator
+
+        // console.log(`${userId} | ${postCreator}`);
+
+        // Se sao iguais entao esta seguindo vc mesmo
+        if (userId == postCreator) return
+
+
         const user = await User.findById(userId);
 
         let updatedFollowing = null
@@ -214,14 +224,17 @@ export const follow = async (req, res) => {
 }
 
 export const following = async (req, res) => {
-    const userId = req.params.userId
-    console.log(`userId: ${userId}`);
+
     try {
+        const userId = req.params.userId
+        console.log(`userId: ${userId}`);
+
         // const user = await User.findById(userId)
         const user = await User.findById(userId)
         const userFollowing = user.following.toString().split(',')
         console.log(`User Following: ${userFollowing}`);
         let followingUsers = []
+
 
         if (userFollowing) {
 
@@ -233,7 +246,6 @@ export const following = async (req, res) => {
 
                 console.log(userFollowing[i]);
                 const followingUserId = userFollowing[i];
-
 
                 const followingUser = await User.findById(followingUserId);
 
@@ -247,7 +259,7 @@ export const following = async (req, res) => {
             }
         }
 
-        // console.log( followingUsers );
+        console.log(followingUsers);
 
 
         res.status(200).json({ followingUsers: followingUsers });
@@ -258,10 +270,10 @@ export const following = async (req, res) => {
 }
 
 export const getUserProfile = async (req, res) => {
-    const userId = req.params.userId
 
     // console.log(`userId: ${userId}`);
     try {
+        const userId = req.params.userId
 
         const user = await User.findById(userId)
         const userPosts = await PostMessage.find({ creator: userId.toString() })
@@ -275,7 +287,15 @@ export const getUserProfile = async (req, res) => {
 
         // PEGAR A FOTO DE PERFIL
 
-        const userProfile = { user_id: user_id, userName: userName, userPhoto: userPhoto, following: following, followingCount: followingCount, userPosts: userPosts, userPostsCount: userPostsCount }
+        const userProfile = {
+            user_id: user_id,
+            userName: userName,
+            userPhoto: userPhoto,
+            following: following,
+            followingCount: followingCount,
+            userPosts: userPosts,
+            userPostsCount: userPostsCount
+        }
         // console.log(userProfile);
         // console.log(userPosts);
         // console.log(user.name+"|||"+user.following);
@@ -287,9 +307,9 @@ export const getUserProfile = async (req, res) => {
 }
 
 export const getLikedsPosts = async (req, res) => {
-    const userId = req.params.userId
 
     try {
+        const userId = req.params.userId
         console.log(`userId: ${userId}`);
         const user = await User.findById(userId)
 
@@ -298,11 +318,13 @@ export const getLikedsPosts = async (req, res) => {
 
         // console.log(user);
         // console.log(`postsLikeds: ${postsLikeds}`);
-        if (postsLikeds)
-        {
+        if (postsLikeds) {
             for (let i = 0; i < postsLikeds.length; i++) {
-                const post =await PostMessage.findById(postsLikeds[i])
+
+                const post = await PostMessage.findById(postsLikeds[i])
+
                 console.log(post);
+
                 userLikedPosts.push(
                     post
                 );
@@ -317,4 +339,67 @@ export const getLikedsPosts = async (req, res) => {
     } catch (error) {
         console.log(error.message);
     }
+}
+
+export const getUsersBySearch = async (req, res) => {
+
+
+    try {
+        const query = req.query.searchQuery
+
+        console.log(query);
+        // REGEXP = Regular Expression
+        // const title = new RegExp(searchQuery, 'i') // 'i' -> ignore case sensivite, ou seja, TEST = Test = test ( tudo vai ser 'test' )
+
+        // Procura em todos os usuarios o query 
+        // $or = ou acha o title ou acha tags
+        // $in = todas as tags que estao no array de tags
+        const _users = await User.find({ name: { $regex: query, $options: 'i' } });
+
+        const users = []
+
+        _users?.forEach(user => {
+
+            users.push({
+                name: user.name,
+                id: user._id,
+                photo: user.photo
+            });
+
+        });
+
+        console.log(users);
+
+        res.json({ data: users })
+    } catch (error) {
+        res.status(404).json({ message: error.message })
+    }
+
+
+}
+
+const getUserProfileInfos = (user) => {
+
+    // const user = await User.findById(userId)
+    // const userPosts = await PostMessage.find({ creator: userId.toString() })
+    // const userPostsCount = userPosts.length
+
+    // const user_id = user._id
+    // const userName = user.name
+    // const userPhoto = user.photo
+    // const followingCount = user.following.length
+
+    // followingUsers.push({
+    //         name: user.name,
+    //         id: user._id,
+    //         photo: user.photo
+    //     });
+
+    const userProfileInfos = {
+        id: user._id,
+        name: user.name,
+        photo: userhoto,
+    }
+
+    return userProfileInfos
 }

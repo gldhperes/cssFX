@@ -2,9 +2,10 @@ import { createTheme } from '@material-ui/core/styles';
 
 const white = "#FFF"
 const grey = '#999999'
-
+const roxo = "#650065"
 
 const theme = createTheme({
+
     palette: {
         primary: {
             main: white,
@@ -20,8 +21,16 @@ const theme = createTheme({
             contrastText: grey,
         },
 
+        buttons:
+        {
+            main: roxo,
+            light: roxo,
+            dark: roxo,
+            contrastText: roxo,
+        }
 
     },
 });
 
-export default theme;
+
+export default theme ;

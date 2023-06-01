@@ -51,31 +51,25 @@ export default makeStyles((theme) => ({
   searchArea: {
     gap: "8px",
 
-    "&.WAMuiChipInput-label-85.WAMuiChipInput-outlined-81.WAMuiChipInput-label-85:not(.WAMuiChipInput-labelShrink-86)":
-    {
-      color: 'white !important',
-    },
+   
+
   },
 
   textField: {
-    "&.MuiOutlinedInput-notchedOutline-45": {
-      borderColor: "rgb(255, 255, 255)",
-    },
+    
 
-    "&.MuiOutlinedInput-root": {
-      position: 'relative',
-      borderRadius: '25px',
-    },
-
-    "&.MuiInputBase-input": {
-      color: 'white',
-      padding: "8px",
-    },
-
-    "&.MuiOutlinedInput-notchedOutline": {
-      borderColor: "inherit",
-    },
   },
+
+
+  searchButton: {
+    "&.MuiButtonBase-root":
+      {
+        color: "#650065",
+        fontWeight: '600',
+        backgroundColor: 'white',
+      },
+  },
+
 
   // categorySection
 

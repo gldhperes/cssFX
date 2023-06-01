@@ -1,6 +1,6 @@
 import { CREATE, FETCH_POST, FETCH_ALL, FETCH_BY_SEARCH, START_LOADING, END_LOADING, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
 
-export default (state = { isLoading: true, posts: [] }, action) => {
+export default (state = { isLoading: true, posts: []}, action) => {
     // const reducer = ( state = [], actions)
     // Em Redux o 'state' sempre tem q ser igual à alguma coisa
 
@@ -32,7 +32,9 @@ export default (state = { isLoading: true, posts: [] }, action) => {
                 numberOfPages: action.payload.numberOfPages,
             }
 
+
         case FETCH_BY_SEARCH:
+            console.log(`FETCH_BY_SEARCH: ${FETCH_BY_SEARCH} -> ${action.payload}`);
             return {
                 ...state,
                 posts: action.payload,
@@ -51,9 +53,18 @@ export default (state = { isLoading: true, posts: [] }, action) => {
             }
 
         case UPDATE:
+            console.log("UPDATE", action.payload);
+
             return {
                 ...state,
-                posts: state.posts.map((post) => post._id === action.payload._id ? action.payload : post)
+                posts: state.posts.map((post) =>
+                (post._id === action.payload._id) ? (
+                        console.log(post._id),
+                        action.payload
+                    ) : (
+                        post
+                    )
+                )
             }
 
         case DELETE:

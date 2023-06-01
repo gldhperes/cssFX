@@ -7,17 +7,21 @@ import Posts from "./Posts";
 import { POSTS } from "../../constants/pagesTypes";
 
 
-const RecentPosts = ( ) => {
+const RecentPosts = ({ user }) => {
 
-    const favoritedPosts = useSelector((state) => state.user.favoritedPosts);
+    const favoritedPosts = useSelector((state) =>
+       // se tiver usuario logado entao
+        user && state.user.favoritedPosts
+    );
+
     const { posts } = useSelector((state) => state.posts)
 
-    console.log( posts );
+    console.log(posts);
     return (
         <>
             {
                 (posts || favoritedPosts) && (
-                    <Posts posts={posts} favPosts={favoritedPosts} category={POSTS}  />
+                    <Posts posts={posts} favPosts={favoritedPosts} category={POSTS} />
                 )
             }
 

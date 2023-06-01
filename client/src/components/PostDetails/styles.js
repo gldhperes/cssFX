@@ -35,9 +35,9 @@ export default makeStyles((theme) => ({
     width: '100%',
     height: '400px',
     margin: '20px 0',
-
+    color: 'black',
     backgroundColor: 'white',
-    border: '1px solid white',
+    // border: '1px solid white',
     borderRadius: '8px',
   },
 

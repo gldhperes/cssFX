@@ -9,7 +9,7 @@ import { getUserProfile } from '../../actions/user'
 
 import useStyles from "./styles"
 
-const Following = () => {
+const UsersCards = () => {
     const classes = useStyles()
     const dispatch = useDispatch();
     const following = useSelector((state) => state.user.following)
@@ -70,4 +70,4 @@ const Following = () => {
     )
 }
 
-export default Following
+export default UsersCards

@@ -17,14 +17,14 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 // import moment from 'moment'
 import { useNavigate } from 'react-router-dom'
 import { getUserPosts } from "../../../api";
-import { deletePost, likePost, favoritePost } from "../../../actions/posts"
+import { deletePost, likePost, favoritePost, getPost } from "../../../actions/posts"
 import { followUser, getUserProfile } from "../../../actions/user"
 import { profile } from "../../../constants/routes";
 
 
 import useStyles from './styles'
 import EditPostMenu from "./EditPostMenu";
-import Following from "../Following";
+import Following from "../UsersCards";
 
 const Post = ({ post, favorited }) => {
     const classes = useStyles();
@@ -198,6 +198,7 @@ const Post = ({ post, favorited }) => {
     // FUNCTIONS =============================
 
     const openPostDetails = () => {
+        
         navigate(`/posts/${post._id}`)
     }
 

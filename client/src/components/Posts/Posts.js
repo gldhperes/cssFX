@@ -65,6 +65,7 @@ const Posts = ({ posts, favPosts, followed, category, setCurrentId }) => {
                     <>
                         <Post
                             post={post}
+                            favorited={getFavorited(post._id)}
                         />
                     </>
                 )

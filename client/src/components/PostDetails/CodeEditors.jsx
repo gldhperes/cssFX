@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 // ACE IMPORTS
 import AceEditor from "react-ace";
@@ -21,36 +21,45 @@ import useStyles from './styles.js'
 const CodeEditors = ({ post }) => {
 
     const classes = useStyles()
-    const htmlCode = post?.htmlCode
-    const cssCode = post?.cssCode
-    const backendCode = post?.backendCode
+    const [htmlCode, setHtmlCode] = useState((post) ? post.htmlCode : '');
+    const [cssCode, setCssCode] = useState((post) ? post.cssCode : '');
+    const [backendCode, setBackendCode] = useState((post) ? post.backendCode : '');
 
-    function onLoad(code) {
-        let codeString = ''
-        let pluginParser = ''
+    console.log("CSS CODE: ", cssCode);
 
+    const editorOptions = {
+        useWorker: false,
+        enableBasicAutocompletion: true,
+        enableLiveAutocompletion: true,
+        enableSnippets: true,
+        showLineNumbers: true,
+        tabSize: 2,
+        readOnly: true,
+        highlightActiveLine: true,
+        showGutter: true,
+        showPrintMargin: true,
+        fontSize: 14,
+    };
 
-        if (code === "html") {
-            // console.log(htmlCode);
-            codeString = htmlCode
-            pluginParser = htmlParser
+    function onLoadCode(editor) {
+
+        try {
+            const editorMode = editor.getSession().getMode().$id;
+            console.log(editorMode);
+            if (editorMode === "ace/mode/html") {
+                // log
+                editor.setValue(htmlCode);
+            }
+            else if (editorMode === "ace/mode/css") {
+                editor.setValue(cssCode)
+            }
+            else if (editorMode === "ace/mode/javascript") {
+                editor.setValue(backendCode)
+            }
+
+        } catch (error) {
+            console.log("Error no onLoad AceEditor: ", error);
         }
-        else if (code === "css") {
-            codeString = cssCode
-            pluginParser = cssParser
-        }
-        else if (code === "javascript") {
-            code = 'babel'
-            codeString = backendCode
-            pluginParser = babelParser
-        }
-
-        const formattedCodeString = prettier.format(codeString, {
-            parser: code,
-            plugins: [pluginParser],
-        });
-
-        return formattedCodeString
     }
 
     function handleCopyToClipboard(code) {
@@ -69,67 +78,101 @@ const CodeEditors = ({ post }) => {
         navigator.clipboard.writeText(textToCopy)
     }
 
-    const EditorContent = ({ code }) => {
-        // {console.log(code + ' | ' + mode)}
-        return (
-            <div className={`${classes.flex} ${classes.editorContent}`}>
-                <div className={`${classes.flex} ${classes.editorTabs}`}>
-                    <p className={`${classes.editorName}`}>
-                        {code}
-                    </p>
-
-                    <div className={`${classes.flex} ${classes.editorName} ${classes.copyTab}`} onClick={() => handleCopyToClipboard(code)}>
-                        <ContentPasteIcon fontSize='small'/>
-                        <p>Copy</p> 
-                    </div>
-                </div>
-
-                <AceEditor
-                    // name={`${post._id}`}
-                    name="UNIQUE_ID"
-                    placeholder=''
-                    mode={code}
-                    theme="monokai"
-                    value={onLoad(code)}
-                    defaultValue=''
-                    height='300px'
-                    width='400px'
-                    // style={editorStyle}
-                    fontSize={14}
-                    showGutter={true}
-                    showPrintMargin={true}
-                    highlightActiveLine={true}
-                    readOnly={true}
-                    // onLoad={onLoad(code)}
-                    // onBeforeLoad={onLoad(code)}
-                    // onChange={onLoad(_post)}
-                    editorProps={{ $blockScrolling: true }}
-                    setOptions={{
-                        // ativa o modo de análise sintática do editor
-                        useWorker: true,
-                        // ativa a quebra automática de linhas
-                        wrapEnabled: true,
-
-                        enableSnippets: true,
-                        showLineNumbers: true,
-                        tabSize: 2,
-                    }}
-                />
-            </div>
-        )
-    }
+  
 
     try {
-        
+
         return (
             <div className={`${classes.codeContainer} ${classes.flex}`}>
-    
-                <EditorContent code={"html"} />
-    
-                <EditorContent code={"css"} />
-    
-                <EditorContent code={"javascript"} />
-    
+
+                <div className={`${classes.flex} ${classes.editorContent}`}>
+                    <div className={`${classes.flex} ${classes.editorTabs}`}>
+                        <p className={`${classes.editorName}`}>
+                            HTML
+                        </p>
+
+                        <div className={`${classes.flex} ${classes.editorName} ${classes.copyTab}`} onClick={() => handleCopyToClipboard("html")}>
+                            <ContentPasteIcon fontSize='small' />
+                            <p>Copy</p>
+                        </div>
+                    </div>
+
+
+                    <AceEditor
+                        name="htmlCode"
+                        placeholder=''
+                        mode="html"
+
+                        defaultValue=''
+                        height='300px'
+                        width='350px'
+                        theme="monokai"
+
+                        onLoad={onLoadCode}
+
+                        editorProps={{ $blockScrolling: true }}
+                        setOptions={editorOptions}
+                    />
+                </div>
+
+                <div className={`${classes.flex} ${classes.editorContent}`}>
+                    <div className={`${classes.flex} ${classes.editorTabs}`}>
+                        <p className={`${classes.editorName}`}>
+                            CSS
+                        </p>
+
+                        <div className={`${classes.flex} ${classes.editorName} ${classes.copyTab}`} onClick={() => handleCopyToClipboard("css")}>
+                            <ContentPasteIcon fontSize='small' />
+                            <p>Copy</p>
+                        </div>
+                    </div>
+
+                    <AceEditor
+                        name="cssCode"
+                        placeholder=''
+                        mode="css"
+
+                        defaultValue=''
+                        height='300px'
+                        width='350px'
+                        theme="monokai"
+
+                        onLoad={onLoadCode}
+
+                        editorProps={{ $blockScrolling: true }}
+                        setOptions={editorOptions}
+                    />
+                </div>
+
+                <div className={`${classes.flex} ${classes.editorContent}`}>
+                    <div className={`${classes.flex} ${classes.editorTabs}`}>
+                        <p className={`${classes.editorName}`}>
+                            Javascript
+                        </p>
+
+                        <div className={`${classes.flex} ${classes.editorName} ${classes.copyTab}`} onClick={() => handleCopyToClipboard("javascript")}>
+                            <ContentPasteIcon fontSize='small' />
+                            <p>Copy</p>
+                        </div>
+                    </div>
+
+                    <AceEditor
+                        name="backendCode"
+                        placeholder=''
+                        mode="javascript"
+
+                        defaultValue=''
+                        height='300px'
+                        width='350px'
+                        theme="monokai"
+
+                        onLoad={onLoadCode}
+
+                        editorProps={{ $blockScrolling: true }}
+                        setOptions={editorOptions}
+                    />
+
+                </div >
             </div >
         )
     } catch (error) {

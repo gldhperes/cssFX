@@ -6,35 +6,56 @@ import SearchIcon from '@mui/icons-material/Search';
 import ChipInput from 'material-ui-chip-input';
 
 import { getPostsBySearch } from '../../actions/posts'
+import { getUsersBySearch } from '../../actions/user'
 import useStyle from './styles'
 
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from '../../colorTheme';
+import inputTheme from '../../inputTheme';
 import Pagination from "../Pagination"
+
+import { makeStyles } from '@material-ui/core/styles';
 
 const SearchSection = ({ searchQuery, page }) => {
     const classes = useStyle()
     const dispatch = useDispatch();
     const navigate = useNavigate()
-    const [search, setSearch] = useState("")
+    const [searchPost, setSearchPost] = useState("")
+    const [searchUser, setSearchUser] = useState("")
     const [tags, setTags] = useState([])
 
 
-    const searchPost = () => {
-        console.log('s: ', search.trim(), ' tags: ', tags);
-        if (search.trim() || tags) {
+    const searchPosts = () => {
+        console.log('s: ', searchPost.trim(), ' tags: ', tags);
+        if (searchPost.trim() || tags) {
             // dispatch -> fetch search post
-            dispatch(getPostsBySearch({ search, tags: tags.join(',') }));
-            navigate(`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`)
+            dispatch(getPostsBySearch({ searchPost: searchPost, tags: tags.join(',') }));
+            navigate(`/posts/search?searchQuery=${searchPost || 'none'}&tags=${tags.join(',')}`)
         } else {
             navigate('/')
         }
     }
 
+    const searchUsers = () => {
+        console.log('s: ', searchUser);
+        if (searchUser || tags) {
+            // dispatch -> fetch search post
+            dispatch(getUsersBySearch(searchUser));
+            navigate(`/user/search?searchQuery=${searchUser || 'none'}`)
+        } else {
+            navigate('/')
+        }
+    }
+
+    const Search = () => {
+        if (searchPost !== "" && tags !== []) searchPosts()
+        if (searchUser !== "") searchUsers()
+    }
+
     const handleKeyPress = (e) => {
         // evento de quando a tecla ENTER for pressionada
         if (e.keyCode === 13) {
-            searchPost()
+            Search()
         }
     }
 
@@ -42,52 +63,120 @@ const SearchSection = ({ searchQuery, page }) => {
 
     const handleDelete = (tagToDelete) => setTags([tags.filter((tag) => tag !== tagToDelete)]);
 
+    const useStylesTextField = makeStyles(theme => ({
+        root: {
+            fontFamily: 'Muli',
+            '& .MuiFormLabel-root': {
+                // color: 'red',
+                fontSize: 12,
+                fontFamily: 'Muli',
+                transform: 'none',
+                top: 17,
+                left: 13
+            },
+            '& .MuiFormLabel-root.Mui-error': {
+                color: '#b04995'
+            },
+            '& input': {
+                color: 'white',
+                fontSize: 14,
+                fontWeight: 600,
+                // padding: '26px 12px 0',
+                // transition: 'padding 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms',
+            },
+            '& .MuiFormLabel-filled + .MuiInputBase-root input': {
+                padding: '35px 12px 14px'
+            },
+            '& .Mui-focused input': {
+                padding: '35px 12px 14px'
+            },
+            '& .MuiFormHelperText-root.Mui-error': {
+                color: 'red',
+                fontFamily: 'Muli',
+                fontSize: 12
+            }
+        }
+    }));
+
+    const classesTextField = useStylesTextField();
+
     return (
         <div className={`${classes.searchSection} ${classes.flex}`}>
 
             <div className={`${classes.searchArea} ${classes.flex}`}>
-                <ThemeProvider theme={theme}>
-                    <TextField
-                        id="outlined-search"
 
-                        color="primary"
+                <TextField
+                    id="outlined-search"
+                    // className={classes.textField}
+                    classes={classesTextField}
+                    color='primary'
 
-                        InputProps={{
+                    InputProps={{
+                        color: 'white !important',
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <SearchIcon sx={{ color: "white" }} />
+                            </InputAdornment>
+                        ),
+                    }}
 
-                            endAdornment: (
-                                <InputAdornment position="end">
-                                    <SearchIcon sx={{ color: "white" }} />
-                                </InputAdornment>
-                            ),
-                        }}
+                    // inputProps={theme.primary}
 
-                        inputProps={theme.primary}
+                    type="Search Post"
+                    value={searchPost}
 
-                        type="search"
-                        value={search}
+                    placeholder="Search Post"
+                    name="SearchPost"
+                    onKeyPress={handleKeyPress}
+                    onChange={(e) => setSearchPost(e.target.value)}
+                    label="Search Post"
+                    variant="outlined"
 
-                        placeholder="Search"
-                        name="Search"
-                        onKeyPress={handleKeyPress}
-                        onChange={(e) => setSearch(e.target.value)}
-                        label="Search"
-                        variant="outlined"
-
-                    />
+                />
 
 
-                    <ChipInput
-                        color={theme.primary}
-                        defaultValue={[]}
-                        value={tags}
-                        onAdd={handleAdd}
-                        onDelete={handleDelete}
-                        label="Search Tags"
-                        variant="outlined"
-                    />
-                </ThemeProvider>
+                <ChipInput
+                    // color={theme.primary}
+                    // defaultValue={[]}
+                    value={tags}
+                    onAdd={handleAdd}
+                    onDelete={handleDelete}
+                    label="Search Tags"
+                // variant="outlined"
+                />
 
-                <Button onClick={searchPost} className={classes.searchButton} variant="contained" color="primary" >
+
+                <TextField
+                    id="outlined-search"
+
+                    // color="primary"
+
+                    classes={classesTextField}
+
+                    InputProps={{
+
+                        endAdornment: (
+                            <InputAdornment position="end">
+                                <SearchIcon sx={{ color: "white" }} />
+                            </InputAdornment>
+                        ),
+                    }}
+
+                    // inputProps={theme.primary}
+
+                    type="Search User"
+                    value={searchUser}
+
+                    placeholder="Search User"
+                    name="SearchUser"
+                    onKeyPress={handleKeyPress}
+                    onChange={(e) => setSearchUser(e.target.value)}
+                    label="Search User"
+                    // variant="outlined"
+
+                />
+
+                <Button onClick={Search} className={classes.searchButton} >
                     Search
                 </Button>
             </div>

@@ -41,7 +41,11 @@ export const getPosts = async (req, res) => {
 
 export const getPostsBySearch = async (req, res) => {
     const { searchQuery, tags } = req.query
+    // const _searchQuery = req.query.searchQuery
+    // const _tags = req.query.tags
 
+    // console.log(_searchQuery);
+    // console.log(_tags);
     try {
         // REGEXP = Regular Expression
         const title = new RegExp(searchQuery, 'i') // 'i' -> ignore case sensivite, ou seja, TEST = Test = test ( tudo vai ser 'test' )

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 // ACE IMPORTS
 import AceEditor from "react-ace";
@@ -17,124 +17,136 @@ import babelParser from 'prettier/parser-babel';
 
 
 import useStyles from './styles.js'
-const CodeEditorForm = ({ postData, setPostData }) => {
+const CodeEditorForm = ({ post, postData, setPostData }) => {
 
     const classes = useStyles()
-    const [htmlCode, setHtmlCode] = useState('');
-    const [cssCode, setCssCode] = useState('');
-    const [backendCode, setBackendCode] = useState('');
+    const [htmlCode, setHtmlCode] = useState((post) ? post.htmlCode : '');
+    const [cssCode, setCssCode] = useState((post) ? post.cssCode : '');
+    const [backendCode, setBackendCode] = useState((post) ? post.backendCode : '');
 
 
-    function onChangeHTML(newValue) {
+    const onChangeHTML = (newValue) => {
         console.log(newValue);
-
         setHtmlCode(newValue.toString());
         setPostData({ ...postData, htmlCode: newValue.toString() });
-
     }
 
-    function onChangeCSS(newValue) {
+    const onChangeCSS = (newValue) => {
         console.log(newValue);
-
         setCssCode(newValue.toString())
         setPostData({ ...postData, cssCode: newValue.toString() });
 
     }
 
-    function onChangeBACKEND(newValue) {
+    const onChangeBACKEND = (newValue) => {
         console.log(newValue);
-
         setBackendCode(newValue.toString())
         setPostData({ ...postData, backendCode: newValue.toString() });
+    }
 
+    function onLoadCode(editor) {
+
+
+        const editorMode = editor.getSession().getMode().$id;
+        console.log(editorMode);
+        if (editorMode === "ace/mode/html") {
+            // log
+            editor.setValue(htmlCode);
+        }
+        else if (editorMode === "ace/mode/css") {
+            editor.setValue(cssCode)
+        }
+        else if (editorMode === "ace/mode/javascript") {
+            editor.setValue(backendCode)
+        }
     }
 
 
+    const editorOptions = {
+        useWorker: false,
+        enableBasicAutocompletion: true,
+        enableLiveAutocompletion: true,
+        enableSnippets: true,
+        showLineNumbers: true,
+        tabSize: 2,
+        readOnly: false,
+        highlightActiveLine: true,
+        showGutter: true,
+        showPrintMargin: true,
+        fontSize: 14,
+    };
 
-    function onLoad(code) {
-        let codeString = ''
-        let pluginParser = ''
-        let _code = ''
-
-        if (code === "html") {
-            // console.log(htmlCode);
-            _code = 'html'
-            codeString = htmlCode
-            pluginParser = htmlParser
-        }
-        else if (code === "css") {
-            _code = 'css'
-            codeString = cssCode
-            pluginParser = cssParser
-        }
-        else if (code === "javascript") {
-            _code = 'babel'
-            codeString = backendCode
-            pluginParser = babelParser
-        }
-
-        let formattedCodeString = prettier.format(codeString, {
-            parser: _code,
-            plugins: [pluginParser],
-        });
-
-        return formattedCodeString
-    }
-
-    const EditorContent = ({ code, codeValue, onChangeCode }) => {
-        // {console.log(onChangeCode )}
-        return (
-            <div className={`${classes.editorContent} ${classes.flex}`}>
-
-                <p className={`${classes.editorName}`}>
-                    {code}
-                </p>
-                <AceEditor
-                    // name={`${post._id}`}
-                    name="UNIQUE_ID"
-                    placeholder=''
-                    mode={code}
-                    theme="monokai"
-                    value={onLoad(code)}
-                    defaultValue=''
-                    height='300px'
-                    width='350px'
-                    // style={editorStyle}
-                    fontSize={14}
-                    showGutter={true}
-                    showPrintMargin={true}
-                    highlightActiveLine={true}
-                    readOnly={false}
-                    // onLoad={() => onLoad(code)}
-                    // onBeforeLoad={onLoad(code)}
-
-                    onChange={onChangeCode}
-
-                    editorProps={{ $blockScrolling: true }}
-                    setOptions={{
-                        // ativa o modo de análise sintática do editor
-                        useWorker: false,
-                        // ativa a quebra automática de linhas
-                        wrapEnabled: true,
-                        autoScrollEditorIntoView: true,
-                        copyWithEmptySelection: true,
-                        enableSnippets: true,
-                        showLineNumbers: true,
-                        tabSize: 2,
-                    }}
-                />
-            </div>
-        )
-    }
 
     return (
         <div className={`${classes.codeContainer} ${classes.flex}`}>
 
-            <EditorContent code={"html"} codeValue={htmlCode} onChangeCode={onChangeHTML} />
+            <div className={`${classes.editorContent} ${classes.flex}`}>
+                <p className={`${classes.editorName}`}>
+                    HTML
+                </p>
+                <AceEditor
+                    // name={`${post._id}`}
+                    name="htmlCode"
+                    placeholder=''
+                    mode="html"
+                    // value={this.editor.onLoad}
+                    defaultValue=''
+                    height='300px'
+                    width='350px'
+                    theme="monokai"
+                    // style={editorStyle}
+                    onLoad={onLoadCode}
+                    onChange={onChangeHTML}
 
-            <EditorContent code={"css"} codeValue={cssCode} onChangeCode={onChangeCSS} />
+                    editorProps={{ $blockScrolling: true }}
+                    setOptions={editorOptions}
+                />
+            </div>
 
-            <EditorContent code={"javascript"} codeValue={backendCode} onChangeCode={onChangeBACKEND} />
+            <div className={`${classes.editorContent} ${classes.flex}`}>
+                <p className={`${classes.editorName}`}>
+                    CSS
+                </p>
+                <AceEditor
+                    name="cssCode"
+                    placeholder=''
+                    mode="css"
+                    theme="monokai"
+                    // value={this.editor.onLoad}
+                    defaultValue=''
+                    height='300px'
+                    width='350px'
+                    // style={editorStyle}
+                    onLoad={onLoadCode}
+                    onChange={onChangeCSS}
+
+                    editorProps={{ $blockScrolling: true }}
+                    setOptions={editorOptions}
+                />
+            </div>
+
+            <div className={`${classes.editorContent} ${classes.flex}`}>
+                <p className={`${classes.editorName}`}>
+                    Javascript
+                </p>
+                <AceEditor
+                    name="backendCode"
+                    placeholder=''
+                    mode="javascript"
+                    theme="monokai"
+                    // value={this.editor.onLoad}
+                    defaultValue=''
+                    height='300px'
+                    width='350px'
+                    // style={editorStyle}
+                    onLoad={onLoadCode}
+                    onChange={onChangeBACKEND}
+
+                    editorProps={{ $blockScrolling: true }}
+                    setOptions={editorOptions}
+                />
+            </div>
+
 
         </div >
     )

@@ -40,6 +40,9 @@ export const getPostsBySearch = (searchQuery) => async(dispatch) => {
 
     try {
         dispatch({ type: START_LOADING })
+
+        console.log("Pesquisa: ", searchQuery.searchPost + " " + searchQuery.tags);
+
         const { data: { data } } = await api.fetchPostsBySearch(searchQuery) 
 
         dispatch( { type: FETCH_BY_SEARCH, payload: data } ) ;

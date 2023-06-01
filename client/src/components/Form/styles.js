@@ -29,7 +29,7 @@ export default makeStyles((theme) => ({
     padding: '20px',
 
     flexFlow: 'column',
-    gap: '8px',
+    gap: '18px',
 
   },
 

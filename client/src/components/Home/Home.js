@@ -11,7 +11,7 @@ import decode from 'jwt-decode'
 // import Pagination from "../Pagination"
 import RecentPosts from "../Posts/RecentPosts";
 import FavoritePosts from "../Posts/FavoritePosts";
-import Following from "../Posts/Following";
+import UsersCards from "../Posts/UsersCards";
 import LikedsPosts from "../Posts/LikedsPosts";
 import Header from "../Header/Header";
 import SearchSection from "./SearchSection";
@@ -21,8 +21,8 @@ import Form from "../Form/Form";
 
 import { logout } from "../../actions/auth.js";
 import { getPosts } from "../../actions/posts";
-import { getFavoritePosts, getUserPosts, getFollowing, getLikedsPosts } from "../../actions/user";
-import { favorites, recentPosts, createPost, updatePost, following, profile, likeds } from "../../constants/routes";
+import { getFavoritePosts, getFollowing, getLikedsPosts } from "../../actions/user";
+import { search, favorites, recentPosts, createPost, updatePost, following, profile, likeds, userRoute } from "../../constants/routes";
 
 
 import useStyles from './styles';
@@ -51,7 +51,8 @@ const Home = () => {
 
     const userLogged = useSelector((state) => state.auth.authData);
 
-
+    console.log("query: ", query);
+    console.log("searchQuery: ", searchQuery);
 
     const logoutUser = () => {
         dispatch(logout())
@@ -88,7 +89,11 @@ const Home = () => {
     const isFollowingRoute = location.pathname.match(following)
     const isCreatePostRoute = location.pathname.match(createPost)
     const isUpdatePostRoute = location.pathname.match(updatePost)
+
+
+    const isSearchUserRoute = location.pathname.startsWith(`${userRoute}${search}`)
     const isProfile = location.pathname.match(profile)
+
     let route = ''
 
     if (isPostsRoute) route = isPostsRoute
@@ -97,6 +102,8 @@ const Home = () => {
     if (isLikedsRoute) route = isLikedsRoute
     if (isCreatePostRoute) route = isCreatePostRoute
     if (isUpdatePostRoute) route = isUpdatePostRoute
+
+    if (isSearchUserRoute) route = isSearchUserRoute
     if (isProfile) route = isProfile
 
 
@@ -126,13 +133,32 @@ const Home = () => {
                 {/* {isFavoriteRoute ? <FavoritePosts setCurrentId={setCurrentId} /> : <Posts setCurrentId={setCurrentId} />} */}
 
                 {
-                    (isPostsRoute && user) &&
-
+                    (isPostsRoute) &&
                     (
-                        dispatch(getFavoritePosts(user.result._id)),
-                        dispatch(getPosts(page)),
-                        dispatch(getFollowing(user.result._id)),
-                        <RecentPosts />
+                        // se houver usuario
+                        (user) ? (
+
+                            // Se houver pesquisa
+                            (query) ? (
+                                dispatch(getFavoritePosts(user.result._id)),
+                                dispatch(getFollowing(user.result._id)),
+                                <RecentPosts user={user} />
+                            ) : (
+
+                                // dispatch(getFavoritePosts(user.result._id)),
+                                dispatch(getPosts(page)),
+                                // dispatch(getFollowing(user.result._id)),
+                                <RecentPosts user={user} />
+                            )
+
+
+                        ) : (
+                            (query) && (
+                                <RecentPosts user={user} />
+                            )
+                        )
+
+
                     )
                 }
 
@@ -164,7 +190,7 @@ const Home = () => {
                         console.log("DISPARANDO GETFOLLOWING"),
                         dispatch(getFollowing(user.result._id)),
 
-                        < Following />
+                        < UsersCards />
                     )
                 }
 
@@ -183,6 +209,15 @@ const Home = () => {
                         <Form />
                     )
                 }
+
+                {
+                    (isSearchUserRoute) && (
+
+                        < UsersCards />
+                    )
+
+                }
+
 
                 {
                     (isProfile && user) &&

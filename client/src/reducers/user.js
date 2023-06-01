@@ -1,4 +1,4 @@
-import { FAVORITE, GET_FAVORITE, GET_USER_POSTS, GET_USER_LIKED_POSTS, FOLLOWING, GET_FOLLOWING, GET_USER_PROFILE } from '../constants/actionTypes';
+import { FAVORITE, GET_FAVORITE, GET_USER_POSTS, GET_USER_LIKED_POSTS, FOLLOWING, GET_FOLLOWING, GET_USER_PROFILE, FETCH_USERS_BY_SEARCH } from '../constants/actionTypes';
 
 const userReducer = (state = { likedPosts: [], favoritedPosts: [], userPosts: [], following: [], userProfile: [], }, action) => {
     switch (action.type) {
@@ -63,6 +63,18 @@ const userReducer = (state = { likedPosts: [], favoritedPosts: [], userPosts: []
                 ...state,
                 userProfile: action.payload.user,
             }
+
+        case FETCH_USERS_BY_SEARCH:
+            console.log(`FETCH_USERS_BY_SEARCH: ${FETCH_USERS_BY_SEARCH} REDUX: ${action.payload}`);
+            return {
+                ...state,
+                posts: action.payload,
+            }
+        // case 'LOGOUT_USER_BY_EXPIRED_TIME':
+        //     return {
+        //         ...state,
+        //         userProfile: action.payload.user,
+        //     }
 
         default:
             return state;
