@@ -19,18 +19,20 @@ export const getPost = async (req, res) => {
 }
 
 export const getPosts = async (req, res) => {
-    const { page } = req.query
+    // const { page } = req.query
 
     try {
-        const LIMIT = 8;
+        // const LIMIT = 8;
 
         // Number(page) transforma a string page em um numero
-        const startIndex = (Number(page) - 1) * LIMIT // Pega o index de começo de toda pagina
+        // const startIndex = (Number(page) - 1) * LIMIT // Pega o index de começo de toda pagina
         const total = await PostMessage.countDocuments({})
 
-        const posts = await PostMessage.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex)
+        // const posts = await PostMessage.find().sort({ _id: -1 }).limit(LIMIT).skip(startIndex)
+        const posts = await PostMessage.find().sort({ _id: -1 })
 
-        res.status(200).json({ data: posts, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT) })
+        // res.status(200).json({ data: posts, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT) })
+        res.status(200).json({ data: posts })
     } catch (error) {
         res.status(404).json({ message: error.message })
     }
@@ -114,24 +116,42 @@ export const likePost = async (req, res) => {
 
     const post = await PostMessage.findById(id);
 
-    const index = post.likes.findIndex((id) => id === String(userId))
 
-    if (index === -1) {
+
+    const indexPost = post.likes.findIndex((id) => id === String(userId))
+    console.log(`indexPost ${indexPost}`);
+
+
+    if (indexPost === -1) {
         // LIKE A POST
         post.likes.push(userId)
-        user.likedPosts.push(post._id)
 
     } else {
         // DISLIKE A POST
         post.likes = post.likes.filter((id) => id !== String(userId))
-        user.likedPosts = user.likedPosts.filter((id) => id !== String(post._id))
-    }
-    const userLikedPosts = user.likedPosts
 
-    // console.log(`User Liked Posts: ${user.likedPosts}`);
+    }
+
+    const indexUser = user.likedPosts.findIndex((postLikedId) => (postLikedId._id.toString() === id) )
+
+    console.log(`indexUser ${indexUser}`)
+
+    if (indexUser === -1) {
+        // LIKE A POST
+        user.likedPosts.push(post._id)
+
+    } else {
+        // DISLIKE A POST
+        user.likedPosts = user.likedPosts.filter((postLikedId) => (postLikedId._id.toString() !== id))
+    }
+
+
+    const userLikedPosts = user.likedPosts
+    await User.findByIdAndUpdate(userId, { likedPosts: userLikedPosts });
+
+    console.log(`User Liked Posts: ${user.userLikedPosts}`);
 
     const updatedPost = await PostMessage.findByIdAndUpdate(id, post, { new: true });
-    await User.findByIdAndUpdate(userId, { likedPosts: userLikedPosts });
 
 
     res.json(updatedPost)

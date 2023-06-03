@@ -11,10 +11,14 @@ const Posts = ({ posts, favPosts, followed, category, setCurrentId }) => {
     const classes = useStyle()
     const { isLoading } = useSelector((state) => state.posts)
 
-    console.log(category);
+    // console.log(category);
     if (!posts && !isLoading) { return 'No Posts' }
 
     if (!posts) { return 'No Posts' }
+
+    posts.forEach(element => {
+        console.log(`posts element ${element._id}`);
+    });
 
     function getFavorited(postId) {
         // console.log(`favoritedPosts: ${ JSON.stringify(favoritedPosts) } `);
@@ -31,7 +35,7 @@ const Posts = ({ posts, favPosts, followed, category, setCurrentId }) => {
     }
 
     const getPosts = (cat, post) => {
-        console.log(cat);
+        // console.log(cat);
         switch (cat) {
             case FAVORITES:
                 // console.log(FAVORITES);
@@ -65,7 +69,9 @@ const Posts = ({ posts, favPosts, followed, category, setCurrentId }) => {
                     <>
                         <Post
                             post={post}
-                            favorited={getFavorited(post._id)}
+                            favorited={getFavorited(post?._id)}  
+                            setCurrentId={setCurrentId}
+                            followed={followed}                      
                         />
                     </>
                 )

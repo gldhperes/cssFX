@@ -39,8 +39,24 @@ export default makeStyles((theme) => ({
 
   },
 
-  buttonSubmit: {
+  submitBtn: {
+
+    color: "#650065",
+    fontWeight: 'bold',
+    backgroundColor: 'white',
+
     marginBottom: 10,
+  },
+
+  clearBtn:
+  {
+    color: "white",
+    fontWeight: 'bold',
+    backgroundColor: '#650065',
+
+    "&:hover": {
+      backgroundColor: '#FF0065',
+    },
   },
 
 
@@ -70,6 +86,22 @@ export default makeStyles((theme) => ({
     borderTopRightRadius: editorRadius,
   },
 
+  errorMsgDiv:
+  {
+    width: '50%',
+    // height: '800px',
+    padding: '20px',
+
+    position: 'absolute',
+    zIndex: '10',
+
+    color: 'white',
+    fontSize: '18px',
+
+    background: 'black',
+    borderRadius: '10px',
+
+  },
 
 
 

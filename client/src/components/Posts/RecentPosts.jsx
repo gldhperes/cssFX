@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 
 import { useSelector } from "react-redux";
 
@@ -10,13 +10,14 @@ import { POSTS } from "../../constants/pagesTypes";
 const RecentPosts = ({ user }) => {
 
     const favoritedPosts = useSelector((state) =>
-       // se tiver usuario logado entao
+        // se tiver usuario logado entao
         user && state.user.favoritedPosts
     );
 
     const { posts } = useSelector((state) => state.posts)
 
-    console.log(posts);
+    // console.log(`posts: ${posts}`);
+
     return (
         <>
             {

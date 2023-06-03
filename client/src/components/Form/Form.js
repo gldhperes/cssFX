@@ -9,6 +9,7 @@ import useStyles from './styles';
 
 import CodeEditorForm from "./CodeEditorForm";
 import checkCode from "./checkCode"
+import OnSubmitCodeMessage from "./OnSubmitCodeMessage";
 // import CodeEditorForm from "./CodeEditorForm";
 
 const Form = () => {
@@ -16,12 +17,13 @@ const Form = () => {
     const user = JSON.parse(localStorage.getItem('profile'))
     const navigate = useNavigate()
     const dispatch = useDispatch();
+    const [submited, setSubmited] = useState(false)
 
     const [currentId, setCurrentId] = useState('')
 
     const post = useSelector((state) => state.posts.post)
-    
-    console.log(post); 
+
+    console.log(post);
 
     const [postData, setPostData] = useState({
         title: '', htmlCode: '',
@@ -53,39 +55,8 @@ const Form = () => {
 
 
     const handleSubmit = (e) => {
-
-
-
-        if (postData) {
-            try {
-                e.preventDefault()
-
-                // Se tiver um post data e a checagem estiver ok
-                const b = checkCode(postData.htmlCode, postData.cssCode, postData.backendCode)
-                console.log("Check Code: ", b);
-
-                if (b) {
-                    console.log(`currentId: ${currentId}`);
-
-                    if (currentId === null) {
-                        dispatch(createPost({ ...postData, name: user?.result?.name }))
-
-                    } else {
-                        dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }))
-                    }
-
-                    navigate('/posts')
-                    clear()
-                }
-                else {
-                    console.log("mensagem de erro");
-                }
-            }
-            catch (error) {
-                console.log(error);
-            }
-        }
-
+        e.preventDefault()
+        setSubmited(true)
     }
 
     if (!user?.result?.name) {
@@ -137,9 +108,34 @@ const Form = () => {
 
                 <FileBase type="file" multiple={false} onDone={({ base64 }) => setPostData({ ...postData, codeImg: base64 })} />
 
-                <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>{currentId ? 'Edit' : 'Create'}</Button>
-                <Button variant="contained" color="secondary" size="small" onClick={clear} fullWidth>Clear</Button>
+                <Button
+                    className={classes.submitBtn}
+                    variant="contained"
+                    size="large"
+                    type="submit"
+                    fullWidth>{currentId ? 'Edit' : 'Create'}
+                </Button>
+
+                <Button
+                    className={classes.clearBtn}
+                    variant="contained"
+                    size="small"
+                    onClick={clear}
+                    fullWidth
+                >
+                    Clear
+                </Button>
+
+
             </form>
+
+            {
+                (submited) && (
+                    <>
+                        <OnSubmitCodeMessage postData={postData} clear={clear} currentId={currentId} setSubmited={setSubmited} />
+                    </>
+                )
+            }
         </Paper>
     )
 }

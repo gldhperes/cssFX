@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 import { Card, CardActions, Button, Typography, IconButton, Avatar } from '@material-ui/core'
@@ -16,15 +16,13 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 // import red from "@material-ui/core/colors/red";
 // import moment from 'moment'
 import { useNavigate } from 'react-router-dom'
-import { getUserPosts } from "../../../api";
-import { deletePost, likePost, favoritePost, getPost } from "../../../actions/posts"
+import { likePost, favoritePost } from "../../../actions/posts"
 import { followUser, getUserProfile } from "../../../actions/user"
 import { profile } from "../../../constants/routes";
 
-
 import useStyles from './styles'
 import EditPostMenu from "./EditPostMenu";
-import Following from "../UsersCards";
+
 
 const Post = ({ post, favorited }) => {
     const classes = useStyles();
@@ -41,7 +39,9 @@ const Post = ({ post, favorited }) => {
     const postId = post?._id
     const postCreator = post?.creator
 
-    const hasLikedPost = likes?.find((like) => like === userId)
+    const [following, setFollowing] = useState(follow?.find((element) => element.id === postCreator) ? true : false)
+
+    const hasLikedPost = likes.find((like) => like === userId)
 
     const base64creatorImg = 'data:image/png;base64,' + post?.creatorImg // Substitua com sua string Base64
     const base64codeImg = post?.codeImg // Substitua com sua string Base64
@@ -53,11 +53,11 @@ const Post = ({ post, favorited }) => {
         navigate(profile)
     }
 
-
-
     // HANDLE LIKES =========================
 
-    const handleLike = async () => {
+    const handleLike = async (e) => {
+        // e.preventDefault()
+
         dispatch(likePost(post._id))
 
         if (hasLikedPost) {
@@ -68,14 +68,14 @@ const Post = ({ post, favorited }) => {
     }
 
     const Likes = () => {
-        if (likes?.length > 0) {
-            return likes?.find((like) => like === userId)
+
+        if (likes.length > 0) {
+
+            return likes.find((like) => like === userId)
                 ? (
                     // SE A PESSOA CURTIU O POST, ELA VE A QUANTIDADE DE LIKES DELE E DE OUTRAS, SENAO, SE SO ELA CURTIU ENTAO MOSTRA ( '1 LIKE' OU '2 LIKES'... )
                     <>
                         <ThumbUpIcon fontSize="small" />
-
-                        {/* &nbsp; {likes?.length > 1 ? `You and ${likes?.length - 1} others` : `${likes?.length} like${likes?.length > 1 ? 's' : ''}`} */}
 
                         <Typography variant="body2" component="h2">
                             &nbsp;{likes?.length} {likes?.length === 1 ? 'Like' : 'Likes'}
@@ -85,7 +85,6 @@ const Post = ({ post, favorited }) => {
                     // SE SO UMA PESSOA CURTIU ENTAO MOSTRA ( '1 LIKE' OU '2 LIKES'... )
                     <>
                         <ThumbUpAltOutlinedIcon fontSize="small" />
-                        {/* &nbsp; {likes?.length} {likes?.length === 1 ? 'Like' : 'Likes'} */}
 
                         <Typography variant="body2" component="h2">
                             &nbsp;{likes?.length} {likes?.length === 1 ? 'Like' : 'Likes'}
@@ -110,9 +109,10 @@ const Post = ({ post, favorited }) => {
 
 
     // HANDLE FAVORITE ===================
+    const handleFavorite = async (e) => {
 
-    const handleFavorite = async () => {
         setFavorite(!favorite)
+
         dispatch(favoritePost(userId, { postId: postId }))
     }
 
@@ -133,72 +133,40 @@ const Post = ({ post, favorited }) => {
 
     // HANDLE FOLLOW ===============================
 
-    const handleFollow = async () => {
+    const handleFollow = async (e) => {
 
-        setFollow(follow)
+        setFollowing(!following)
         dispatch(followUser(userId, postCreator))
+
     }
 
     const Follow = () => {
+    
+        return (following)
+            ? (
+                <>
+                    <PersonAddAlt1Icon fontSize="small" />
 
-        // return (follow) ?
-        //     (
-        //         <>
-        //             <PersonAddAlt1Icon fontSize="small" />
+                    <Typography variant="body2" component="h2">
+                        &nbsp;{"Following"}
+                    </Typography>
+                </>
+            ) : (
+                <>
+                    <PersonAddAltIcon fontSize="small" />
 
-        //             <Typography variant="body2" component="h2">
-        //                 &nbsp;{"Following"}
-        //             </Typography>
-        //         </>
-        //     ) : (
-        //         <>
-        //             <PersonAddAltIcon fontSize="small" />
-
-        //             <Typography variant="body2" component="h2">
-        //                 &nbsp;{"Follow"}
-        //             </Typography>
-        //         </>
-        //     )
-
-        if (follow) console.log("PC: ", follow)
-
-        return (
-            <div className={`${classes.flex}`} key={postCreator}>
-                {
-                    (follow.size > 0) ? (
-                        follow.map((following) =>
-
-                            (following.id === postCreator) && (
-                                <>
-                                    <PersonAddAlt1Icon fontSize="small" />
-
-                                    <Typography variant="body2" component="h2">
-                                        &nbsp;{"Following"}
-                                    </Typography>
-                                </>
-                            )
-
-                        )
-                    ) : (
-                        <>
-                            <PersonAddAltIcon fontSize="small" />
-
-                            <Typography variant="body2" component="h2">
-                                &nbsp;{"Follow"}
-                            </Typography>
-                        </>
-                    )
-                }
-
-            </div>
-        )
+                    <Typography variant="body2" component="h2">
+                        &nbsp;{"Follow"}
+                    </Typography>
+                </>
+            )
     }
 
 
     // FUNCTIONS =============================
 
     const openPostDetails = () => {
-        
+
         navigate(`/posts/${post._id}`)
     }
 
@@ -235,19 +203,6 @@ const Post = ({ post, favorited }) => {
 
             </div>
 
-            {/* SE NAO FOR A PESSOA QUE CRIOU O POST, ENTAO NAO PODERA VER O BOTAO */}
-            {/* {(user?.result?.googleId || user?.result?._id) === post?.creator && (
-                <div className={classes.overlay2}>
-                    <Button style={{ color: 'white' }} size='small' onClick={() => setCurrentId(post._id)}>
-                        <MoreHorizIcon fontSize="medium" />
-                    </Button>
-                </div>
-            )} */}
-
-
-
-
-
             <CardActions className={`${classes.postActions} ${classes.flex}`}>
 
                 <IconButton size="small" disabled={!user?.result} style={{ color: "white" }} onClick={handleFavorite}>
@@ -264,13 +219,7 @@ const Post = ({ post, favorited }) => {
 
                 {/* SE NAO FOR A PESSOA QUE CRIOU O POST, ENTAO NAO PODERA VER O BOTAO */}
                 {(user?.result?.googleId || user?.result?._id) === post?.creator && (
-
                     <EditPostMenu id={post._id} />
-
-                    // <Button className={classes.deleteBtn} size="small" onClick={() => dispatch(deletePost(post._id))}>
-                    //     <DeleteIcon style={{ color: "white" }} fontSize='small' />
-                    // </Button>
-
                 )}
 
 

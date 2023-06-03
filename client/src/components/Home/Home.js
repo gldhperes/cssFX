@@ -38,21 +38,17 @@ const Home = () => {
     const navigate = useNavigate()
     const query = useQuery()
     const searchQuery = query.get('searchQuery')
-    const page = query.get('page') || 1
 
     const [currentId, setCurrentId] = useState(null)
     const [tags, setTags] = useState([])
-    // const [route, setRoute] = useState(null)
-    // const [search, setSearch] = useState("")
 
     // CONSTANTES PARA O USUARIO
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
-    // console.log( "USER: ", user );
 
     const userLogged = useSelector((state) => state.auth.authData);
 
-    console.log("query: ", query);
-    console.log("searchQuery: ", searchQuery);
+    // console.log("query: ", query);
+    // console.log("searchQuery: ", searchQuery);
 
     const logoutUser = () => {
         dispatch(logout())
@@ -121,7 +117,7 @@ const Home = () => {
 
             <CategorySection user={user} />
 
-            <SearchSection searchQuery={searchQuery} page={page} />
+            <SearchSection searchQuery={searchQuery} />
 
             <div className={`${classes.flex} ${classes.mainContainer}`}>
 
@@ -136,18 +132,20 @@ const Home = () => {
                     (isPostsRoute) &&
                     (
                         // se houver usuario
+                        dispatch(getPosts()),
+
                         (user) ? (
+                            dispatch(getLikedsPosts(user.result._id)),
+                            dispatch(getFavoritePosts(user.result._id)),
+                            dispatch(getFollowing(user.result._id)),
 
                             // Se houver pesquisa
                             (query) ? (
-                                dispatch(getFavoritePosts(user.result._id)),
-                                dispatch(getFollowing(user.result._id)),
+                                // dispatch(getFavoritePosts(user.result._id)),
+                                // dispatch(getFollowing(user.result._id)),
                                 <RecentPosts user={user} />
                             ) : (
-
-                                // dispatch(getFavoritePosts(user.result._id)),
-                                dispatch(getPosts(page)),
-                                // dispatch(getFollowing(user.result._id)),
+                                // dispatch(getPosts()),
                                 <RecentPosts user={user} />
                             )
 

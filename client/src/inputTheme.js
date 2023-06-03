@@ -7,7 +7,8 @@ const inputTheme = createTheme({
             styleOverrides: {
                 root: {
                     // Some CSS
-                    color: 'white !important',
+                    // color: 'white !important',
+                    color: 'white',
                 },
             },
         },

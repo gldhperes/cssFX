@@ -332,7 +332,7 @@ export const getLikedsPosts = async (req, res) => {
 
         }
 
-        // console.log(`userLikedPosts: ${userLikedPosts}`);
+        console.log(`userLikedPosts: ${userLikedPosts}`);
         // console.log(user.name+"|||"+user.following);
 
         res.status(200).json({ userLikedPosts: userLikedPosts });

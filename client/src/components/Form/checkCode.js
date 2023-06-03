@@ -6,30 +6,46 @@ import babelParser from 'prettier/parser-babel';
 
 export default function checkCode(htmlCode, cssCode, backendCode) {
 
+
+    const _html = checkCodeIndividually("html", htmlCode, htmlParser)
+
+    const _css = checkCodeIndividually("css", cssCode, cssParser)
+
+    const _back = checkCodeIndividually("babel", backendCode, babelParser)
     try {
-
-        const _html = checkCodeIndividually("html", htmlCode, htmlParser)
-
-        const _css = checkCodeIndividually("css", cssCode, cssParser)
-
-        const _back = checkCodeIndividually("babel", backendCode, babelParser)
 
         console.log(`${_html}${_css}${_back}`);
 
 
         if (_html && _css && _back) {
-            return true
+            return { result: true }
         }
-        else
-        {
-            return false
+        else {
+            let code = []
+
+            if (!_html) { code.push("html") }
+            if (!_css) { code.push("css") }
+            if (!_back) { code.push("backend") }
+
+            return {
+                result: false,
+                code: code,
+            }
         }
 
     }
     catch (error) {
         console.log("Error no CheckCode: ", error);
-        
-        
+        let code = []
+
+        if (!_html) { code.push("html") }
+        if (!_css) { code.push("css") }
+        if (!_back) { code.push("backend") }
+
+        return {
+            result: false,
+            code: code,
+        }
     }
 
 }
@@ -49,8 +65,7 @@ const checkCodeIndividually = (codeType, codeString, pluginParser) => {
 
     } catch (error) {
         console.log(`Erro no codigo ${codeType}: ${error}`);
-      
-        
+        return false
     }
 
 }

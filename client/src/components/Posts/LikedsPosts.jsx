@@ -8,7 +8,7 @@ const LikedsPosts = () => {
   const likedsPosts = useSelector((state) => state.user.likedPosts)
   const favoritedPosts = useSelector((state) => state.user.favoritedPosts);
 
-  console.log(likedsPosts);
+  console.log(`likedsPosts ${likedsPosts}`);
 
   return (
     <>

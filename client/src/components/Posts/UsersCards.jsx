@@ -22,12 +22,12 @@ const UsersCards = () => {
         navigate(profile);
     }
 
-    const FollowingUsers = ({ creatorName, creatorId, creatorPhoto }) => {
+    const FollowingUsers = ({ creatorName, creatorId, creatorPhoto, _key }) => {
 
         const base64creatorPhoto = 'data:image/png;base64,' + creatorPhoto
 
         return (
-            <div className={`${classes.flex} ${classes.CreatorCard}`} onClick={() => { callUserProfile(creatorId) }}>
+            <div key={_key} className={`${classes.flex} ${classes.CreatorCard}`} onClick={() => { callUserProfile(creatorId) }}>
 
                 <Avatar className={`${classes.flex} ${classes.CreatorIcon}`} src={base64creatorPhoto}>
                     {/* {user.result.name.charAt(0)} */}
@@ -54,12 +54,14 @@ const UsersCards = () => {
                             (following) ? (
 
                                 following.map((creator) => (
-                                    <div key={creator['id']} >
-                                        <FollowingUsers creatorName={creator['name']} creatorId={creator['id']} creatorPhoto={creator['photo']} />
+                                    <div key={creator.id} >
+                                        <FollowingUsers creatorName={creator.name} creatorId={creator.id} creatorPhoto={creator.photo} key={creator.id} />
                                     </div>
                                 ))
                             ) : (
-                                "You are not following anyone"
+                                <>
+                                    {"You are not following anyone"}
+                                </>
                             )
                         }
                     </div>

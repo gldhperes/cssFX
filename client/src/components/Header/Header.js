@@ -6,6 +6,7 @@ import memories from '../../images/memories.png';
 
 import NavMenu from './NavMenu';
 
+import colorTheme from '../../colorTheme';
 import useStyle from './styles'
 
 const Header = ({ logout, user}) => {
@@ -35,11 +36,11 @@ const Header = ({ logout, user}) => {
 
                 ) : (
                     <div className={`${classes.flex} ${classes.userSection}`}>
-                        <Button component={Link} to="/auth" variant="contained" color="primary">
+                        <Button className={classes.navbarButton} component={Link} to="/auth" variant="contained">
                             Log In
                         </Button>
 
-                        <Button component={Link} to="/auth" variant="contained" color="primary">
+                        <Button className={classes.navbarButton} component={Link} to="/auth" variant="contained">
                             Sign Up
                         </Button>
                     </div>

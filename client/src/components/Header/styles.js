@@ -47,7 +47,24 @@ export default makeStyles((theme) => ({
   },
 
   userSection: {
+
     gap: "20px",
+
+    // "&.MuiButton-root.MuiButton-label": {
+    //   color: '#650065 !important',
+    // },
+
+    "&.MuiButton-label": {
+      color: '#650065 !important',
+    },
+
+  },
+
+  navbarButton:
+  {
+    color: "#650065",
+    fontWeight: 'bold',
+    backgroundColor: 'white',
   },
 
   profile: {
@@ -76,11 +93,11 @@ export default makeStyles((theme) => ({
     height: dimUserPhoto,
     borderRadius: '50%',
 
-    
+
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],
   },
-  
+
   userImg: {
     width: '100%',
     heigth: '100%',
@@ -93,7 +110,7 @@ export default makeStyles((theme) => ({
       backgroundColor: 'black',
       border: '1px solid white',
     },
-    
+
     "&.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root:hover": {
       color: '#990099',
     },

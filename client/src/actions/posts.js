@@ -20,13 +20,13 @@ export const getPost = (id) => async(dispatch) => {
     }
 }
 
-export const getPosts = (page) => async(dispatch) => {
+export const getPosts = () => async(dispatch) => {
 
     try {
         dispatch({ type: START_LOADING })
 
         // Espera o retorno do api.fetch
-        const { data } = await api.fetchPosts(page) 
+        const { data } = await api.fetchPosts() 
 
         dispatch( { type: FETCH_ALL, payload: data } ) ;
 

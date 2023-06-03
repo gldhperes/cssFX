@@ -116,7 +116,8 @@ export default makeStyles({
   navMenu: 
   {
     "&.MuiPaper-root": {
-      top: '415px !important',
+      // position: 'absolute',
+      // top: '0px !important',
 
       color: 'white',
       backgroundColor: 'black',

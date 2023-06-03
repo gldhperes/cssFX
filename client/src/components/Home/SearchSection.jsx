@@ -16,17 +16,22 @@ import Pagination from "../Pagination"
 
 import { makeStyles } from '@material-ui/core/styles';
 
-const SearchSection = ({ searchQuery, page }) => {
+const SearchSection = ({ searchQuery }) => {
     const classes = useStyle()
     const dispatch = useDispatch();
     const navigate = useNavigate()
     const [searchPost, setSearchPost] = useState("")
     const [searchUser, setSearchUser] = useState("")
     const [tags, setTags] = useState([])
+    // const [tags, setTags] = useState([])
 
 
     const searchPosts = () => {
-        console.log('s: ', searchPost.trim(), ' tags: ', tags);
+        console.log('s: ', searchPost.trim(), ' tags: ', tags.join(','));
+        
+        // const tagsArray = tags.join(',')
+        // console.log(tagsArray);
+        
         if (searchPost.trim() || tags) {
             // dispatch -> fetch search post
             dispatch(getPostsBySearch({ searchPost: searchPost, tags: tags.join(',') }));
@@ -48,7 +53,9 @@ const SearchSection = ({ searchQuery, page }) => {
     }
 
     const Search = () => {
-        if (searchPost !== "" && tags !== []) searchPosts()
+
+        // if (searchPost !== "" && tags !== []) searchPosts()
+        if (tags ) searchPosts()
         if (searchUser !== "") searchUsers()
     }
 
@@ -60,45 +67,7 @@ const SearchSection = ({ searchQuery, page }) => {
     }
 
     const handleAdd = (tag) => setTags([...tags, tag]);
-
     const handleDelete = (tagToDelete) => setTags([tags.filter((tag) => tag !== tagToDelete)]);
-
-    const useStylesTextField = makeStyles(theme => ({
-        root: {
-            fontFamily: 'Muli',
-            '& .MuiFormLabel-root': {
-                // color: 'red',
-                fontSize: 12,
-                fontFamily: 'Muli',
-                transform: 'none',
-                top: 17,
-                left: 13
-            },
-            '& .MuiFormLabel-root.Mui-error': {
-                color: '#b04995'
-            },
-            '& input': {
-                color: 'white',
-                fontSize: 14,
-                fontWeight: 600,
-                // padding: '26px 12px 0',
-                // transition: 'padding 200ms cubic-bezier(0.0, 0, 0.2, 1) 0ms',
-            },
-            '& .MuiFormLabel-filled + .MuiInputBase-root input': {
-                padding: '35px 12px 14px'
-            },
-            '& .Mui-focused input': {
-                padding: '35px 12px 14px'
-            },
-            '& .MuiFormHelperText-root.Mui-error': {
-                color: 'red',
-                fontFamily: 'Muli',
-                fontSize: 12
-            }
-        }
-    }));
-
-    const classesTextField = useStylesTextField();
 
     return (
         <div className={`${classes.searchSection} ${classes.flex}`}>
@@ -107,12 +76,9 @@ const SearchSection = ({ searchQuery, page }) => {
 
                 <TextField
                     id="outlined-search"
-                    // className={classes.textField}
-                    classes={classesTextField}
-                    color='primary'
+                    className={classes.inputComponent}
 
                     InputProps={{
-                        color: 'white !important',
                         endAdornment: (
                             <InputAdornment position="end">
                                 <SearchIcon sx={{ color: "white" }} />
@@ -136,22 +102,18 @@ const SearchSection = ({ searchQuery, page }) => {
 
 
                 <ChipInput
-                    // color={theme.primary}
-                    // defaultValue={[]}
+                    className={classes.inputComponent}
                     value={tags}
                     onAdd={handleAdd}
                     onDelete={handleDelete}
                     label="Search Tags"
-                // variant="outlined"
+                    variant="outlined"
                 />
-
 
                 <TextField
                     id="outlined-search"
 
-                    // color="primary"
-
-                    classes={classesTextField}
+                    className={classes.inputComponent}
 
                     InputProps={{
 
@@ -162,8 +124,6 @@ const SearchSection = ({ searchQuery, page }) => {
                         ),
                     }}
 
-                    // inputProps={theme.primary}
-
                     type="Search User"
                     value={searchUser}
 
@@ -172,27 +132,26 @@ const SearchSection = ({ searchQuery, page }) => {
                     onKeyPress={handleKeyPress}
                     onChange={(e) => setSearchUser(e.target.value)}
                     label="Search User"
-                    // variant="outlined"
-
+                    variant="outlined"
                 />
 
-                <Button onClick={Search} className={classes.searchButton} >
+                <Button onClick={Search} className={classes.searchButton} variant="contained">
                     Search
                 </Button>
             </div>
 
 
-            <Paper>
+            {/* <Paper> */}
                 {/* SE NAO TIVERMOS UMA PESQUISA OU TAG ENTAO RENDERIZA A PAGINAÇÃO */}
-                {(!searchQuery && !tags.length) && (
+                {/* {(!searchQuery && !tags.length) && ( */}
 
-                    <Paper className={classes.pagination} elevation={4}>
+                    {/* <Paper className={classes.pagination} elevation={4}> */}
 
-                        <Pagination page={page} />
+                        {/* <Pagination page={page} /> */}
 
-                    </Paper>
-                )}
-            </Paper>
+                    {/* </Paper> */}
+                {/* )} */}
+            {/* </Paper> */}
 
         </div>
     )

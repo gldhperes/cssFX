@@ -1,5 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 
+const purple = '#650065'
+const darkPurple = '#1E001E'
 
 export default makeStyles((theme) => ({
   flex: {
@@ -44,30 +46,64 @@ export default makeStyles((theme) => ({
     justifyContent: "space-between",
 
 
-    backgroundColor: "#1E001E",
-
+    backgroundColor: darkPurple,
   },
 
   searchArea: {
     gap: "8px",
-
-   
-
   },
 
-  textField: {
-    
+  inputComponent: {
+    "& .MuiTextField-root": {
+      outline: `1px solid white`,
+      color: 'white',
+      borderRadius: '4px',
+    },
 
+    "& .MuiInputBase-input .MuiOutlinedInput-input": {
+      color: 'white',
+      borderRadius: '4px',
+    },
+
+    "& .MuiOutlinedInput-adornedEnd": {
+
+      outline: `1px solid white`,
+      color: 'white',
+      borderRadius: '4px',
+    },
+
+    '& .MuiFormLabel-root': {
+      color: 'white',
+      borderRadius: '4px',
+    },
+    
+    "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {
+      color: "white",
+      background: darkPurple,
+      padding: " 0px 5px",
+    },
+    
+    "& .MuiFormControl-root": {
+      outline: `1px solid white`,
+      color: 'white',
+      borderRadius: '4px',
+    },
+
+    // CHIP INPUT
+
+    "& .WAMuiChipInput-outlined-32.WAMuiChipInput-chipContainer-31.WAMuiChipInput-labeled-35":
+    {
+      outline: `1px solid white`,
+      color: 'white',
+      borderRadius: '4px',
+    },
   },
 
 
   searchButton: {
-    "&.MuiButtonBase-root":
-      {
-        color: "#650065",
-        fontWeight: '600',
-        backgroundColor: 'white',
-      },
+    color: "#650065",
+    fontWeight: 'bold',
+    backgroundColor: 'white',
   },
 
 
@@ -87,5 +123,6 @@ export default makeStyles((theme) => ({
 
   categoryBtn: {
     color: 'white',
+    fontWeight: '600',
   },
 }));
