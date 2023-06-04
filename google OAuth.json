@@ -7,11 +7,12 @@
         "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
         "client_secret": "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",
         "redirect_uris": [
-            "https://localhost:3000",
-            "https://localhost:3000/auth"
+            "https://css-fx-server.netlify.app/",
+            "https://css-fx-server.netlify.app/auth"
         ],
         "javascript_origins": [
-            "https://localhost:3000"
+            "https://css-fx-server.netlify.app/"
         ]
     }
 }
+

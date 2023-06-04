@@ -1,6 +1,9 @@
 import axios from 'axios'
 
-const API = axios.create({ baseURL: 'http://localhost:5000'})
+// 'http://localhost:5000'
+const URL = 'https://css-fx-server.netlify.app/'
+
+const API = axios.create({ baseURL: URL})
 
 // ACONTECE EM QUALQUER REQUEST
 API.interceptors.request.use( (req) => {
