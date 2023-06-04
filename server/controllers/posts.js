@@ -7,7 +7,7 @@ import PostMessage from '../models/postMessage.js'
 const router = express.Router()
 
 export const getPost = async (req, res) => {
-    res.header('Access-Control-Allow-Origin', 'https://css-fx.netlify.app/*');
+    
 
     const { id } = req.params
 
@@ -21,7 +21,7 @@ export const getPost = async (req, res) => {
 }
 
 export const getPosts = async (req, res) => {
-    res.header('Access-Control-Allow-Origin', 'https://css-fx.netlify.app/*');
+    
     // const { page } = req.query
 
     try {
@@ -45,7 +45,7 @@ export const getPosts = async (req, res) => {
 // PARAMS -> /posts/:id , logo -> id = 123      mais usado em coisas especificas
 
 export const getPostsBySearch = async (req, res) => {
-    res.header('Access-Control-Allow-Origin', 'https://css-fx.netlify.app/*');
+    
 
     const { searchQuery, tags } = req.query
     // const _searchQuery = req.query.searchQuery
@@ -69,7 +69,7 @@ export const getPostsBySearch = async (req, res) => {
 }
 
 export const createPost = async (req, res) => {
-    res.header('Access-Control-Allow-Origin', 'https://css-fx.netlify.app/*');
+    
 
     const post = req.body
 
@@ -88,7 +88,7 @@ export const createPost = async (req, res) => {
 }
 
 export const updatePost = async (req, res) => {
-    res.header('Access-Control-Allow-Origin', 'https://css-fx.netlify.app/*');
+    
 
     const { id: _id } = req.params
     const post = req.body
@@ -102,7 +102,7 @@ export const updatePost = async (req, res) => {
 }
 
 export const deletePost = async (req, res) => {
-    res.header('Access-Control-Allow-Origin', 'https://css-fx.netlify.app/*');
+    
 
     const { id } = req.params
     // const post = req.body;
@@ -115,7 +115,7 @@ export const deletePost = async (req, res) => {
 }
 
 export const likePost = async (req, res) => {
-    res.header('Access-Control-Allow-Origin', 'https://css-fx.netlify.app/*');
+    
 
     const { id } = req.params
     const userId = req.userId
@@ -141,11 +141,11 @@ export const likePost = async (req, res) => {
 
     } else {
         // DISLIKE A POST
-        post.likes = post.likes.filter((id) => id !== String(userId))
+        post.likes = post?.likes?.filter((id) => id !== String(userId))
 
     }
 
-    const indexUser = user.likedPosts.findIndex((postLikedId) => (postLikedId._id.toString() === id) )
+    const indexUser = user?.likedPosts?.findIndex((postLikedId) => (postLikedId._id.toString() === id) )
 
     console.log(`indexUser ${indexUser}`)
 
@@ -155,7 +155,7 @@ export const likePost = async (req, res) => {
 
     } else {
         // DISLIKE A POST
-        user.likedPosts = user.likedPosts.filter((postLikedId) => (postLikedId._id.toString() !== id))
+        user.likedPosts = user?.likedPosts?.filter((postLikedId) => (postLikedId._id.toString() !== id))
     }
 
 

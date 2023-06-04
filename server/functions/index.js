@@ -17,17 +17,17 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }))
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }))
 app.use(cors())
 
+
 // app.use(express.json());
 app.use('/posts', postRoutes)
 app.use('/user', userRoutes)
 
 // const CONNECTION_URL = 'mongodb+srv://guilherme:4988010@cssfx.spmitbq.mongodb.net/?retryWrites=true&w=majority';
-// const PORT = process.env.PORT;
 
 mongoose.set("strictQuery", true);
 
 mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => app.listen(PORT, () => {
+    .then(() => app.listen( () => {
         console.log(`Server running on port`)
     }
     ))
@@ -36,5 +36,4 @@ mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnified
     }
     );
 
-// app.use('/.netlify/functions/api', router);
-module.exports.handler = serverless(app)
+// module.exports.handler = serverless(app)

@@ -1,9 +1,9 @@
 [build]
-	functions = "functions"
-	
-[[redirects]]
-  from = "/"
-  to = "https://css-fx.netlify.app/"
-  status = 200
-  force = true
-  headers = {X-From = "Netlify"}
+  functions = "functions"
+
+[[headers]]
+  for = "/*"
+    [headers.values]
+    Access-Control-Allow-Origin = "https://css-fx.netlify.app"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, PATCH"
+    Access-Control-Allow-Headers = "Content-Type, Authorization"

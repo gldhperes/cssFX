@@ -2,11 +2,11 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./functions/index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js",
-    "build": "netlify deploy --prod"
+    "start": "nodemon ./functions/index.js",
+    "build": "node ./functions/index.js"
   },
   "keywords": [],
   "author": "",
