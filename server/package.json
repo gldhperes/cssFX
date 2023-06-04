@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon index.js",
-    "build": "node index.js -d dist"
+    "build": "babel ./ -d dist"
   },
   "keywords": [],
   "author": "",
