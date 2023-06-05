@@ -23,7 +23,6 @@ app.use(cors({
   }));
 
 
-// app.use(express.json());
 app.use('/posts', postRoutes)
 app.use('/user', userRoutes)
 
@@ -33,7 +32,7 @@ mongoose.set("strictQuery", true);
 
 mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => app.listen( () => {
-        console.log(`Server running on port`)
+        console.log(`Server running`)
     }
     ))
     .catch((error) => {
