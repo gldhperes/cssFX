@@ -40,4 +40,4 @@ mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: tr
     }
     );
 
-module.exports.handler = serverless(app)
+// module.exports.handler = serverless(app)
