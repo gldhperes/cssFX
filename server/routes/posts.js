@@ -6,7 +6,6 @@ import auth from "../middleware/auth.js";
 const router = express.Router()
 
 router.get('/', getPosts),
-router.get('/posts', getPosts),
 router.get('/search', getPostsBySearch) 
 router.get('/:id', getPost) 
 
