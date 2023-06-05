@@ -3,7 +3,8 @@ import axios from 'axios'
 // const URL = 'https://css-fx-server.netlify.app'
 // const URL = 'http://localhost'
 
-const URL = "https://cssfx-production.up.railway.app"
+// const URL = "https://cssfx-production.up.railway.app"
+const URL = ""
 const API = axios.create({ baseURL: URL })
 
 // ACONTECE EM QUALQUER REQUEST

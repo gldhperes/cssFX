@@ -26,7 +26,7 @@ app.use(cors({
 app.use('/posts', postRoutes)
 app.use('/user', userRoutes)
 
-const CONNECTION_URL = 'mongodb+srv://guilherme:4988010@cssfx.spmitbq.mongodb.net/?retryWrites=true&w=majority';
+const CONNECTION_URL = 'mongodb+srv://guilhermex:4988010@cssfx.spmitbq.mongodb.net/?retryWrites=true&w=majority';
 const PORT = 3333 || process.env.PORT 
 
 mongoose.set("strictQuery", true);

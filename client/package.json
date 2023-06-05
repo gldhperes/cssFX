@@ -3,7 +3,7 @@
   "name": "mern-stack-client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "https://cssfx-production.up.railway.app",
+  "proxy": "https://cssfx-production.up.railway.app:3333",
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
