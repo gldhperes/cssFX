@@ -16,15 +16,14 @@ dotenv.config()
 app.use(bodyParser.json({ limit: "30mb", extended: true }))
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }))
 
+app.use('/posts', postRoutes)
+app.use('/user', userRoutes)
+
 app.use(cors({
     origin: ['*'],
     methods: ['GET, POST, PUT, DELETE, PATCH'],
     allowedHeaders: 'Content-Type, Authorization'
 }));
-
-
-app.use('/posts', postRoutes)
-app.use('/user', userRoutes)
 
 const CONNECTION_URL = 'mongodb+srv://guilherme:4988010@cssfx.spmitbq.mongodb.net/?retryWrites=true&w=majority';
 
