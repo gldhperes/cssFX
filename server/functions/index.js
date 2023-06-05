@@ -32,14 +32,22 @@ const PORT = 3001
 mongoose.set("strictQuery", true);
 
 mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => app.listen(PORT, () => {
-        console.log(`Server running`)
+    .then(() => {
+        console.log("Conectado com o banco de dados");
+        InitializeServer()
     }
-    ))
+    )
     .catch((error) => {
         console.log("Algo deu errado");
         console.log(error.message);
     }
     );
+
+function InitializeServer() {
+    app.listen(PORT, () => {
+        console.log(`Server running`)
+    })
+}
+
 
 // module.exports.handler = serverless(app)
