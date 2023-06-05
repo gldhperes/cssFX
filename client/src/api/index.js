@@ -1,15 +1,16 @@
 import axios from 'axios'
 
-// 'http://localhost:5000'
-const URL = 'https://css-fx-server.netlify.app/'
+// const URL = 'https://css-fx-server.netlify.app'
+// const URL = 'http://localhost'
 
-const API = axios.create({ baseURL: URL})
+const URL = 'https://cssfx-production.up.railway.app'
+const API = axios.create({ baseURL: URL })
 
 // ACONTECE EM QUALQUER REQUEST
-API.interceptors.request.use( (req) => {
+API.interceptors.request.use((req) => {
     const profile = JSON.parse(localStorage.getItem('profile'));
 
-    if( profile ){    
+    if (profile) {
         req.headers.Authorization = `Bearer ${profile.token}`
     }
 
@@ -29,11 +30,11 @@ export const signIn = (formData) => API.post(`/user/signin`, formData)
 export const signUp = (formData) => API.post(`/user/signup`, formData)
 export const googleSignIn = (profileObj) => API.post(`/user/googlesignin`, profileObj)
 
-export const favoritePost = (userId , postId) => API.patch(`/user/${userId}/favoritePost`, postId)
+export const favoritePost = (userId, postId) => API.patch(`/user/${userId}/favoritePost`, postId)
 export const getFavoritePosts = (userId) => API.get(`/user/${userId}/favoritePosts`)
 export const getUserPosts = (userId) => API.get(`/user/${userId}/userPosts`)
-export const followUser = ( followData ) => API.post(`/user/follow`, followData)
+export const followUser = (followData) => API.post(`/user/follow`, followData)
 export const getFollowing = (userId) => API.get(`/user/${userId}/following`)
-export const getLikedsPosts = (userId) => API.get(`/user/${userId}/likeds` )
+export const getLikedsPosts = (userId) => API.get(`/user/${userId}/likeds`)
 export const getUserProfile = (userId) => API.get(`/user/${userId}/profile`)
 export const fetchUsersBySearch = (userName) => API.get(`/user/search?searchQuery=${userName || 'none'}`)
