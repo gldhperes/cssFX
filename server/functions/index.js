@@ -17,8 +17,8 @@ app.use(bodyParser.json({ limit: "30mb", extended: true }))
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }))
 
 app.use(cors({ 
-    origin: 'https://css-fx.netlify.app',
-    methods: 'GET, POST, PUT, DELETE',
+    origin: ['*'],
+    methods: 'GET, POST, PUT, DELETE, PATCH',
     allowedHeaders: 'Content-Type, Authorization'
   }));
 
