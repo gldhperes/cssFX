@@ -44,6 +44,6 @@ mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnified
 
 function InitializeServer() {
     app.listen(process.env.PORT || 3333, () => {
-        console.log(`Server running on ${PORT}`)
+        console.log(`Server running`)
     })
 }
