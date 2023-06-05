@@ -26,7 +26,7 @@ app.use(cors({
 
 app.use('/posts', postRoutes)
 app.use('/user', userRoutes)
-app.use('/', testRoutes)
+// app.use('/', testRoutes)
 
 
 
