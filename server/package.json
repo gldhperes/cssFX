@@ -5,8 +5,8 @@
   "main": "./functions/index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon ./functions/index.js",
-    "build": "node ./functions/index.js build"
+    "start": "nodemon ./functions/index.js"
+    
   },
   "keywords": [],
   "author": "",
