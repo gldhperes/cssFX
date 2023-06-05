@@ -9,7 +9,7 @@ import fs from 'fs';
 
 import postRoutes from './routes/posts.js'
 import userRoutes from './routes/users.js'
-import testRoutes from './routes/test.js'
+// import testRoutes from './routes/test.js'
 
 const app = express();
 dotenv.config()
