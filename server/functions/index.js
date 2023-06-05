@@ -20,9 +20,10 @@ app.use('/posts', postRoutes)
 app.use('/user', userRoutes)
 
 app.use(cors({
-    origin: ['*'],
-    methods: ['GET, POST, PUT, DELETE, PATCH'],
-    allowedHeaders: 'Content-Type, Authorization'
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    allowedHeaders: ["Content-Type", "Authorization","Access-Control-Allow-Origin"],
+    // credentials: true
 }));
 
 const CONNECTION_URL = 'mongodb+srv://guilherme:4988010@cssfx.spmitbq.mongodb.net/?retryWrites=true&w=majority';
