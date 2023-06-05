@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "nodemon ./functions/index.js",
-    "build":"npm run build"
+    "build": "babel ./functions -d ./dist"
   },
   "keywords": [],
   "author": "",
