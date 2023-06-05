@@ -18,10 +18,9 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }))
 
 
 app.use(cors({
-    origin: ["*"],
+    origin: "https://css-fx.netlify.app",
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization", "Access-Control-Allow-Origin"],
-    // credentials: true
 }));
 
 app.use('/posts', postRoutes)
@@ -38,6 +37,7 @@ mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: tr
     }
     ))
     .catch((error) => {
+        console.log("Algo deu errado");
         console.log(error.message);
     }
     );
