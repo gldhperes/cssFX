@@ -7,8 +7,8 @@ import serverless from 'serverless-http'
 import fs from 'fs';
 
 
-import postRoutes from '../routes/posts.js'
-import userRoutes from '../routes/users.js'
+import postRoutes from './routes/posts.js'
+import userRoutes from './routes/users.js'
 
 const app = express();
 dotenv.config()
