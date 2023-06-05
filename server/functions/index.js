@@ -26,12 +26,11 @@ app.use(cors({
 app.use('https://cssfx-production.up.railway.app/posts', postRoutes)
 app.use('/user', userRoutes)
 
-const CONNECTION_URL = 'mongodb+srv://guilherme:4988010@cssfx.spmitbq.mongodb.net/?retryWrites=true&w=majority';
-const PORT = 3333 || process.env.PORT 
+
 
 mongoose.set("strictQuery", true);
 
-mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         console.log("Conectado com o banco de dados");
         InitializeServer()
@@ -44,7 +43,7 @@ mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: tr
     );
 
 function InitializeServer() {
-    app.listen(PORT, () => {
+    app.listen(process.env.PORT || 3333, () => {
         console.log(`Server running on ${PORT}`)
     })
 }

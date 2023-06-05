@@ -19,9 +19,9 @@ const App = () => {
                 <Container maxWidth="xl" disableGutters={true}>
 
                     <Routes>
+                        <Route path={recentPosts} exact element={<Home />} />
                         <Route path="/" exact element={<Navigate to='/posts' />} />
                         <Route path={`${recentPosts}/:id`} element={<PostDetails />} />
-                        <Route path={recentPosts} exact element={<Home />} />
 
                         <Route path={`${recentPosts}${search}`} exact element={<Home />} />
 
