@@ -27,7 +27,7 @@ app.use('/posts', postRoutes)
 app.use('/user', userRoutes)
 
 const CONNECTION_URL = 'mongodb+srv://guilherme:4988010@cssfx.spmitbq.mongodb.net/?retryWrites=true&w=majority';
-const PORT = 3001
+const PORT = 3333
 
 mongoose.set("strictQuery", true);
 
@@ -45,9 +45,6 @@ mongoose.connect(CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: tr
 
 function InitializeServer() {
     app.listen(PORT, () => {
-        console.log(`Server running`)
+        console.log(`Server running on ${PORT}`)
     })
 }
-
-
-// module.exports.handler = serverless(app)
