@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
-import {Paper, Button } from '@material-ui/core';
+import {Paper, Button } from '@mui/material';
 
 import { FAVORITES, FOLLOWING, LIKEDS, POSTS } from '../../constants/pagesTypes.js'
 import { favorites, recentPosts, likeds, following, auth } from '../../constants/routes.js';

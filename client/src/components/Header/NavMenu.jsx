@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { Avatar, Typography } from '@material-ui/core'
+import { Avatar, Typography } from '@mui/material'
 import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
 import Menu from '@mui/material/Menu';

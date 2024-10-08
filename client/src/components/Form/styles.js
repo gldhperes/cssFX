@@ -1,5 +1,5 @@
 
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 
 const monokaiBackgroundColor = 'rgb(46, 46, 46)'
 const editorRadius = '5px'

@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 
 const dimCreatorIcon = '80px'
 export default makeStyles((theme) => ({

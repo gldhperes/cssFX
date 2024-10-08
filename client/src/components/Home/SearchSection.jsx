@@ -1,20 +1,20 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Paper, TextField, Button, InputAdornment } from '@material-ui/core';
+import { TextField, Button, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import ChipInput from 'material-ui-chip-input';
+import Chip from '@mui/material/Chip';
 
 import { getPostsBySearch } from '../../actions/posts'
 import { getUsersBySearch } from '../../actions/user'
 import useStyle from './styles'
 
-import { ThemeProvider } from '@material-ui/core/styles';
-import theme from '../../colorTheme';
-import inputTheme from '../../inputTheme';
-import Pagination from "../Pagination"
+// import { ThemeProvider } from '@mui/styles';
+// import theme from '../../colorTheme';
+// import inputTheme from '../../inputTheme';
+// import Pagination from "../Pagination"
 
-import { makeStyles } from '@material-ui/core/styles';
+// import { makeStyles } from '@mui/styles';
 
 const SearchSection = ({ searchQuery }) => {
     const classes = useStyle()
@@ -101,7 +101,7 @@ const SearchSection = ({ searchQuery }) => {
                 />
 
 
-                <ChipInput
+                <Chip
                     className={classes.inputComponent}
                     value={tags}
                     onAdd={handleAdd}

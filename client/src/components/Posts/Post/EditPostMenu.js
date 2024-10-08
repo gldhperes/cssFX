@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 
 
 import MoreHorizRoundedIcon from '@mui/icons-material/MoreHorizRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
-import DeleteIcon from '@material-ui/icons/Delete'
+import DeleteIcon from '@mui/icons-material/Delete'
 
 
 import useStyle from './styles'

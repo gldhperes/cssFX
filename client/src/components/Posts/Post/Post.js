@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-import { Card, CardActions, Button, Typography, IconButton, Avatar } from '@material-ui/core'
+import { Card, CardActions, Button, Typography, IconButton, Avatar } from '@mui/material'
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 
@@ -13,7 +13,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 
 // import { FAVORITES, MOST_LIKEDS, USER_POSTS } from "../../../constants/pagesTypes";
-// import red from "@material-ui/core/colors/red";
+// import red from "@mui/material/colors/red";
 // import moment from 'moment'
 import { useNavigate } from 'react-router-dom'
 import { likePost, favoritePost } from "../../../actions/posts"

@@ -1,5 +1,5 @@
 import React from "react";
-import { Container } from '@material-ui/core';
+import { Container } from '@mui/material';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
 import Home from "./components/Home/Home";
@@ -7,7 +7,7 @@ import Auth from "./components/Auth/Auth";
 import PostDetails from "./components/PostDetails/PostDetails";
 import { auth, userRoute, search, recentPosts, createPost, updatePost, favorites, following, profile, likeds } from './constants/routes'
 
-import { ThemeProvider } from '@material-ui/core/styles';
+import { ThemeProvider } from '@mui/styles';
 import theme from './colorTheme';
 
 const App = () => {

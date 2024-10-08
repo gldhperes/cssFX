@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 
 const postCreatorDim = "50px";
 const contentPadding = '5px auto';

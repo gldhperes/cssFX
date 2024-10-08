@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-import { Avatar, Typography } from '@material-ui/core'
+import { Avatar, Typography } from '@mui/material'
 
 import { profile } from '../../constants/routes'
 import { getUserProfile } from '../../actions/user'

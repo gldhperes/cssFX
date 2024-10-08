@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { Avatar, Button, Paper, Grid, Typography, Container } from '@material-ui/core'
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+import { Avatar, Button, Paper, Grid, Typography, Container } from '@mui/material';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import { GoogleLogin } from 'react-google-login'
 import { useNavigate } from 'react-router-dom';

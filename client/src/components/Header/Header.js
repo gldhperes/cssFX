@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { AppBar, Typography, Toolbar, Button } from '@material-ui/core'
+import { AppBar, Typography, Toolbar, Button } from '@mui/material'
 
 import memories from '../../images/memories.png';
 

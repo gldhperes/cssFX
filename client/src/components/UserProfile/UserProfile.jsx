@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 import useStyle from './styles'
 import Post from '../Posts/Post/Post'
-import { Avatar } from '@material-ui/core'
+import { Avatar } from '@mui/material'
 
 const UserProfile = () => {
     const userProfile = useSelector((state) => state.user.userProfile)
