@@ -6,8 +6,8 @@
   "main": "./functions/index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js",
-    "build": "babel  -d ./build"
+    "start": "node index.js",
+    "build": "babel -d ./dist"
   },
   "keywords": [],
   "author": "",
