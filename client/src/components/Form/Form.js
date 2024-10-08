@@ -4,11 +4,11 @@ import FileBase from 'react-file-base64'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 
-import { createPost, updatePost } from '../../actions/posts';
+// import { createPost, updatePost } from '../../actions/posts';
 import useStyles from './styles';
 
 import CodeEditorForm from "./CodeEditorForm";
-import checkCode from "./checkCode"
+// import checkCode from "./checkCode"
 import OnSubmitCodeMessage from "./OnSubmitCodeMessage";
 // import CodeEditorForm from "./CodeEditorForm";
 
