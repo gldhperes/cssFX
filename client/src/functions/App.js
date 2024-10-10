@@ -2,13 +2,13 @@ import React from "react";
 import { Container } from '@mui/material';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
-import Home from "./components/Home/Home.js";
-import Auth from "./Auth/Auth.js";
-import PostDetails from "./components/PostDetails/PostDetails";
-import { auth, userRoute, search, recentPosts, createPost, updatePost, favorites, following, profile, likeds } from './constants/routes'
+import Home from "../components/Home/Home.js";
+import Auth from "../Auth/Auth.js";
+import PostDetails from "../components/PostDetails/PostDetails.jsx";
+import { auth, userRoute, search, recentPosts, createPost, updatePost, favorites, following, profile, likeds } from '../constants/routes.js'
 
 import { ThemeProvider } from '@mui/styles';
-import theme from './colorTheme';
+import theme from '../colorTheme.js';
 
 const App = () => {
     const user = JSON.parse(localStorage.getItem('profile'))
