@@ -6,7 +6,7 @@ import { configureStore } from "@reduxjs/toolkit";
 
 import thunk from 'redux-thunk'
 
-import reducer from './reducers/index.js'
+import reducer from './reducers'
 
 import App from './App.js';
 import './index.css';
