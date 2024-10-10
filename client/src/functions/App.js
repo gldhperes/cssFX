@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
 import Home from "../components/Home/Home.js";
 import Auth from "../Auth/Auth.js";
-import PostDetails from "../components/PostDetails/PostDetails.jsx";
+import PostDetails from "../components/PostDetails/PostDetails.jsx"
 import { auth, userRoute, search, recentPosts, createPost, updatePost, favorites, following, profile, likeds } from '../constants/routes.js'
 
 import { ThemeProvider } from '@mui/styles';

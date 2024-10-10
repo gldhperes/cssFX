@@ -6,7 +6,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 
 import { getPost, getPostsBySearch } from '../../actions/posts'
 import useStyles from './styles.js'
-import CodeEditors from './CodeEditors'
+import CodeEditors from "./CodeEditors.jsx"
 import { profile } from '../../constants/routes'
 import { getUserProfile } from '../../actions/user'
 

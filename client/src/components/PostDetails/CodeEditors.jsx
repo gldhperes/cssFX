@@ -16,8 +16,8 @@ import "ace-builds/src-noconflict/ext-language_tools"
 
 import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 
-
 import useStyles from './styles.js'
+
 const CodeEditors = ({ post }) => {
 
     const classes = useStyles()
