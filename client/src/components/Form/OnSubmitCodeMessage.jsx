@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
-import checkCode from './checkCode';
-import { createPost, updatePost } from '../../actions/posts';
+import checkCode from "./checkCode.js";
+import { createPost, updatePost } from "../../actions/posts.js";
 
 
 import useStyles from './styles';

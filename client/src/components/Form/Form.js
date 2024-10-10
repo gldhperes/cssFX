@@ -7,9 +7,9 @@ import { useSelector } from 'react-redux'
 // import { createPost, updatePost } from '../../actions/posts';
 import useStyles from './styles';
 
-import CodeEditorForm from "./CodeEditorForm";
+import CodeEditorForm from "./CodeEditorForm.js";
 // import checkCode from "./checkCode"
-import OnSubmitCodeMessage from "./OnSubmitCodeMessage";
+import OnSubmitCodeMessage from "./OnSubmitCodeMessage.jsx";
 // import CodeEditorForm from "./CodeEditorForm";
 
 const Form = () => {
