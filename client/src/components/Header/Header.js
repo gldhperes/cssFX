@@ -6,7 +6,7 @@ import memories from '../../images/memories.png';
 
 import NavMenu from './NavMenu';
 
-import colorTheme from '../colorTheme';
+// import colorTheme from '../../colorTheme';
 import useStyle from './styles'
 
 const Header = ({ logout, user}) => {

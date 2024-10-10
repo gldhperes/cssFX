@@ -8,23 +8,23 @@ import decode from 'jwt-decode'
 
 // import { getPostsBySearch } from '../../actions/posts'
 // import Pagination from "../Pagination"
-import RecentPosts from "../Posts/RecentPosts";
-import FavoritePosts from "../Posts/FavoritePosts";
-import UsersCards from "../Posts/UsersCards";
-import LikedsPosts from "../Posts/LikedsPosts";
-import Header from "../../Header/Header.js";
-import SearchSection from "./SearchSection";
-import CategorySection from "./CategorySection";
-import UserProfile from "../UserProfile/UserProfile";
-import Form from "../Form/Form";
+import RecentPosts from "../Posts/RecentPosts.jsx";
+import FavoritePosts from "../Posts/FavoritePosts.jsx";
+import UsersCards from "../Posts/UsersCards.jsx";
+import LikedsPosts from "../Posts/LikedsPosts.jsx";
+import Header from "../Header/Header.js";
+import SearchSection from "./SearchSection.jsx";
+import CategorySection from "./CategorySection.jsx";
+import UserProfile from "../UserProfile/UserProfile.jsx";
+import Form from "../Form/Form.js";
 
 import { logout } from "../../actions/auth.js";
-import { getPosts } from "../../actions/posts";
-import { getFavoritePosts, getFollowing, getLikedsPosts } from "../../actions/user";
-import { search, favorites, recentPosts, createPost, updatePost, following, profile, likeds, userRoute } from "../../constants/routes";
+import { getPosts } from "../../actions/posts.js";
+import { getFavoritePosts, getFollowing, getLikedsPosts } from "../../actions/user.js";
+import { search, favorites, recentPosts, createPost, updatePost, following, profile, likeds, userRoute } from "../../constants/routes.js";
 
 
-import useStyles from './styles';
+import useStyles from './styles.js';
 
 function useQuery() {
     return new URLSearchParams(useLocation().search)
@@ -39,7 +39,7 @@ const Home = () => {
     const searchQuery = query.get('searchQuery')
 
     // const [currentId, setCurrentId] = useState(null)
-    const [tags, setTags] = useState([])
+    // const [tags, setTags] = useState([])
 
     // CONSTANTES PARA O USUARIO
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))

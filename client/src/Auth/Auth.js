@@ -10,7 +10,7 @@ import { gapi } from 'gapi-script';
 
 import Icon from './Icon.js'
 import Input from './Input.js'
-import { signin, signup, googleSignIn } from '../../actions/auth.js'
+import { signin, signup, googleSignIn } from '../actions/auth.js'
 
 import useStyles from './styles.js'
 const initalState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' }
