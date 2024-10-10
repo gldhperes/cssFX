@@ -6,7 +6,7 @@ import { FAVORITES, FOLLOWING, LIKEDS, POSTS } from '../../constants/pagesTypes.
 import { favorites, recentPosts, likeds, following, auth } from '../../constants/routes.js';
 
 
-import useStyle from './styles'
+import useStyle from './styles.js'
 
 const CategorySection = ({ user }) => {
     const classes = useStyle()

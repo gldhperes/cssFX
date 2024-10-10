@@ -8,7 +8,7 @@ import { Avatar } from '@mui/material'
 const UserProfile = () => {
     const userProfile = useSelector((state) => state.user.userProfile)
 
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
+    // const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
 
     const classes = useStyle()
 

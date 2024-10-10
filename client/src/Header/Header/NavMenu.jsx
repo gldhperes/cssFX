@@ -8,8 +8,8 @@ import Tooltip from '@mui/material/Tooltip';
 import Menu from '@mui/material/Menu';
 import IconButton from '@mui/material/IconButton';
 
-import { getFavoritePosts, getUserProfile } from "../actions/user.js"
-import { FAVORITES, CREATE_A_POST, FOLLOWING, PROFILE, LOGOUT } from "../functions/constants/pagesTypes.js";
+import { getFavoritePosts, getUserProfile } from "../../actions/user.js"
+import { FAVORITES, CREATE_A_POST, FOLLOWING, PROFILE, LOGOUT } from "../../constants/pagesTypes.js";
 import { favorites, createPost, following, profile } from '../../constants/routes.js'; 
 
 import { FETCH_POST } from '../../constants/actionTypes.js';

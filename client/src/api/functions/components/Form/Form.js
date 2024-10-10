@@ -15,8 +15,8 @@ import OnSubmitCodeMessage from "./OnSubmitCodeMessage";
 const Form = () => {
     const classes = useStyles();
     const user = JSON.parse(localStorage.getItem('profile'))
-    const navigate = useNavigate()
-    const dispatch = useDispatch();
+    // const navigate = useNavigate()
+    // const dispatch = useDispatch();
     const [submited, setSubmited] = useState(false)
 
     const [currentId, setCurrentId] = useState('')

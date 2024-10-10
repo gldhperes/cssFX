@@ -1,6 +1,6 @@
-import { CREATE, FETCH_POST, FETCH_ALL, FETCH_BY_SEARCH, START_LOADING, END_LOADING, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
+import { CREATE, FETCH_POST, FETCH_ALL, FETCH_BY_SEARCH, START_LOADING, END_LOADING, UPDATE, DELETE, LIKE } from '../../constants/actionTypes';
 
-export default (state = { isLoading: true, posts: []}, action) => {
+const postsReducer = (state = { isLoading: true, posts: []}, action) => {
     // const reducer = ( state = [], actions)
     // Em Redux o 'state' sempre tem q ser igual à alguma coisa
 
@@ -77,3 +77,5 @@ export default (state = { isLoading: true, posts: []}, action) => {
             return state;
     }
 }
+
+export default postsReducer

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
 import { Card, CardActions, Button, Typography, IconButton, Avatar } from '@mui/material'
@@ -175,7 +175,7 @@ const Post = ({ post, favorited }) => {
         <Card className={`${classes.post} ${classes.flex}`} raised elevation={6}>
 
             <Button className={`${classes.flex} ${classes.postImg}`} onClick={() => openPostDetails()} >
-                <img className={`${classes.flex} ${classes.PostCodeImg}`} src={base64codeImg} />
+                <img className={`${classes.flex} ${classes.PostCodeImg}`} alt="" src={base64codeImg} />
             </Button>
 
             <div className={`${classes.postDetails} ${classes.flex}`}>

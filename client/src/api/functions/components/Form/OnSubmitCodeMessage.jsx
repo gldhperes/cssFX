@@ -14,6 +14,7 @@ const OnSubmitCodeMessage = ({ postData, clear, currentId, setSubmited }) => {
     const user = JSON.parse(localStorage.getItem('profile'))
 
     const [showErrorMessage, setShowErrorMessage] = useState(true);
+    const [errorMsg, setErrorMessage] = useState("");
 
     // const [codeOk, setCodeOk] = useState(null)
 
@@ -37,7 +38,7 @@ const OnSubmitCodeMessage = ({ postData, clear, currentId, setSubmited }) => {
         return () => {
             clearTimeout(timer);
         } // Limpa o timer se o componente for desmontado antes de expirar
-    }, []);
+    }, [setSubmited, showErrorMessage]);
 
     // Verifica se a mensagem de erro deve ser exibida
     if (!showErrorMessage) {
@@ -65,7 +66,7 @@ const OnSubmitCodeMessage = ({ postData, clear, currentId, setSubmited }) => {
         } else {
             if (b.result === false) {
                 let errorCode = []
-                const errorMsg = ''
+                
 
                 console.log(b.code);
 
@@ -83,7 +84,7 @@ const OnSubmitCodeMessage = ({ postData, clear, currentId, setSubmited }) => {
                 });
 
                 errorCode.forEach(element => {
-                    errorMsg += element + ' '
+                    setErrorMessage (element + ' ');
                     // setErrorMsg((prevErrorMsg) => prevErrorMsg + element + ' ');
                 });
 

@@ -1,6 +1,6 @@
 import { makeStyles } from '@mui/styles';
 
-const purple = '#650065'
+// const purple = '#650065'
 const darkPurple = '#1E001E'
 
 export default makeStyles((theme) => ({

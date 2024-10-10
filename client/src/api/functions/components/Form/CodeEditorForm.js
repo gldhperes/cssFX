@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 // ACE IMPORTS
 import AceEditor from "react-ace";
@@ -9,10 +9,10 @@ import "ace-builds/src-noconflict/theme-monokai";
 // import "ace-builds/src-noconflict/ext-language_tools"
 
 // PRETTIER - ORGANIZADOR DE CODIGOS
-import prettier from 'prettier/standalone';
-import htmlParser from 'prettier/parser-html';
-import cssParser from 'prettier/parser-postcss';
-import babelParser from 'prettier/parser-babel';
+// import prettier from 'prettier/standalone';
+// import htmlParser from 'prettier/parser-html';
+// import cssParser from 'prettier/parser-postcss';
+// import babelParser from 'prettier/parser-babel';
 
 
 

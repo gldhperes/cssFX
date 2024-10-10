@@ -1,4 +1,4 @@
-import { FAVORITE, GET_FAVORITE, GET_USER_POSTS, GET_USER_LIKED_POSTS, FOLLOWING, GET_FOLLOWING, GET_USER_PROFILE, FETCH_USERS_BY_SEARCH } from '../constants/actionTypes';
+import { FAVORITE, GET_FAVORITE, GET_USER_POSTS, GET_USER_LIKED_POSTS, FOLLOWING, GET_FOLLOWING, GET_USER_PROFILE, FETCH_USERS_BY_SEARCH } from '../../constants/actionTypes';
 
 const userReducer = (state = { likedPosts: [], favoritedPosts: [], userPosts: [], following: [], userProfile: [], }, action) => {
     switch (action.type) {
