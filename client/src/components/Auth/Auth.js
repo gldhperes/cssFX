@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { Avatar, Button, Paper, Grid, Typography, Container } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
-import { GoogleLogin } from 'react-google-login'
+import { GoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import { gapi } from 'gapi-script';
 
