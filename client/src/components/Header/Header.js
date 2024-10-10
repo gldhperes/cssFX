@@ -4,7 +4,7 @@ import { AppBar, Typography, Toolbar, Button } from '@mui/material'
 
 import memories from '../../images/memories.png';
 
-import NavMenu from './NavMenu';
+import NavMenu from "./NavMenu.jsx";
 
 // import colorTheme from '../../colorTheme';
 import useStyle from './styles'
