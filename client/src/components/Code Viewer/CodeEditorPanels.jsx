@@ -17,7 +17,7 @@ import "ace-builds/src-noconflict/ext-language_tools"
 
 
 import useStyles from './styles.js'
-const Code_Editor_Panels = ({ post, postData, setPostData, can_edit }) => {
+const CodeEditorPanels = ({ post, postData, setPostData, can_edit }) => {
     
     const [editable, SetCanEdit] = useState(can_edit);
     const classes = useStyles()
@@ -166,4 +166,4 @@ const Code_Editor_Panels = ({ post, postData, setPostData, can_edit }) => {
     )
 }
 
-export default Code_Editor_Panels
+export default CodeEditorPanels

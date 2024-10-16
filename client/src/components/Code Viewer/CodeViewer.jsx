@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 
 import useStyles from './styles.js'
 
-const Code_Viewer = ({ htmlCode, cssCode }) => {
+const CodeViewer = ({ htmlCode, cssCode }) => {
 
     const classes = useStyles()
 
@@ -46,4 +46,4 @@ const Code_Viewer = ({ htmlCode, cssCode }) => {
 
 
 
-export default Code_Viewer
+export default CodeViewer

@@ -1,12 +1,12 @@
 import React, { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { useDispatch } from "react-redux"
 
 import { Card, CardActions, Button, Typography, IconButton, Avatar, ThemeProvider } from '@mui/material'
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 
-import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
-import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+// import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
+// import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
@@ -18,7 +18,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 // import moment from 'moment'
 import { useNavigate } from 'react-router-dom'
 import { likePost, favoritePost } from "../../../actions/posts"
-import { followUser, getUserProfile } from "../../../actions/user"
+import { getUserProfile } from "../../../actions/user"
 import { profile } from "../../../constants/routes";
 
 import useStyles from './styles'
@@ -35,13 +35,13 @@ const Post = ({ post, favorited }) => {
 
     const [likes, setLikes] = useState(post?.likes)
     const [favorite, setFavorite] = useState(favorited)
-    const [follow, setFollow] = useState(useSelector((state) => state.user.following))
+    // const [follow, setFollow] = useState(useSelector((state) => state.user.following))
 
     const userId = user?.result?.googleId || user?.result?._id
     const postId = post?._id
     const postCreator = post?.creator
 
-    const [following, setFollowing] = useState(follow?.find((element) => element.id === postCreator) ? true : false)
+    // const [following, setFollowing] = useState(follow?.find((element) => element.id === postCreator) ? true : false)
 
     const hasLikedPost = likes.find((like) => like === userId)
 
@@ -54,11 +54,6 @@ const Post = ({ post, favorited }) => {
         dispatch(getUserProfile(user_id))
         navigate(profile)
     }
-
-
-
-
-
 
 
 
@@ -142,34 +137,34 @@ const Post = ({ post, favorited }) => {
 
 
     // HANDLE FOLLOW ===============================
-    const handleFollow = async (e) => {
+    // const handleFollow = async (e) => {
 
-        setFollowing(!following)
-        dispatch(followUser(userId, postCreator))
+    //     setFollowing(!following)
+    //     dispatch(followUser(userId, postCreator))
 
-    }
+    // }
 
-    const Follow = () => {
+    // const Follow = () => {
 
-        return (following)
-            ? (
-                <>
-                    <PersonAddAlt1Icon fontSize="small" />
+    //     return (following)
+    //         ? (
+    //             <>
+    //                 <PersonAddAlt1Icon fontSize="small" />
 
-                    <Typography variant="body2" component="h2">
-                        &nbsp;{"Following"}
-                    </Typography>
-                </>
-            ) : (
-                <>
-                    <PersonAddAltIcon fontSize="small" />
+    //                 <Typography variant="body2" component="h2">
+    //                     &nbsp;{"Following"}
+    //                 </Typography>
+    //             </>
+    //         ) : (
+    //             <>
+    //                 <PersonAddAltIcon fontSize="small" />
 
-                    <Typography variant="body2" component="h2">
-                        &nbsp;{"Follow"}
-                    </Typography>
-                </>
-            )
-    }
+    //                 <Typography variant="body2" component="h2">
+    //                     &nbsp;{"Follow"}
+    //                 </Typography>
+    //             </>
+    //         )
+    // }
 
 
     // FUNCTIONS =============================
@@ -223,10 +218,6 @@ const Post = ({ post, favorited }) => {
                     <IconButton style={{ color: "white" }} size="small" disabled={!user?.result} onClick={handleLike}>
                         <Likes />
                     </IconButton>
-
-                    {/* <IconButton style={{ color: "white" }} size="small" disabled={!user?.result} onClick={handleFollow}>
-                        <Follow />
-                    </IconButton> */}
 
                     {/* SE NAO FOR A PESSOA QUE CRIOU O POST, ENTAO NAO PODERA VER O BOTAO */}
                     {(user?.result?.googleId || user?.result?._id) === post?.creator && (

@@ -65,8 +65,8 @@ const SearchSection = ({ searchQuery }) => {
         }
     }
 
-    const handleAdd = (tag) => setTags([...tags, tag]);
-    const handleDelete = (tagToDelete) => setTags([tags.filter((tag) => tag !== tagToDelete)]);
+    // const handleAdd = (tag) => setTags([...tags, tag]);
+    // const handleDelete = (tagToDelete) => setTags([tags.filter((tag) => tag !== tagToDelete)]);
 
     return (
         <div className={`${classes.searchSection} ${classes.flex}`}>

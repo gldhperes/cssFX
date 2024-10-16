@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { AppBar, Typography, Toolbar, Button, ThemeProvider } from '@mui/material'
+import { Typography, Toolbar, Button } from '@mui/material'
 
 import memories from '../../images/memories.png';
 
 import NavMenu from "./NavMenu.jsx";
 
 import useStyle from './styles.js'
-import theme from '../../colorTheme.js';
+// import theme from '../../colorTheme.js';
 
 
 import { useDispatch, useSelector } from 'react-redux';

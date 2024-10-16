@@ -18,7 +18,7 @@ const UsersCards = ({ userID }) => {
 
     useEffect(() => {
         dispatch(getFollowing(userID))
-    }, [dispatch])
+    }, [userID, dispatch])
 
 
     function callUserProfile(creatorId) {
@@ -60,7 +60,6 @@ const UsersCards = ({ userID }) => {
                             (following) ? (
 
                                 following.map((creator) => (
-                                    (console.log(creator)),
                                     <div key={creator.id} >
                                         <FollowingUsers creatorName={creator.name} creatorId={creator.id} creatorPhoto={creator.photo} key={creator.id} />
                                     </div>

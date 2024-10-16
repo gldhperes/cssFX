@@ -15,7 +15,7 @@ const FavoritePosts = ({ userID }) => {
 
     useEffect(() => {
         dispatch(getFavoritePosts(userID))
-    }, [dispatch])
+    }, [userID, dispatch])
 
 
     return (

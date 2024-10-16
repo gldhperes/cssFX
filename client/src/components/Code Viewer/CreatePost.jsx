@@ -1,40 +1,37 @@
-import React, { useState, useEffect } from "react"
-import { TextField, Button, Typography, Paper } from '@mui/material';
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+
+import CodeViewer from './CodeViewer';
 import FileBase from 'react-file-base64'
 
-import { useDispatch, useSelector } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { TextField, Button, Typography, Paper } from '@mui/material';
 
-import { getPost } from '../../actions/posts.js'
+import useStyles from './styles.js'
 
-// import { createPost, updatePost } from '../../actions/posts';
-import useStyles from './styles.js';
+import CodeEditorPanels from './CodeEditorPanels';
+import OnSubmitCodeMessage from './OnSubmitCodeMessage.jsx';
+import { createPost } from '../../actions/posts.js';
 
-import Code_Editor_Panels from "./Code_Editor_Panels.jsx";
-// import checkCode from "./checkCode"
-import OnSubmitCodeMessage from "./OnSubmitCodeMessage.jsx";
-import Code_Viewer from "./Code_Viewer.jsx";
-// import CodeEditorForm from "./CodeEditorForm";
 
-const Update_Post = () => {
+const CreatePost = () => {
 
-    const classes = useStyles();
-    const user = JSON.parse(localStorage.getItem('profile'))
+    const classes = useStyles()
     const dispatch = useDispatch()
-
-    const { post } = useSelector((state) => state.posts)
-
-    const { id } = useParams()
+    
+    const user = JSON.parse(localStorage.getItem('profile'))
 
     const [submited, setSubmited] = useState(false)
 
     const [currentId, setCurrentId] = useState('')
 
-    const [postData, setPostData] = useState(post)
+    const [postData, setPostData] = useState({
+        title: '', htmlCode: '',
+        cssCode: '', backendCode: '',
+        codeImg: '', tags: ''
+    })
 
 
     const clear_postData = () => {
-        // setCurrentId(null);
 
         setPostData({
             title: '', htmlCode: '',
@@ -43,29 +40,16 @@ const Update_Post = () => {
         });
     };
 
+
     const handleUpdatePostData = (updated_post) => {
         setPostData(updated_post)
     }
-
-    useEffect(() => {
-        dispatch(getPost(id))
-    }, [id, dispatch])
-
-    useEffect(() => {
-        // clear()
-
-        if (post) {
-            console.log(`UPDATE POST: ${post}`);
-            setPostData(post);
-            setCurrentId(post._id)
-        }
-
-    }, [post])
 
 
     const handleSubmit = (e) => {
         e.preventDefault()
         setSubmited(true)
+        dispatch(createPost(postData))
     }
 
     if (!user?.result?.name) {
@@ -79,23 +63,22 @@ const Update_Post = () => {
     }
 
     return (
-        console.log(postData),
-
         <Paper className={`${classes.flex} ${classes.paper}`} elevation={6}>
             <form autoComplete="off" noValidate className={`${classes.flex} ${classes.form}`} onSubmit={handleSubmit}>
-                <Typography variant="h6">Update a Post</Typography>
+                <Typography variant="h6">{'Creating'} a Post</Typography>
 
                 {/* TITULO DO POST */}
-                <TextField name="title" variant="outlined" label="Title" fullWidth value={postData.title} onChange={(e) => setPostData({ ...postData, title: e.target.value })} />
-                <TextField name="tag" variant="outlined" label="Tag" fullWidth value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })} />
+                <TextField name="title" variant="outlined" label="Title" fullWidth required value={postData.title} onChange={(e) => setPostData({ ...postData, title: e.target.value })} />
+                <TextField name="tag" variant="outlined" label="Tag" fullWidth required value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })} />
 
-                <Code_Editor_Panels
+                <CodeEditorPanels
                     postData={postData}
                     setPostData={handleUpdatePostData}
                     can_edit={true}
                 />
 
-                <Code_Viewer htmlCode={postData?.htmlCode} cssCode={postData?.cssCode} />
+                <CodeViewer htmlCode={postData?.htmlCode} cssCode={postData?.cssCode} />
+
 
                 <FileBase type="file" multiple={false} onDone={({ base64 }) => setPostData({ ...postData, codeImg: base64 })} />
 
@@ -106,7 +89,7 @@ const Update_Post = () => {
                     type="submit"
                     fullWidth
                 >
-                    Update
+                    Create
                 </Button>
 
                 <Button
@@ -133,4 +116,4 @@ const Update_Post = () => {
     )
 }
 
-export default Update_Post;
+export default CreatePost

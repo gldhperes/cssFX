@@ -15,7 +15,7 @@ const LikedsPosts = ({ userID }) => {
 
   useEffect(() => {
     dispatch(getLikedsPosts(userID))
-  }, [])
+  }, [userID, dispatch])
 
 
   return (

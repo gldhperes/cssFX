@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Container, ThemeProvider } from '@mui/material';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
 import Home from "../components/Home/Home.jsx";
 import Auth from "../Auth/Auth.jsx";
 import PostDetails from "../components/PostDetails/PostDetails.jsx"
-import Update_Post from "../components/Code Viewer/Update_Post.jsx";
-import Create_Post from "../components/Code Viewer/Create_Post.jsx";
+import UpdatePost from "../components/Code Viewer/UpdatePost.jsx";
+import CreatePost from "../components/Code Viewer/CreatePost.jsx";
 
 import { auth, userRoute, search, recentPosts, createPost, updatePost, favorites, following, profile, likeds } from '../constants/routes.js'
 
@@ -48,10 +48,9 @@ const App = () => {
 
                         <Route path={following} exact element={<UsersCards userID={user?.result?._id}  />} />
 
+                        <Route path={createPost} exact element={<CreatePost />} />
 
-                        <Route path={createPost} exact element={<Create_Post />} />
-
-                        <Route path={`${updatePost}/:id`} exact element={<Update_Post />} />
+                        <Route path={`${updatePost}/:id`} exact element={<UpdatePost />} />
 
                         <Route path={profile} exact element={<UserProfile />} />
 

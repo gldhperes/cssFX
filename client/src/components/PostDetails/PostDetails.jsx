@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from 'react-redux'
 // import moment from 'moment' // biblioteca JS que lida com o tempo
 import { useParams, useNavigate } from 'react-router-dom'
 
-import { getPost, getPostsBySearch } from '../../actions/posts'
+import { getPost } from '../../actions/posts'
 import useStyles from './styles.js'
 
 import { profile } from '../../constants/routes'
 import { getUserProfile } from '../../actions/user'
-import Code_Editor_Panels from '../Code Viewer/Code_Editor_Panels.jsx'
-import Code_Viewer from '../Code Viewer/Code_Viewer.jsx'
+import CodeEditorPanels from '../Code Viewer/CodeEditorPanels.jsx'
+import CodeViewer from '../Code Viewer/CodeViewer.jsx'
 
 const PostDetails = () => {
 
@@ -88,11 +88,11 @@ const PostDetails = () => {
 
         <Divider style={{ width: '100%', backgroundColor: 'white', margin: '20px 0' }} />
 
-        <Code_Editor_Panels postData={post} can_edit={false} />
+        <CodeEditorPanels postData={post} can_edit={false} />
 
         <Divider style={{ width: '100%', backgroundColor: 'white', margin: '20px 0' }} />
 
-        <Code_Viewer htmlCode={htmlCode} cssCode={cssCode} />
+        <CodeViewer htmlCode={htmlCode} cssCode={cssCode} />
 
         {/* <div id="codeExemple" className={`${classes.codeExemple} ${classes.flex}`} >
 
