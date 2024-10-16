@@ -1,7 +1,7 @@
 import React from "react"
 import { CircularProgress } from '@mui/material'
 import { useSelector } from "react-redux";
-import Post from "./Post/Post";
+import Post from "./Post/Post.jsx";
 
 import useStyle from './styles'
 import { FAVORITES, POSTS, LIKEDS } from "../../constants/pagesTypes";
