@@ -15,7 +15,8 @@ import RecentPosts from "../components/Posts/RecentPosts.jsx";
 import FavoritePosts from "../components/Posts/FavoritePosts.jsx";
 import UsersCards from "../components/Posts/UsersCards.jsx";
 import LikedsPosts from "../components/Posts/LikedsPosts.jsx";
-import UserProfile from "../components/UserProfile/UserProfile.jsx";
+import UserProfile from "../components/UserProfile/UserProfile.jsx"
+
 
 import theme from "../colorTheme.js";
 
