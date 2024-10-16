@@ -3,7 +3,7 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "./functions/index.js",
+  "main": "./api/index.js",
   "type": "module",
   "scripts": {
     "start": "nodemon index.js",

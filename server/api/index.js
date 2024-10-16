@@ -3,12 +3,12 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors'
 import dotenv from 'dotenv'
-import serverless from 'serverless-http'
-import fs from 'fs';
+// import serverless from 'serverless-http'
+// import fs from 'fs';
 
 
-import postRoutes from './routes/posts.js'
-import userRoutes from './routes/users.js'
+import postRoutes from '../routes/posts.js'
+import userRoutes from '../routes/users.js'
 // import testRoutes from './routes/test.js'
 
 const app = express();
@@ -26,8 +26,6 @@ app.use(cors({
 
 app.use('/posts', postRoutes)
 app.use('/user', userRoutes)
-// app.use('/', testRoutes)
-
 
 
 mongoose.set("strictQuery", true);
