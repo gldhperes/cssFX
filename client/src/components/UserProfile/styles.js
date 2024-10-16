@@ -12,16 +12,16 @@ export default makeStyles(() => ({
 
     userProfileDetails: {
         width: '100%',
+        paddingTop: "20px",
+        
         color: 'white',
 
         flexFlow: "column",
-        justifyContent: 'center',
-        alignItems: 'center',
         gap: '10px',
     },
 
     userDetails:{
-
+        padding: "10px 0px",
         color: 'darkgrey',
 
         flexFlow: "row",

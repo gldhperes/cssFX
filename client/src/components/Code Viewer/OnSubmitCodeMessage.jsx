@@ -6,7 +6,7 @@ import checkCode from "./checkCode.js";
 import { createPost, updatePost } from "../../actions/posts.js";
 
 
-import useStyles from './styles';
+import useStyles from './styles.js';
 const OnSubmitCodeMessage = ({ postData, clear, currentId, setSubmited }) => {
     const classes = useStyles();
     const navigate = useNavigate()
@@ -47,10 +47,10 @@ const OnSubmitCodeMessage = ({ postData, clear, currentId, setSubmited }) => {
 
     if (postData) {
         const b = checkCode(postData.htmlCode, postData.cssCode, postData.backendCode)
-        console.log("Check Code: ", b);
+        // console.log("Check Code: ", b);
 
         if (b.result === true) {
-            console.log(`currentId: ${currentId}`);
+            // console.log(`currentId: ${currentId}`);
 
             if (currentId === null) {
                 dispatch(createPost({ ...postData, name: user?.result?.name }))
@@ -68,7 +68,7 @@ const OnSubmitCodeMessage = ({ postData, clear, currentId, setSubmited }) => {
                 let errorCode = []
                 
 
-                console.log(b.code);
+                // console.log(b.code);
 
                 b.code.forEach(element => {
                     if (element === "html") {

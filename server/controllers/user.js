@@ -1,9 +1,11 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
+import jwtDecode from 'jwt-decode';
 
 import User from '../models/user.js'
 import PostMessage from '../models/postMessage.js'
+import { log } from 'console';
 
 const expireTokenTime = '12h'
 
@@ -54,38 +56,46 @@ export const signup = async (req, res) => {
 export const googleSignIn = async (req, res) => {
 
     try {
-        const profileObj = req.body
-        const email = profileObj.email
+        const data = req.body
+        const credential = Object.keys(data)[0];
+        // console.log(credential);
 
-        // console.log(`profileObj: ${ JSON.stringify(profileObj)}`);
+        const profileObj = jwtDecode(credential);
+        // console.log("profileObj: ", profileObj);
+
+        const json_data = JSON.stringify(profileObj);
+        // console.log(json_data);
+
+        const email = profileObj?.email
+
 
 
         const existingUser = await User.findOne({ email })
 
         // SE NAO EXISTIR, ENTAO CRIA
         if (!existingUser) {
-            const password = `${profileObj.familyName}+${profileObj.googleId}+${profileObj.givenName}+54321`
+            const password = `${profileObj.family_name}+${profileObj?.sub}+${profileObj.given_name}+54321`
             const hashedPassword = await bcrypt.hash(password, 12)
 
-            const result = await User.create({ email: email, password: hashedPassword, name: `${profileObj.givenName} ${profileObj.familyName}` })
+            const result = await User.create({ email: email, password: hashedPassword, name: `${profileObj.given_name} ${profileObj.family_name}` })
 
             const token = jwt.sign({ email: result.email, id: result._id }, 'Teste', { expiresIn: expireTokenTime })
 
             res.status(200).json({ result: result, token })
         } else {
             // SE EXISTIR, ENTAO DEVOLVE USUARIO
-            const password = `${profileObj.familyName}+${profileObj.googleId}+${profileObj.givenName}+54321`
-            const isPasswordCorrect = await bcrypt.compare(password, existingUser.password)
+            // const password = `${profileObj.familyName}+${profileObj.googleId}+${profileObj.givenName}+54321`
+            // const isPasswordCorrect = await bcrypt.compare(password, existingUser.password)
 
             // console.log( `pass: ${existingUser.password}` );
             // console.log( `isPasswordCorrect: ${isPasswordCorrect}` );
 
             // const isPasswordCorrect = await bcrypt.compare(password, existingUser.password)
 
-            if (!isPasswordCorrect) {
-                console.log("Nao é o mesmo usuario");
-                return
-            }
+            // if (!isPasswordCorrect) {
+            //     console.log("Nao é o mesmo usuario");
+            //     return
+            // }
 
 
             const token = jwt.sign({ email: existingUser.email, id: existingUser._id }, 'Teste', { expiresIn: expireTokenTime })
@@ -95,7 +105,7 @@ export const googleSignIn = async (req, res) => {
 
 
     } catch (error) {
-        console.log(error.message);
+        console.log("Error: ", error.message);
     }
 }
 
@@ -114,8 +124,8 @@ export const favoritePost = async (req, res) => {
         if (!mongoose.Types.ObjectId.isValid(postId)) return res.status(404).send('No post with that id')
 
 
-        const user = await User.findById(userId);
-        // console.log(`user: ${user}`);
+        const user = await User.findOne({ userId });
+        console.log(`user: ${user}`);
 
         // const post = await PostMessage.findById( postId );
         // const index = user.findOne({_id: userId}, {favoritedPosts: 1}).favoritedPosts.includes(postId)
@@ -132,13 +142,13 @@ export const favoritePost = async (req, res) => {
         const posts = updatedFavPost.favoritedPosts
         // console.log("POSTS:", posts);
 
-        if (posts !== [] || posts !== null) return
+        if (posts != [] || posts !== null) return
 
         const favPost = await PostMessage.find({ _id: posts.toString().split(',') })
 
         res.status(200).json({ favPost: favPost });
     } catch (error) {
-        console.log(error.message);
+        console.log("Error on favorite post: ", error.message);
         res.status(500).json({ error });
     }
 }
@@ -177,7 +187,7 @@ export const getUserPosts = async (req, res) => {
         // console.log(`userId: ${userId}`);
         if (!userId) return res.json({ message: 'Unauthenticated' })
 
-        const user = await User.findById(userId);
+        const user = await User.findOne(userId);
 
         const posts = await PostMessage.find({ creator: userId.toString() })
 
@@ -185,7 +195,7 @@ export const getUserPosts = async (req, res) => {
 
         res.status(200).json({ _userPosts: posts });
     } catch (error) {
-        console.log(error);
+        console.log("Error on Get_User_Posts: ", error);
         res.status(500).json({ error });
     }
 }
@@ -218,7 +228,7 @@ export const follow = async (req, res) => {
 
         res.status(200).json({ following: follow });
     } catch (error) {
-        console.log(error.message);
+        console.log("Error on Follow: ", error.message);
 
     }
 }
@@ -229,27 +239,26 @@ export const following = async (req, res) => {
         const userId = req.params.userId
         console.log(`userId: ${userId}`);
 
-        // const user = await User.findById(userId)
-        const user = await User.findById(userId)
-        const userFollowing = user.following.toString().split(',')
-        console.log(`User Following: ${userFollowing}`);
-        let followingUsers = []
+        const user = await User.findById({ _id: userId });
+        // console.log(`user: ${user}`);
 
+    
+        const userFollowing = user?.following?.toString().split(',')
+        // console.log(`User Following: ${userFollowing}`);
+
+
+        let followingUsers = []
 
         if (userFollowing) {
 
             for (let i = 0; i < userFollowing.length; i++) {
-                // const element = await User.findById(userFollowing[i])
-                // console.log(element.name);
-
-                // followingUsers.push(element.name)
 
                 console.log(userFollowing[i]);
                 const followingUserId = userFollowing[i];
 
                 const followingUser = await User.findById(followingUserId);
 
-                console.log(`Following User: ${followingUser.name}`);
+                // console.log(`Following User: ${followingUser.name}`);
 
                 followingUsers.push({
                     name: followingUser.name,
@@ -257,15 +266,13 @@ export const following = async (req, res) => {
                     photo: followingUser.photo
                 });
             }
+
+            console.log(followingUsers);
+            res.status(200).json({ followingUsers: followingUsers });
         }
 
-        console.log(followingUsers);
-
-
-        res.status(200).json({ followingUsers: followingUsers });
     } catch (error) {
-        console.log(error);
-        console.log(error.message);
+        console.log("Error on Following: ", error.message);
     }
 }
 

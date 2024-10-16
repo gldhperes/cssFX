@@ -17,7 +17,7 @@ export default makeStyles((theme) => ({
   },
 
   smMargin: {
-    margin: theme.spacing(1),
+    // margin: theme.spacing(1),
   },
 
   actionDiv: {
@@ -27,6 +27,7 @@ export default makeStyles((theme) => ({
   // POSTS ================
   postsContainer: {
     width: '100%',
+    padding: "10px 5px",
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     gap: '25px',

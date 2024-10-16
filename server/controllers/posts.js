@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 
 import User from '../models/user.js'
 import PostMessage from '../models/postMessage.js'
+import { log } from 'console';
 
 const router = express.Router()
 
@@ -37,6 +38,8 @@ export const getPosts = async (req, res) => {
         // res.status(200).json({ data: posts, currentPage: Number(page), numberOfPages: Math.ceil(total / LIMIT) })
         res.status(200).json({ data: posts })
     } catch (error) {
+        console.log("Error on getPosts: ", error);
+        
         res.status(404).json({ message: error.message })
     }
 }

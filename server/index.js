@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }))
 
 
 app.use(cors({
-    origin: ["https://css-fx.netlify.app","*"],
+    origin: ["https://css-fx.netlify.app","*" /*, "http://localhost:3000"*/],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization", "Access-Control-Allow-Origin"],
 }));

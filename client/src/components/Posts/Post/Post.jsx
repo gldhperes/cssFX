@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 
-import { Card, CardActions, Button, Typography, IconButton, Avatar } from '@mui/material'
+import { Card, CardActions, Button, Typography, IconButton, Avatar, ThemeProvider } from '@mui/material'
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 
@@ -10,6 +10,7 @@ import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+// import theme from "../../../colorTheme.js"
 
 
 // import { FAVORITES, MOST_LIKEDS, USER_POSTS } from "../../../constants/pagesTypes";
@@ -22,6 +23,7 @@ import { profile } from "../../../constants/routes";
 
 import useStyles from './styles'
 import EditPostMenu from "./EditPostMenu";
+import theme from "../../../colorTheme";
 
 
 const Post = ({ post, favorited }) => {
@@ -48,13 +50,45 @@ const Post = ({ post, favorited }) => {
 
     // UserPage ================================
     const callUserPage = async (user_id) => {
-        console.log(user_id);
+        // console.log(user_id);
         dispatch(getUserProfile(user_id))
         navigate(profile)
     }
 
-    // HANDLE LIKES =========================
 
+
+
+
+
+
+
+    // HANDLE FAVORITE ===================
+    const handleFavorite = async (e) => {
+
+        setFavorite(!favorite)
+
+        dispatch(favoritePost(userId, { postId: postId }))
+    }
+
+    const Favorite = () => {
+
+        return (favorite) ?
+            (
+                <>
+                    <FavoriteIcon fontSize="small" />   
+                </>
+            ) : (
+                <>
+                    <FavoriteBorderIcon fontSize="small" />
+                </>
+
+            )
+    }
+
+
+
+    
+    // HANDLE LIKES =========================
     const handleLike = async (e) => {
         // e.preventDefault()
 
@@ -107,32 +141,7 @@ const Post = ({ post, favorited }) => {
 
 
 
-
-    // HANDLE FAVORITE ===================
-    const handleFavorite = async (e) => {
-
-        setFavorite(!favorite)
-
-        dispatch(favoritePost(userId, { postId: postId }))
-    }
-
-    const Favorite = () => {
-
-        return (favorite) ?
-            (
-                <>
-                    <FavoriteIcon fontSize="small" />
-                </>
-            ) : (
-                <>
-                    <FavoriteBorderIcon fontSize="small" />
-                </>
-
-            )
-    }
-
     // HANDLE FOLLOW ===============================
-
     const handleFollow = async (e) => {
 
         setFollowing(!following)
@@ -141,7 +150,7 @@ const Post = ({ post, favorited }) => {
     }
 
     const Follow = () => {
-    
+
         return (following)
             ? (
                 <>
@@ -172,60 +181,63 @@ const Post = ({ post, favorited }) => {
 
 
     return (
-        <Card className={`${classes.post} ${classes.flex}`} raised elevation={6}>
+        <ThemeProvider theme={theme}>
+            <Card className={`${classes.post} ${classes.flex}`} raised elevation={6}
+                sx={{ bgcolor: 'buttons.main', color: "primary.main" }}
+            >
+                <Button className={`${classes.flex} ${classes.postImg}`} onClick={() => openPostDetails()} >
+                    <img className={`${classes.flex} ${classes.PostCodeImg}`} alt="" src={base64codeImg} />
+                </Button>
 
-            <Button className={`${classes.flex} ${classes.postImg}`} onClick={() => openPostDetails()} >
-                <img className={`${classes.flex} ${classes.PostCodeImg}`} alt="" src={base64codeImg} />
-            </Button>
+                <div className={`${classes.postDetails} ${classes.flex}`}>
 
-            <div className={`${classes.postDetails} ${classes.flex}`}>
-
-                <div className={`${classes.tags} ${classes.flex}`}>
-                    <Typography variant="body2" component="h2">
-                        {
-                            post?.tags?.map((tag) => `#${tag} `)
-                        }
-                    </Typography>
-                </div>
-
-                <div className={`${classes.postInfo} ${classes.flex}`}>
-
-                    <Avatar className={`${classes.flex} ${classes.postCreatorIcon}`} src={base64creatorImg} onClick={() => callUserPage(postCreator)} />
-
-                    <div className={`${classes.postContent} ${classes.flex}`}>
-                        <Typography variant="h6"> {post?.title} </Typography>
-
-                        <Typography className={classes.postCreator} variant="h6" onClick={() => callUserPage(postCreator)}> {post.name} </Typography>
+                    <div className={`${classes.tags} ${classes.flex}`}>
+                        <Typography variant="body2" component="h2">
+                            {
+                                post?.tags?.map((tag) => `#${tag} `)
+                            }
+                        </Typography>
                     </div>
 
+                    <div className={`${classes.postInfo} ${classes.flex}`}>
+
+                        <Avatar className={`${classes.flex} ${classes.postCreatorIcon}`} src={base64creatorImg} onClick={() => callUserPage(postCreator)} />
+
+                        <div className={`${classes.postContent} ${classes.flex}`}>
+                            <Typography variant="h6"> {post?.title} </Typography>
+
+                            <Typography className={classes.postCreator} buttons variant="h6" onClick={() => callUserPage(postCreator)}> {post.name} </Typography>
+                        </div>
+
+
+                    </div>
 
                 </div>
 
-            </div>
+                <CardActions className={`${classes.postActions} ${classes.flex}`}>
 
-            <CardActions className={`${classes.postActions} ${classes.flex}`}>
+                    <IconButton size="small" disabled={!user?.result} style={{ color: "white" }} onClick={handleFavorite}>
+                        <Favorite />
+                    </IconButton>
 
-                <IconButton size="small" disabled={!user?.result} style={{ color: "white" }} onClick={handleFavorite}>
-                    <Favorite />
-                </IconButton>
+                    <IconButton style={{ color: "white" }} size="small" disabled={!user?.result} onClick={handleLike}>
+                        <Likes />
+                    </IconButton>
 
-                <IconButton style={{ color: "white" }} size="small" disabled={!user?.result} onClick={handleLike}>
-                    <Likes />
-                </IconButton>
+                    {/* <IconButton style={{ color: "white" }} size="small" disabled={!user?.result} onClick={handleFollow}>
+                        <Follow />
+                    </IconButton> */}
 
-                <IconButton style={{ color: "white" }} size="small" disabled={!user?.result} onClick={handleFollow}>
-                    <Follow />
-                </IconButton>
-
-                {/* SE NAO FOR A PESSOA QUE CRIOU O POST, ENTAO NAO PODERA VER O BOTAO */}
-                {(user?.result?.googleId || user?.result?._id) === post?.creator && (
-                    <EditPostMenu id={post._id} />
-                )}
+                    {/* SE NAO FOR A PESSOA QUE CRIOU O POST, ENTAO NAO PODERA VER O BOTAO */}
+                    {(user?.result?.googleId || user?.result?._id) === post?.creator && (
+                        <EditPostMenu id={postId} />
+                    )}
 
 
 
-            </CardActions>
-        </Card>
+                </CardActions>
+            </Card>
+        </ThemeProvider>
     )
 }
 

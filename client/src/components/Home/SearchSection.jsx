@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { TextField, Button, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import Chip from '@mui/material/Chip';
 
 import { getPostsBySearch } from '../../actions/posts'
 import { getUsersBySearch } from '../../actions/user'
@@ -101,14 +100,14 @@ const SearchSection = ({ searchQuery }) => {
                 />
 
 
-                <Chip
+                {/* <Chip
                     className={classes.inputComponent}
                     value={tags}
                     onAdd={handleAdd}
                     onDelete={handleDelete}
                     label="Search Tags"
                     variant="outlined"
-                />
+                /> */}
 
                 <TextField
                     id="outlined-search"

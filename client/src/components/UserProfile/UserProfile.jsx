@@ -8,12 +8,12 @@ import { Avatar } from '@mui/material'
 const UserProfile = () => {
     const userProfile = useSelector((state) => state.user.userProfile)
 
-    // const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
-
     const classes = useStyle()
 
     console.log(userProfile);
+
     const base64Image = 'data:image/png;base64,' + userProfile?.userPhoto // Substitua com sua string Base64
+    
     return (
         userProfile && (
             <section className={`${classes.flex} ${classes.userProfileDetails}`}>

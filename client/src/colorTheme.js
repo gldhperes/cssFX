@@ -2,7 +2,9 @@ import { createTheme } from '@mui/material/styles';
 
 const white = "#FFF"
 const grey = '#999999'
-const roxo = "#650065"
+const purple = "#650065"
+const darkPurple = "#400040"
+const darkerPurple = '#1E001E'
 
 const theme = createTheme({
 
@@ -11,22 +13,22 @@ const theme = createTheme({
             main: white,
             light: white,
             dark: white,
-            contrastText: white,
+            // contrastText: white,
         },
 
         secundary: {
             main: grey,
             light: grey,
             dark: grey,
-            contrastText: grey,
+            // contrastText: grey,
         },
 
         buttons:
         {
-            main: roxo,
-            light: roxo,
-            dark: roxo,
-            contrastText: roxo,
+            main: purple,
+            dark: darkPurple,
+            darker: darkerPurple,
+            contrastText: white,
         }
 
     },

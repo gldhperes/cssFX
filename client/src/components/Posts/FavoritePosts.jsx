@@ -1,16 +1,22 @@
-import React from "react"
+import React, { useEffect } from "react"
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Posts from "./Posts";
 
 import { FAVORITES } from "../../constants/pagesTypes";
+import { getFavoritePosts } from "../../actions/user.js";   
 
-const FavoritePosts = ( ) => {
-   
+const FavoritePosts = ({ userID }) => {
+
+    const dispatch = useDispatch()
+
     const favoritedPosts = useSelector((state) => state.user.favoritedPosts);
 
-    console.log('FAVORITED');
+    useEffect(() => {
+        dispatch(getFavoritePosts(userID))
+    }, [dispatch])
+
 
     return (
         <>

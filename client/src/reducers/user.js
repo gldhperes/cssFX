@@ -48,12 +48,12 @@ const userReducer = (state = { likedPosts: [], favoritedPosts: [], userPosts: []
                 following: action.payload.followingUsers,
             }
 
-            case "GET_USER_FOLLOWING":
-                console.log(`GET_USER_FOLLOWING REDUX: ${state.following}`);
-                return {
-                    ...state,
-                    following: state.following,
-                }
+        case "GET_USER_FOLLOWING":
+            console.log(`GET_USER_FOLLOWING REDUX: ${state.following}`);
+            return {
+                ...state,
+                following: state.following,
+            }
 
         case GET_USER_LIKED_POSTS:
 

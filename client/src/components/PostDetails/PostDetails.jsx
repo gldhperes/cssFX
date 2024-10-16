@@ -6,50 +6,37 @@ import { useParams, useNavigate } from 'react-router-dom'
 
 import { getPost, getPostsBySearch } from '../../actions/posts'
 import useStyles from './styles.js'
-import CodeEditors from "./CodeEditors.jsx"
+
 import { profile } from '../../constants/routes'
 import { getUserProfile } from '../../actions/user'
+import Code_Editor_Panels from '../Code Viewer/Code_Editor_Panels.jsx'
+import Code_Viewer from '../Code Viewer/Code_Viewer.jsx'
 
 const PostDetails = () => {
-  
+
   const { post, posts, isLoading } = useSelector((state) => state.posts)
+  const dispatch = useDispatch()
+
   const [htmlCode, setHtmlCode] = useState(null)
   const [cssCode, setCssCode] = useState(null)
 
 
-  const [codeExemple, setCodeExemple] = useState(null)
-  const dispatch = useDispatch()
+  // const [codeExemple, setCodeExemple] = useState(null)
   const navigate = useNavigate()
   const { id } = useParams()
 
   const classes = useStyles()
 
-  function HTMLRenderer({ html }) {
-    return <div id="htmlRenderer" dangerouslySetInnerHTML={{ __html: html }} />;
-  }
-
-  function CSSRenderer({ css }) {
-    useEffect(() => {
-      const styleElement = document.createElement("style");
-      styleElement.innerText = css;
-      const htmlRenderer = document.getElementById("htmlRenderer")
-
-      htmlRenderer.appendChild(styleElement);
-      return () => {
-        htmlRenderer.removeChild(styleElement);
-      };
-    }, [css]);
-
-    return null;
-  }
 
   useEffect(() => {
-    if (htmlCode !== null && cssCode !== null && codeExemple === null) {
+    if (htmlCode !== null && cssCode !== null) {
+      console.log(htmlCode);
       console.log(cssCode);
       // console.log(typeof (htmlCode));
-      setCodeExemple(htmlCode)
+      setHtmlCode(htmlCode)
+      setHtmlCode(cssCode)
     }
-  }, [htmlCode, cssCode, codeExemple]);
+  }, [htmlCode, cssCode]);
 
 
   useEffect(() => {
@@ -58,7 +45,7 @@ const PostDetails = () => {
 
   useEffect(() => {
     if (post) {
-      dispatch(getPostsBySearch({ search: 'none', tags: post?.tags.join(',') }))
+      // dispatch(getPostsBySearch({ search: 'none', tags: post?.tags.join(',') }))
       setHtmlCode(post?.htmlCode)
       setCssCode(post?.cssCode)
     }
@@ -70,7 +57,6 @@ const PostDetails = () => {
     return (
       <Paper elevation={6} className={classes.loadingPaper}>
         <CircularProgress size='7em' />
-
       </Paper>
     )
   }
@@ -99,23 +85,24 @@ const PostDetails = () => {
 
           {/* COLOCAR BOTOES DE FOLLOW, LIKE, FAVORITE */}
         </div>
-        
-        <Divider style={{ width: '100%', backgroundColor: 'white', margin: '20px 0' }} />
-
-        <CodeEditors post={post} />
 
         <Divider style={{ width: '100%', backgroundColor: 'white', margin: '20px 0' }} />
 
-        <div id="codeExemple" className={`${classes.codeExemple} ${classes.flex}`} >
+        <Code_Editor_Panels postData={post} can_edit={false} />
 
+        <Divider style={{ width: '100%', backgroundColor: 'white', margin: '20px 0' }} />
 
-          {(codeExemple !== null && cssCode !== null) &&
+        <Code_Viewer htmlCode={htmlCode} cssCode={cssCode} />
+
+        {/* <div id="codeExemple" className={`${classes.codeExemple} ${classes.flex}`} >
+
+          {(htmlCode !== null && cssCode !== null) &&
             <>
-              <HTMLRenderer html={codeExemple} />
+              <HTMLRenderer html={htmlCode} />
               <CSSRenderer css={cssCode} />
             </>
           }
-        </div>
+        </div> */}
 
 
 

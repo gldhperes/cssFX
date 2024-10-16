@@ -20,7 +20,6 @@ export default makeStyles({
 
     borderRadius: '15px',
     color: 'white',
-    background: '#1E001E',
   },
 
 
@@ -117,7 +116,7 @@ export default makeStyles({
   {
     "&.MuiPaper-root": {
       // position: 'absolute',
-      // top: '0px !important',
+      // top: '0px ',
 
       color: 'white',
       backgroundColor: 'black',

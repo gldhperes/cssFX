@@ -1,39 +1,40 @@
 import React, { useState, useEffect } from "react"
 import { TextField, Button, Typography, Paper } from '@mui/material';
 import FileBase from 'react-file-base64'
-import { useSelector } from 'react-redux'
-// import { useNavigate } from 'react-router-dom'
+
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+
+import { getPost } from '../../actions/posts.js'
 
 // import { createPost, updatePost } from '../../actions/posts';
-import useStyles from './styles';
+import useStyles from './styles.js';
 
-import CodeEditorForm from "./CodeEditorForm.js";
+import Code_Editor_Panels from "./Code_Editor_Panels.jsx";
 // import checkCode from "./checkCode"
 import OnSubmitCodeMessage from "./OnSubmitCodeMessage.jsx";
+import Code_Viewer from "./Code_Viewer.jsx";
 // import CodeEditorForm from "./CodeEditorForm";
 
-const Form = () => {
+const Update_Post = () => {
+
     const classes = useStyles();
     const user = JSON.parse(localStorage.getItem('profile'))
-    // const navigate = useNavigate()
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch()
+
+    const { post } = useSelector((state) => state.posts)
+
+    const { id } = useParams()
+
     const [submited, setSubmited] = useState(false)
 
     const [currentId, setCurrentId] = useState('')
 
-    const post = useSelector((state) => state.posts.post)
-
-    console.log(post);
-
-    const [postData, setPostData] = useState({
-        title: '', htmlCode: '',
-        cssCode: '', backendCode: '',
-        codeImg: '', tags: ''
-    })
+    const [postData, setPostData] = useState(post)
 
 
-    const clear = () => {
-        setCurrentId(null);
+    const clear_postData = () => {
+        // setCurrentId(null);
 
         setPostData({
             title: '', htmlCode: '',
@@ -42,8 +43,16 @@ const Form = () => {
         });
     };
 
+    const handleUpdatePostData = (updated_post) => {
+        setPostData(updated_post)
+    }
+
     useEffect(() => {
-        clear()
+        dispatch(getPost(id))
+    }, [id, dispatch])
+
+    useEffect(() => {
+        // clear()
 
         if (post) {
             console.log(`UPDATE POST: ${post}`);
@@ -74,37 +83,19 @@ const Form = () => {
 
         <Paper className={`${classes.flex} ${classes.paper}`} elevation={6}>
             <form autoComplete="off" noValidate className={`${classes.flex} ${classes.form}`} onSubmit={handleSubmit}>
-                <Typography variant="h6">{currentId ? 'Editing' : 'Creating'} a Post</Typography>
+                <Typography variant="h6">Update a Post</Typography>
 
                 {/* TITULO DO POST */}
                 <TextField name="title" variant="outlined" label="Title" fullWidth value={postData.title} onChange={(e) => setPostData({ ...postData, title: e.target.value })} />
                 <TextField name="tag" variant="outlined" label="Tag" fullWidth value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })} />
 
-                {/* HTML CODE */}
-                {
-                    (post) ? (
-                        <CodeEditorForm
-                            post={{
-                                htmlCode: post.htmlCode,
-                                cssCode: post.cssCode,
-                                backendCode: post.backendCode
-                            }}
-                            postData={postData}
-                            setPostData={setPostData}
-                        />
-                    ) : (
-                        <CodeEditorForm
-                            postData={postData}
-                            setPostData={setPostData}
-                        />
-                    )
-                }
+                <Code_Editor_Panels
+                    postData={postData}
+                    setPostData={handleUpdatePostData}
+                    can_edit={true}
+                />
 
-
-                {/* SE CodeEditorForm estiver ativo entao comente os tres TextFields abaixo */}
-                {/* <TextField name="html" variant="outlined" label="Html" fullWidth value={postData.htmlCode} onChange={(e) => setPostData({ ...postData, htmlCode: e.target.value })} />
-                <TextField name="css" variant="outlined" label="Css" fullWidth value={postData.cssCode} onChange={(e) => setPostData({ ...postData, cssCode: e.target.value })} />
-                <TextField name="Backend" variant="outlined" label="Backend" fullWidth value={postData.backendCode} onChange={(e) => setPostData({ ...postData, backendCode: e.target.value })} /> */}
+                <Code_Viewer htmlCode={postData?.htmlCode} cssCode={postData?.cssCode} />
 
                 <FileBase type="file" multiple={false} onDone={({ base64 }) => setPostData({ ...postData, codeImg: base64 })} />
 
@@ -113,14 +104,16 @@ const Form = () => {
                     variant="contained"
                     size="large"
                     type="submit"
-                    fullWidth>{currentId ? 'Edit' : 'Create'}
+                    fullWidth
+                >
+                    Update
                 </Button>
 
                 <Button
                     className={classes.clearBtn}
                     variant="contained"
                     size="small"
-                    onClick={clear}
+                    onClick={clear_postData}
                     fullWidth
                 >
                     Clear
@@ -132,7 +125,7 @@ const Form = () => {
             {
                 (submited) && (
                     <>
-                        <OnSubmitCodeMessage postData={postData} clear={clear} currentId={currentId} setSubmited={setSubmited} />
+                        <OnSubmitCodeMessage postData={postData} clear={clear_postData} currentId={currentId} setSubmited={setSubmited} />
                     </>
                 )
             }
@@ -140,4 +133,4 @@ const Form = () => {
     )
 }
 
-export default Form;
+export default Update_Post;

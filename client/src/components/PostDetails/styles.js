@@ -31,15 +31,7 @@ export default makeStyles((theme) => ({
     margin: '10px',
   },
 
-  codeExemple: {
-    width: '100%',
-    height: '400px',
-    margin: '20px 0',
-    color: 'black',
-    backgroundColor: 'white',
-    // border: '1px solid white',
-    borderRadius: '8px',
-  },
+  
 
   recommendedPosts: {
     padding: '8px',

@@ -5,6 +5,7 @@ import { Avatar, Button, Paper, Grid, Typography, Container } from '@mui/materia
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import { GoogleLogin } from '@react-oauth/google';
+
 import { useNavigate } from 'react-router-dom';
 import { gapi } from 'gapi-script';
 
@@ -15,7 +16,7 @@ import { signin, signup, googleSignIn } from '../actions/auth.js'
 import useStyles from './styles.js'
 const initalState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' }
 
-const Auth = () => {
+const Auth = ({ setUser }) => {
     const classes = useStyles()
 
     const [showPassword, setShowPassword] = useState(false)
@@ -64,14 +65,16 @@ const Auth = () => {
     }
 
     const googleSuccess = async (res) => {
-        const result = res?.profileObj;
-        // console.log(res);
+      
+        const result = res?.credential;
+        // console.log(result);
 
         try {
 
             dispatch(googleSignIn(result))
 
-            navigate('/')
+            navigate('/posts')
+
         } catch (error) {
             console.log(error);
         }
@@ -93,7 +96,7 @@ const Auth = () => {
                         (isSignup) ? (
                             'Sign Up'
                         ) : (
-                            'Sign In'
+                            'Log In'
                         )
                     }
                 </Typography>
@@ -122,19 +125,19 @@ const Auth = () => {
                         }
                     </Grid>
 
-                    <Button  className={`${classes.loginButton} ${classes.submit}`} type='submit' fullWidth variant='contained'>
+                    <Button className={`${classes.loginButton} ${classes.submit}`} type='submit' fullWidth variant='contained'>
                         {
                             (isSignup) ? (
                                 'Sign Up'
                             ) : (
-                                'Sign In'
+                                'Log In'
                             )
                         }
                     </Button>
 
                     <GoogleLogin
 
-                        clientId='132306028558-ip1jv3f6pj03amoj0fj0qg4fnivi8r2u.apps.googleusercontent.com'
+                        // clientId='132306028558-ip1jv3f6pj03amoj0fj0qg4fnivi8r2u.apps.googleusercontent.com'
                         render={(renderProps) => (
                             <Button
                                 className={`${classes.loginButton} ${classes.googleButton}`}
@@ -151,18 +154,25 @@ const Auth = () => {
                         cookiePolicy="single_host_origin"
                     />
 
-                    <Grid container justifyContent="flex-end">
-                        <Grid item>
-                            <Button className={`${classes.loginButton}`} onClick={switchMode}>
-                                {
-                                    (isSignup) ? (
-                                        'Already have an account? Sign In'
-                                    ) : (
-                                        "Don't have an account? Sign Up"
-                                    )
-                                }
-                            </Button>
-                        </Grid>
+                    {/* <Grid container justifyContent="flex-end"> */}
+                    <Grid container
+                        direction="row"
+                        sx={{
+                            justifyContent: "flex-end",
+                            alignItems: "center",
+                        }}>
+
+                        {/* <Grid item> */}
+                        <Button className={`${classes.loginButton}`} onClick={switchMode}>
+                            {
+                                (isSignup) ? (
+                                    'Already have an account? Sign In'
+                                ) : (
+                                    "Don't have an account? Sign Up"
+                                )
+                            }
+                        </Button>
+                        {/* </Grid> */}
 
                     </Grid>
                 </form>

@@ -41,7 +41,7 @@ export const getPostsBySearch = (searchQuery) => async(dispatch) => {
     try {
         dispatch({ type: START_LOADING })
 
-        console.log("Pesquisa: ", searchQuery.searchPost + " " + searchQuery.tags);
+        // console.log("Pesquisa: ", searchQuery.searchPost + " " + searchQuery.tags);
 
         const { data: { data } } = await api.fetchPostsBySearch(searchQuery) 
 
@@ -101,8 +101,8 @@ export const favoritePost = (userId, postId) => async(dispatch) => {
     try {
         const { data } = await api.favoritePost(userId, postId)
         
-        console.log( `data recebido favoritePost: ${ data }`);
-        console.log( "dispatch favoritePost: ", dispatch( { type: FAVORITE, payload: data } ) );
+        // console.log( `data recebido favoritePost: ${ data }`);
+        // console.log( "dispatch favoritePost: ", dispatch( { type: FAVORITE, payload: data } ) );
     } catch (error) {
         console.log('error:', error.message);      
     }

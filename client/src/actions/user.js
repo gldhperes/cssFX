@@ -37,7 +37,7 @@ export const followUser = (userId, postCreator) => async (dispatch) => {
 
 export const getFollowing = (userId) => async (dispatch) => {
     try {
-        console.log (`userId: ${userId}`);
+        // console.log (`userId: ${userId}`);
         const { data } = await api.getFollowing( userId )
 
         dispatch({ type: GET_FOLLOWING, payload: data });
@@ -49,7 +49,7 @@ export const getFollowing = (userId) => async (dispatch) => {
 
 export const getLikedsPosts = (userId) => async (dispatch) => {
     try {
-        console.log (`userId: ${userId}`);
+        // console.log (`userId: ${userId}`);
         const { data } = await api.getLikedsPosts( userId )
 
         dispatch({ type: GET_USER_LIKED_POSTS, payload: data });
@@ -61,7 +61,7 @@ export const getLikedsPosts = (userId) => async (dispatch) => {
 
 export const getUserProfile = (userId) => async (dispatch) => {
     try {
-        console.log (`userId: ${userId}`);
+        // console.log (`userId: ${userId}`);
 
         const { data } = await api.getUserProfile( userId )
 
@@ -82,7 +82,7 @@ export const getUsersBySearch = (searchQuery) => async(dispatch) => {
         dispatch( { type: FETCH_USERS_BY_SEARCH, payload: data } ) ;
 
         dispatch({ type: END_LOADING })
-        console.log( "users found: ", data );  
+        // console.log( "users found: ", data );  
     } catch (error) {
         console.log( error );       
     }

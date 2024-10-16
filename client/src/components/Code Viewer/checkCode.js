@@ -5,8 +5,7 @@ import cssParser from 'prettier/parser-postcss';
 import babelParser from 'prettier/parser-babel';
 
 export default function checkCode(htmlCode, cssCode, backendCode) {
-
-
+ 
     const _html = checkCodeIndividually("html", htmlCode, htmlParser)
 
     const _css = checkCodeIndividually("css", cssCode, cssParser)
@@ -14,7 +13,7 @@ export default function checkCode(htmlCode, cssCode, backendCode) {
     const _back = checkCodeIndividually("babel", backendCode, babelParser)
     try {
 
-        console.log(`${_html}${_css}${_back}`);
+        // console.log(`${_html}${_css}${_back}`);
 
 
         if (_html && _css && _back) {
@@ -53,7 +52,7 @@ export default function checkCode(htmlCode, cssCode, backendCode) {
 const checkCodeIndividually = (codeType, codeString, pluginParser) => {
     try {
 
-        console.log(`codeType ${codeType}  `);
+        // console.log(`codeType ${codeType}  `);
 
         prettier.format(codeString, {
             parser: codeType,

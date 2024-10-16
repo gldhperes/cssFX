@@ -1,120 +1,128 @@
 import { makeStyles } from '@mui/styles';
-import { deepPurple } from '@mui/material/colors';
+import { border } from '@mui/system';
+// import { deepPurple } from '@mui/material/colors';
 
 const dimUserPhoto = '50px'
+
+// const purple = '#650065'
+const darkPurple = '#1E001E'
 
 export default makeStyles((theme) => ({
   flex: {
     display: 'flex',
-    flexFlow: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
+    flexFlow: 'row ',
+    justifyContent: 'center ',
+    alignItems: 'center ',
   },
 
   appBar: {
     width: '100%',
     justifyContent: 'space-between',
     padding: '10px 20px',
-    background: '#650065',
+    backgroundColor: darkPurple,
 
-    [theme.breakpoints.down('xs')]: {
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center'
-    },
+    // [theme.breakpoints.down('xs')]: {
+    //   flexDirection: 'column',
+    //   justifyContent: 'center',
+    //   alignItems: 'center'
+    // },
   },
 
   image: {
-    height: "60px",
+    height: "60px ",
   },
 
   heading: {
-    color: 'white',
-    textDecoration: 'none',
-    fontSize: '2em',
-    fontWeight: 300,
+    color: 'white ',
+    textDecoration: 'none ',
+    fontSize: '2em ',
+    fontWeight: 300 + "",
   },
 
   // TOOL BAR =============================
   toolbar: {
-    display: 'flex',
-    justifyContent: 'flex-end',
+    display: 'flex ',
+    justifyContent: 'flex-end ',
     width: '400px',
 
-    [theme.breakpoints.down('xs')]: {
-      width: 'auto',
-    },
+    // [theme.breakpoints.down('xs')]: {
+    //   width: 'auto ',
+    // },
   },
 
   userSection: {
 
-    gap: "20px",
+    gap: "20px ",
 
-    // "&.MuiButton-root.MuiButton-label": {
-    //   color: '#650065 !important',
-    // },
+    "&.MuiButton-root.MuiButton-label": {
+      color: '#650065 ',
+    },
 
     "&.MuiButton-label": {
-      color: '#650065 !important',
+      color: '#650065 ',
     },
 
   },
 
   navbarButton:
   {
-    color: "#650065",
-    fontWeight: 'bold',
-    backgroundColor: 'white',
+    color: "#650065 ",
+    fontWeight: 'bold ',
+    backgroundColor: 'white ',
   },
 
   profile: {
-    gap: "20px",
-    color: 'white',
+    gap: "20px ",
+    color: 'white ',
 
-    [theme.breakpoints.down('sm')]: {
-      width: 'auto',
-      marginTop: 20,
-      justifyContent: 'center',
-    },
+    // [theme.breakpoints.down('sm')]: {
+    //   width: 'auto ',
+    //   marginTop: 20 +"",
+    //   justifyContent: 'center ',
+    // },
   },
 
   logout: {
-    marginLeft: '20px',
+    marginLeft: '20px ',
   },
 
   userName: {
-    display: 'flex',
-    alignItems: 'center',
-    textAlign: 'center',
+    display: 'flex ',
+    alignItems: 'center ',
+    textAlign: 'center ',
   },
 
   avatar: {
     width: dimUserPhoto,
     height: dimUserPhoto,
-    borderRadius: '50%',
+    borderRadius: '50% ',
 
 
-    color: theme.palette.getContrastText(deepPurple[500]),
-    backgroundColor: deepPurple[500],
+    // color: theme.palette.getContrastText(deepPurple[500]),
+    color: darkPurple,
+    backgroundColor: darkPurple,
   },
 
   userImg: {
-    width: '100%',
-    heigth: '100%',
+    width: '100% ',
+    heigth: '100% ',
+
+    border: "50% ",
   },
 
 
-  navMenu: {
+  menuItem: {
     "&.MuiPaper-root": {
-      color: 'white',
-      backgroundColor: 'black',
-      border: '1px solid white',
+      color: 'white ',
+      backgroundColor: 'black ',
+      border: '1px solid white ',
     },
 
     "&.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root:hover": {
-      color: '#990099',
+      color: '#990099 ',
     },
 
   }
 
 }));
+

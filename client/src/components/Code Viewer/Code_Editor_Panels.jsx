@@ -6,7 +6,7 @@ import "ace-builds/src-noconflict/mode-html";
 import "ace-builds/src-noconflict/mode-css";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-monokai";
-// import "ace-builds/src-noconflict/ext-language_tools"
+import "ace-builds/src-noconflict/ext-language_tools"
 
 // PRETTIER - ORGANIZADOR DE CODIGOS
 // import prettier from 'prettier/standalone';
@@ -17,38 +17,53 @@ import "ace-builds/src-noconflict/theme-monokai";
 
 
 import useStyles from './styles.js'
-const CodeEditorForm = ({ post, postData, setPostData }) => {
-
+const Code_Editor_Panels = ({ post, postData, setPostData, can_edit }) => {
+    
+    const [editable, SetCanEdit] = useState(can_edit);
     const classes = useStyles()
-    const [htmlCode, setHtmlCode] = useState((post) ? post.htmlCode : '');
-    const [cssCode, setCssCode] = useState((post) ? post.cssCode : '');
-    const [backendCode, setBackendCode] = useState((post) ? post.backendCode : '');
+    const [htmlCode, setHtmlCode] = useState((postData) ? postData.htmlCode : '');
+    const [cssCode, setCssCode] = useState((postData) ? postData?.cssCode : '');
+    const [backendCode, setBackendCode] = useState((postData) ? postData?.backendCode : '');
 
+
+    function Check_Post_Data() {
+
+        if (postData != null && setPostData != null && can_edit) { return true }
+        else { return false }
+
+    }
 
     const onChangeHTML = (newValue) => {
-        console.log(newValue);
-        setHtmlCode(newValue.toString());
-        setPostData({ ...postData, htmlCode: newValue.toString() });
+        // console.log(newValue);
+
+        if (Check_Post_Data()) {
+            setHtmlCode(newValue.toString());
+            setPostData({ ...postData, htmlCode: newValue.toString() });
+        }
     }
 
     const onChangeCSS = (newValue) => {
-        console.log(newValue);
-        setCssCode(newValue.toString())
-        setPostData({ ...postData, cssCode: newValue.toString() });
+        // console.log(newValue);
 
+        if (Check_Post_Data()) {
+            setCssCode(newValue.toString())
+            setPostData({ ...postData, cssCode: newValue.toString() });
+        }
     }
 
     const onChangeBACKEND = (newValue) => {
-        console.log(newValue);
-        setBackendCode(newValue.toString())
-        setPostData({ ...postData, backendCode: newValue.toString() });
+        // console.log(newValue);
+
+        if (Check_Post_Data()) {
+            setCssCode(newValue.toString())
+            setPostData({ ...postData, backendCode: newValue.toString() });
+        }
     }
 
+
     function onLoadCode(editor) {
-
-
         const editorMode = editor.getSession().getMode().$id;
-        console.log(editorMode);
+        // console.log(editorMode);
         if (editorMode === "ace/mode/html") {
             // log
             editor.setValue(htmlCode);
@@ -69,7 +84,7 @@ const CodeEditorForm = ({ post, postData, setPostData }) => {
         enableSnippets: true,
         showLineNumbers: true,
         tabSize: 2,
-        readOnly: false,
+        readOnly: !editable,
         highlightActiveLine: true,
         showGutter: true,
         showPrintMargin: true,
@@ -85,7 +100,6 @@ const CodeEditorForm = ({ post, postData, setPostData }) => {
                     HTML
                 </p>
                 <AceEditor
-                    // name={`${post._id}`}
                     name="htmlCode"
                     placeholder=''
                     mode="html"
@@ -152,4 +166,4 @@ const CodeEditorForm = ({ post, postData, setPostData }) => {
     )
 }
 
-export default CodeEditorForm
+export default Code_Editor_Panels

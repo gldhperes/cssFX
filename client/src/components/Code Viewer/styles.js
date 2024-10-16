@@ -15,7 +15,7 @@ export default makeStyles((theme) => ({
 
   root: {
     '& .MuiTextField-root': {
-      margin: theme.spacing(1),
+      // margin: theme.spacing(1),
     },
   },
 
@@ -106,6 +106,16 @@ export default makeStyles((theme) => ({
 
 
 
+  // CODE VIEWER =====================
+  code_viewer: {
+    width: '100%',
+    height: '400px',
+    margin: '20px 0',
+    color: 'black',
+    backgroundColor: 'white',
+    border: '2px solid black',
+    borderRadius: '8px',
+  },
 
 
 }));

@@ -16,10 +16,6 @@ const Posts = ({ posts, favPosts, followed, category, setCurrentId }) => {
 
     if (!posts) { return 'No Posts' }
 
-    posts.forEach(element => {
-        console.log(`posts element ${element._id}`);
-    });
-
     function getFavorited(postId) {
         // console.log(`favoritedPosts: ${ JSON.stringify(favoritedPosts) } `);
 

@@ -6,7 +6,7 @@ export default makeStyles((theme) => ({
 
   root: {
     '& .MuiTextField-root': {
-      margin: theme.spacing(1),
+      // margin: theme.spacing(1),
     },
   },
 
@@ -19,8 +19,8 @@ export default makeStyles((theme) => ({
   },
 
   paper: {
-    padding: theme.spacing(2),
-    marginTop: theme.spacing(8),
+    // padding: theme.spacing(2),
+    // marginTop: theme.spacing(8),
 
 
     flexDirection: 'column',
@@ -31,14 +31,14 @@ export default makeStyles((theme) => ({
   },
 
   avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
+    // margin: theme.spacing(1),
+    // backgroundColor: theme.palette.secondary.main,
   },
 
 
   form: {
     width: '100%',
-    marginTop: theme.spacing(3),
+    // marginTop: theme.spacing(3),
   },
 
 
@@ -68,11 +68,11 @@ export default makeStyles((theme) => ({
 
 
   submit: {
-    margin: theme.spacing(3, 0, 2),
+    // margin: theme.spacing(3, 0, 2),
   },
 
   googleButton: {
-    marginBottom: theme.spacing(2),
+    // marginBottom: theme.spacing(2),
   },
 
   loginButton:
