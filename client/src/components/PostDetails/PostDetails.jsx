@@ -9,8 +9,8 @@ import useStyles from './styles.js'
 
 import { profile } from '../../constants/routes'
 import { getUserProfile } from '../../actions/user'
-import CodeEditorPanels from '../Code Viewer/CodeEditorPanels.jsx'
-import CodeViewer from '../Code Viewer/CodeViewer.jsx'
+import CodeEditorPanels from '../CodeViewer/CodeEditorPanels.jsx'
+import CodeViewer from '../CodeViewer/CodeViewer.jsx'
 
 const PostDetails = () => {
 

@@ -5,8 +5,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Home from "../components/Home/Home.jsx";
 import Auth from "../Auth/Auth.jsx";
 import PostDetails from "../components/PostDetails/PostDetails.jsx"
-import UpdatePost from "../components/Code Viewer/UpdatePost.jsx";
-import CreatePost from "../components/Code Viewer/CreatePost.jsx";
+import UpdatePost from "../components/CodeViewer/UpdatePost.jsx";
+import CreatePost from "../components/CodeViewer/CreatePost.jsx";
 
 import { auth, userRoute, search, recentPosts, createPost, updatePost, favorites, following, profile, likeds } from '../constants/routes.js'
 
