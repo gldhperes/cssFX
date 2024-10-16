@@ -11,9 +11,7 @@ import CategorySection from "./CategorySection.jsx";
 
 
 import { logout } from "../../actions/auth.js";
-// import { getPosts } from "../../actions/posts.js";
-// import { getFavoritePosts, getFollowing, getLikedsPosts } from "../../actions/user.js";
-// import { search, favorites, recentPosts, createPost, updatePost, following, profile, likeds, userRoute } from "../../constants/routes.js";
+
 
 
 // import useStyles from './styles.js';

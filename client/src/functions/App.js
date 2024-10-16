@@ -5,8 +5,8 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Home from "../components/Home/Home.jsx";
 import Auth from "../Auth/Auth.jsx";
 import PostDetails from "../components/PostDetails/PostDetails.jsx"
-import UpdatePost from "../components/CodeViewer/UpdatePost.jsx";
-import CreatePost from "../components/CodeViewer/CreatePost.jsx";
+import CreateAPost from "../components/CodeViewer/CreateAPost.jsx";
+import UpdateUserPost from "../components/CodeViewer/UpdateUserPost.jsx";
 
 import { auth, userRoute, search, recentPosts, createPost, updatePost, favorites, following, profile, likeds } from '../constants/routes.js'
 
@@ -48,9 +48,9 @@ const App = () => {
 
                         <Route path={following} exact element={<UsersCards userID={user?.result?._id}  />} />
 
-                        <Route path={createPost} exact element={<CreatePost />} />
+                        <Route path={createPost} exact element={<CreateAPost />} />
 
-                        <Route path={`${updatePost}/:id`} exact element={<UpdatePost />} />
+                        <Route path={`${updatePost}/:id`} exact element={<UpdateUserPost />} />
 
                         <Route path={profile} exact element={<UserProfile />} />
 
