@@ -7,8 +7,8 @@ import dotenv from 'dotenv'
 // import fs from 'fs';
 
 
-import postRoutes from '../routes/posts.js'
-import userRoutes from '../routes/users.js'
+import postRoutes from './routes/posts.js'
+import userRoutes from './routes/users.js'
 // import testRoutes from './routes/test.js'
 
 const app = express();
