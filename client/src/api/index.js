@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 // LINK PARA O SERVIDOR
-const URL = "https://cssfxserver.vercel.app:3333"
+const URL = "https://cssfxserver.vercel.app/"
 // const URL = "http://localhost:3333"
 
 const API = axios.create({ baseURL: URL })
