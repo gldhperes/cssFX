@@ -2,7 +2,7 @@ import React, { useEffect } from "react"
 
 import { useDispatch, useSelector } from "react-redux";
 
-import Posts from "./Posts";
+import Posts from "./Posts.jsx";
 
 import { FAVORITES } from "../../constants/pagesTypes";
 import { getFavoritePosts } from "../../actions/user.js";   

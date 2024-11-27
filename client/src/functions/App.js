@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Container, ThemeProvider } from '@mui/material';
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
 import { auth, userRoute, search, recentPosts, createPost, updatePost, favorites, following, profile, likeds, searchPosts, searchUsers } from '../constants/routes.js'
 
@@ -22,12 +22,10 @@ import SearchedUsers from "../components/Posts/SearchedUsers.jsx";
 import SearchSection from "../components/Home/SearchSection.jsx";
 
 import theme from "../theme.js";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 
 const App = () => {
-
-    // const dispatch = useDispatch()
 
     const userFromRedux = useSelector((state) => state.auth.authData); // Obtém o usuário do Redux
     const [user, setUser] = useState(() => {

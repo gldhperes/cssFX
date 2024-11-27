@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import { getPosts } from "../../actions/posts.js";
 
-import Posts from "./Posts";
+import Posts from "./Posts.jsx";
 import SearchSection from "../Home/SearchSection.jsx";
 
 import { POSTS } from "../../constants/pagesTypes";

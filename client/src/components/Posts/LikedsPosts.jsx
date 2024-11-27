@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 import { LIKEDS } from "../../constants/pagesTypes";
 import { getLikedsPosts } from "../../actions/user.js";   
 
-import Posts from './Posts';
+import Posts from './Posts.jsx';
 
 const LikedsPosts = ({ userID }) => {
 
