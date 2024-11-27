@@ -5,7 +5,6 @@ import { Avatar, Button, Paper, Typography, Container, Grid2 } from '@mui/materi
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 import { GoogleLogin } from '@react-oauth/google';
-// import { GoogleLogin } from 'react-google-login';
 
 import { useNavigate } from 'react-router-dom';
 
