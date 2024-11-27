@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+
 import { Container, ThemeProvider } from '@mui/material';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 
@@ -22,7 +24,6 @@ import SearchedUsers from "../components/Posts/SearchedUsers.jsx";
 import SearchSection from "../components/Home/SearchSection.jsx";
 
 import theme from "../theme.js";
-import { useSelector } from "react-redux";
 
 
 const App = () => {

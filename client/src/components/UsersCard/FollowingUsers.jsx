@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getFollowing } from '../../actions/user'
 
 import useStyles from "./styles"
-import UserCard from './UserCard'
+import UserCard from './UserCard.jsx'
 
 const FollowingUsers = ({ userID }) => {
     const classes = useStyles()
