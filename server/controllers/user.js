@@ -57,11 +57,14 @@ export const googleSignIn = async (req, res) => {
 
     try {
         const data = req.body
-        const credential = Object.keys(data)[0];
-        // console.log(credential);
+        console.log(data);
 
+        const credential = data.credential;
+        console.log(credential);
+        
         const profileObj = jwtDecode(credential);
         // console.log("profileObj: ", profileObj);
+        // return;
 
         const json_data = JSON.stringify(profileObj);
         // console.log(json_data);

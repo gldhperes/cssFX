@@ -1,5 +1,7 @@
 export const profile = '/profile'
 export const recentPosts = '/posts'
+export const searchPosts = '/search/posts/'
+export const searchUsers = '/search/users/'
 export const favorites = '/favorites'
 export const following = '/following'
 export const likeds = '/likeds'

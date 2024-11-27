@@ -20,11 +20,11 @@ import { logout } from "../../actions/auth.js";
 //     return new URLSearchParams(useLocation().search)
 // }
 
-const Home = () => {
+const Home = ({user}) => {
     // const classes = useStyles();
 
-    const dispatch = useDispatch();
-    const navigate = useNavigate()
+    // const dispatch = useDispatch();
+    // const navigate = useNavigate()
     // const query = useQuery()
     // const searchQuery = query.get('searchQuery')
 
@@ -32,38 +32,38 @@ const Home = () => {
     // const [tags, setTags] = useState([])
 
     // CONSTANTES PARA O USUARIO
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
+    // const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
 
-    const userLogged = useSelector((state) => state.auth.authData);
+    // const userLogged = useSelector((state) => state.auth.authData);
 
-    const logoutUser = () => {
-        dispatch(logout())
-        setUser(null)
-        navigate('/')
-    }
+    // const logoutUser = () => {
+    //     dispatch(logout())
+    //     setUser(null)
+    //     navigate('/')
+    // }
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if (userLogged && !user) {
+    //     if (userLogged && !user) {
 
-            const token = userLogged?.token
-            // console.log( `token: ${token}`);
+    //         const token = userLogged?.token
+    //         // console.log( `token: ${token}`);
 
-            setUser(JSON.parse(localStorage.getItem('profile')))
+    //         setUser(JSON.parse(localStorage.getItem('profile')))
 
-            // Json Web Token..
-            if (token) {
+    //         // Json Web Token..
+    //         if (token) {
 
-                const decodedToken = decode(token)
+    //             const decodedToken = decode(token)
 
-                if (decodedToken.exp * 1000 < new Date().getTime()) {
-                    logoutUser()
-                }
-            }
+    //             if (decodedToken.exp * 1000 < new Date().getTime()) {
+    //                 logoutUser()
+    //             }
+    //         }
 
-        }
+    //     }
 
-    }, [userLogged]) // eslint-disable-line react-hooks/exhaustive-deps
+    // }, [userLogged]) // eslint-disable-line react-hooks/exhaustive-deps
 
 
     return (

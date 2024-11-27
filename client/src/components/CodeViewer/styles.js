@@ -110,12 +110,41 @@ export default makeStyles((theme) => ({
   code_viewer: {
     width: '100%',
     height: '400px',
-    margin: '20px 0',
+
+    // margin: '20px 0',
+
     color: 'black',
     backgroundColor: 'white',
+
     border: '2px solid black',
-    borderRadius: '8px',
   },
 
+  // OnPostCodeViewer ===================
+  onpost_code_viewer: {
+    width: '100%',
+    height: '100%',
+
+    // position: "relative",
+    overflow: "hidden",
+
+    backgroundColor: 'white',
+    borderRadius: '4px',
+  },
+
+
+  buttonOverride: {
+    width: "100%",
+    height: "100%",
+
+    position: 'absolute',
+    top: 0,
+    left: 0,
+   
+    backgroundColor: 'transparent',
+    border: 'none',
+    zIndex: 10, 
+    cursor: 'pointer',
+
+  },
 
 }));

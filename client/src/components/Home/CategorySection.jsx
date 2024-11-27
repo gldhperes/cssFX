@@ -1,13 +1,14 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
-import { Paper, Button, ThemeProvider } from '@mui/material';
+import { Paper, Button, ThemeProvider, AppBar } from '@mui/material';
 
 import { FAVORITES, FOLLOWING, LIKEDS, POSTS } from '../../constants/pagesTypes.js'
-import { favorites, recentPosts, likeds, following, auth } from '../../constants/routes.js';
+import { favorites, likeds, following, auth } from '../../constants/routes.js';
 
 
 import useStyle from './styles.js'
-import theme from '../../colorTheme.js';
+import theme from '../../theme.js';
+import { Box } from '@mui/system';
 
 const CategorySection = ({ user }) => {
     const classes = useStyle()
@@ -18,7 +19,7 @@ const CategorySection = ({ user }) => {
     const handlers = {
 
         "Posts": () => {
-            navigate(recentPosts)
+            navigate("/")
         },
 
         Favorites: () => {
@@ -64,17 +65,19 @@ const CategorySection = ({ user }) => {
 
 
     return (
-        <ThemeProvider theme={theme}>
-            <Paper square className={`${classes.categorySection} ${classes.flex}`} sx={{bgcolor:"buttons.dark"}}>
+
+        <AppBar position="static" className={`${classes.categorySection} ${classes.flex}`}>
+            <Box className={`${classes.AppBarBox} ${classes.flex}`}>
                 {
                     categorys.map((cat) => (
-                        <Button className={classes.categoryBtn} key={cat} onClick={(event) => handlerCallCategory(event, cat)}>
+                        <Button variant="contained" disableElevation className={classes.categoryBtn} key={cat} onClick={(event) => handlerCallCategory(event, cat)}>
                             {cat}
                         </Button>
                     ))
                 }
-            </Paper>
-        </ThemeProvider>
+            </Box>
+        </AppBar>
+
     )
 }
 

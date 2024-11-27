@@ -1,4 +1,4 @@
-import { AUTH, LOGOUT } from '../constants/actionTypes';
+import { AUTH, LOGOUT, CHECKUSER } from '../constants/actionTypes';
 import * as api from '../api'
 
 export const signin = ( formData ) => async ( dispatch ) => {
@@ -31,6 +31,18 @@ export const googleSignIn = ( profileObj ) => async ( dispatch ) => {
         
     } catch (error) {
         console.log(error);
+    }
+}
+
+export const checkToken = () => async ( dispatch ) => {
+    try {
+        // const { data } = await api.checkToken() 
+        console.log("dispatching CHECKUSER");
+        
+        dispatch({ type: CHECKUSER })
+        
+    } catch (error) {
+        console.log("logout error: ", error);
     }
 }
 

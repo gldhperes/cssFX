@@ -22,9 +22,8 @@ const auth = async (req, res, next) => {
         next()
 
     } catch (error) {
-        console.log(error);
-        console.log(error.message);
-        // res.json( { logoutUser: 'logout' } )
+        console.log("Error on auth: ", error.message);
+        return res.json( { logout_user: 'logout' } )
     }
 }
 

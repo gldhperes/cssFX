@@ -64,6 +64,8 @@ export const getUserProfile = (userId) => async (dispatch) => {
         // console.log (`userId: ${userId}`);
 
         const { data } = await api.getUserProfile( userId )
+        console.log(data);
+        
 
         dispatch({ type: GET_USER_PROFILE, payload: data})
 
@@ -82,7 +84,7 @@ export const getUsersBySearch = (searchQuery) => async(dispatch) => {
         dispatch( { type: FETCH_USERS_BY_SEARCH, payload: data } ) ;
 
         dispatch({ type: END_LOADING })
-        // console.log( "users found: ", data );  
+        console.log( "users found: ", data );  
     } catch (error) {
         console.log( error );       
     }

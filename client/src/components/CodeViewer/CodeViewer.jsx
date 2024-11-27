@@ -1,47 +1,24 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
+import { generatePreviewDocument } from './GeneratePreviewDocument.js';
 import useStyles from './styles.js'
+import Code from './Code.jsx';
 
 const CodeViewer = ({ htmlCode, cssCode }) => {
 
-    const classes = useStyles()
-
-    // console.log("code viewer: ", htmlCode, cssCode);
-    
-
-    function HTMLRenderer({ html }) {
-        return <div id="htmlRenderer" dangerouslySetInnerHTML={{ __html: html }} />;
-    }
-
-    function CSSRenderer({ css }) {
-        useEffect(() => {
-            const styleElement = document.createElement("style");
-            styleElement.innerText = css;
-            const htmlRenderer = document.getElementById("htmlRenderer")
-
-            htmlRenderer.appendChild(styleElement);
-
-            return () => {
-                htmlRenderer.removeChild(styleElement);
-            };
-        }, [css]);
-
-        return null;
-    }
+  const classes = useStyles()
 
 
+  return (
+    <div id="code_viewer" className={`${classes.code_viewer} ${classes.flex}`} >
 
-    return (
-        <div id="code_viewer" className={`${classes.code_viewer} ${classes.flex}`} >
+      {
+        (htmlCode !== null && cssCode !== null) &&
+        <Code generatePreviewDocument={generatePreviewDocument(htmlCode, cssCode)} />
+      }
 
-            {/* {(htmlCode !== null && cssCode !== null) && */}
-                <>
-                    <HTMLRenderer html={htmlCode} />
-                    <CSSRenderer css={cssCode} />
-                </>
-            {/* } */}
-        </div>
-    )
+    </div>
+  )
 }
 
 

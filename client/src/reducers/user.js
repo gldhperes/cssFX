@@ -75,8 +75,9 @@ const userReducer = (state = { likedPosts: [], favoritedPosts: [], userPosts: []
             console.log(`FETCH_USERS_BY_SEARCH: ${FETCH_USERS_BY_SEARCH} REDUX: ${action.payload}`);
             return {
                 ...state,
-                posts: action.payload,
+                userProfile: action.payload,
             }
+            
         // case 'LOGOUT_USER_BY_EXPIRED_TIME':
         //     return {
         //         ...state,

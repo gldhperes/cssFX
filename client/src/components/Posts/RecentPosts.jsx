@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { getPosts } from "../../actions/posts.js";
 
@@ -8,34 +8,32 @@ import Posts from "./Posts";
 import SearchSection from "../Home/SearchSection.jsx";
 
 import { POSTS } from "../../constants/pagesTypes";
+import useStyle from "./styles.js";
 
-function useQuery() {
-    return new URLSearchParams(useLocation().search)
-}
 
 const RecentPosts = () => {
-
+    const classes = useStyle()
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const { posts } = useSelector((state) => state.posts)
 
     // const favoritedPosts = useSelector((state) =>
     // se tiver usuario logado entao
     // user && state.user.favoritedPosts
     // );
 
-    const query = useQuery()
-    const searchQuery = query.get('searchQuery')
-
     const favoritedPosts = null
 
     useEffect(() => {
         dispatch(getPosts())
+        // navigate(`/`)
     }, [dispatch])
 
-    const { posts } = useSelector((state) => state.posts)
+    console.log("posts", posts)
 
     return (
         <>
-            <SearchSection searchQuery={searchQuery} />
 
             {
                 (posts || favoritedPosts) && (

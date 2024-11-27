@@ -18,6 +18,7 @@ const postReducer = (state = { isLoading: true, posts: []}, action) => {
             }
 
         case FETCH_POST:
+            console.log(`FETCH ONE POST: ${FETCH_POST} -> ${action.payload}`);
             return {
                 ...state,
                 post: action.payload,
@@ -58,7 +59,7 @@ const postReducer = (state = { isLoading: true, posts: []}, action) => {
             return {
                 ...state,
                 posts: state.posts.map((post) =>
-                (post._id === action.payload._id) ? (
+                    (post._id === action.payload._id) ? (
                         console.log(post._id),
                         action.payload
                     ) : (

@@ -1,4 +1,5 @@
 import { makeStyles } from '@mui/styles';
+import { height } from '@mui/system';
 
 const postCreatorDim = "50px";
 const contentPadding = '5px auto';
@@ -18,32 +19,26 @@ export default makeStyles({
     justifyContent: 'space-between',
     alignItems: 'flex-start',
 
-    borderRadius: '15px',
-    color: 'white',
+    borderRadius: '8px',
   },
 
 
-  postImg: 
+  postImg:
   {
     width: '100%',
     height: '180px',
+    position: "relative",
 
-    padding: 0,
+    padding: "3px",
 
     overflow: 'hidden',
 
     backgroundColor: '#650065',
     backgroundBlendMode: 'darken',
+    borderRadius: '8px',
+
   },
 
-  PostCodeImg:
-  {
-    height: '180px',
-
-    backgroundSize: 'contain',
-    backgroundPosition: "center",
-  },
- 
 
   // POST DETAILS ============================
   postDetails: {
@@ -91,7 +86,7 @@ export default makeStyles({
     // background: 'red',
   },
 
-  postCreator:{
+  postCreator: {
     cursor: "pointer",
   },
 
@@ -105,14 +100,14 @@ export default makeStyles({
     color: 'white',
     // background: 'green',
   },
- 
+
   deleteBtn: {
     marginRight: '0px',
     color: "white",
   },
 
   // USER POST MENU ========================
-  navMenu: 
+  navMenu:
   {
     "&.MuiPaper-root": {
       // position: 'absolute',
@@ -123,16 +118,16 @@ export default makeStyles({
       border: '1px solid white',
     },
 
-    
-    
+
+
   },
-  
+
   navMenuItem:
   {
     "&.css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root:hover": {
-      
+
       color: '#990099',
-      
+
     },
 
   }

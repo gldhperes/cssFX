@@ -1,68 +1,95 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, ThemeProvider } from '@mui/material';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom'
+
+import { auth, userRoute, search, recentPosts, createPost, updatePost, favorites, following, profile, likeds, searchPosts, searchUsers } from '../constants/routes.js'
 
 import Home from "../components/Home/Home.jsx";
-import Auth from "../Auth/Auth.jsx";
+import Auth from "../components/Auth/Auth.jsx";
 import PostDetails from "../components/PostDetails/PostDetails.jsx"
 import CreateAPost from "../components/CodeViewer/CreateAPost.jsx";
 import UpdateUserPost from "../components/CodeViewer/UpdateUserPost.jsx";
 
-import { auth, userRoute, search, recentPosts, createPost, updatePost, favorites, following, profile, likeds } from '../constants/routes.js'
-
 import Header from "../components/Header/Header.jsx";
 import RecentPosts from "../components/Posts/RecentPosts.jsx";
 import FavoritePosts from "../components/Posts/FavoritePosts.jsx";
-import UsersCards from "../components/Posts/UsersCards.jsx";
+import UsersCards from "../components/UsersCard/FollowingUsers.jsx";
 import LikedsPosts from "../components/Posts/LikedsPosts.jsx";
 import UserProfile from "../components/UserProfile/UserProfile.jsx"
 
+import SearchedPosts from "../components/Posts/SearchedPosts.jsx";
+import SearchedUsers from "../components/Posts/SearchedUsers.jsx";
+import SearchSection from "../components/Home/SearchSection.jsx";
 
-import theme from "../colorTheme.js";
+import theme from "../theme.js";
+import { useDispatch, useSelector } from "react-redux";
+
 
 const App = () => {
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')))
 
+    // const dispatch = useDispatch()
+
+    const userFromRedux = useSelector((state) => state.auth.authData); // Obtém o usuário do Redux
+    const [user, setUser] = useState(() => {
+        // Inicializa o estado com o valor do localStorage
+        const localUser = localStorage.getItem("profile");
+        return localUser ? JSON.parse(localUser) : null;
+    });
+
+    
     const updateUser = (newUser) => {
         setUser(newUser); // Função para atualizar User
-        console.log(newUser);
-
+        console.log("NEW USER on APP", newUser);
     };
+    
+    useEffect(() => {
+        console.log("user", user);
+        
+        // Atualiza o estado para usar o Redux se não houver usuário no localStorage
+        if (!user && userFromRedux) {
+            setUser(userFromRedux);
+        }
+    }, [user, userFromRedux]);
 
 
-    return (
-        <ThemeProvider theme={theme}>
-            <BrowserRouter>
-                <Header updateUser={updateUser} />
-                <Home />
+return (
+    <ThemeProvider theme={theme}>
 
-                <Container maxWidth="xl" disableGutters={true}>
-                    <Routes>
-                        <Route path="/" exact element={<Navigate to={recentPosts} />} />
+        <BrowserRouter>
+            <Header user={user} updateUser={updateUser} />
+            <Home user={user} />
+            <SearchSection />
 
-                        <Route path={recentPosts} element={<RecentPosts />} />
-                        <Route path={`${recentPosts}/:id`} element={<PostDetails />} />
+            <Container maxWidth="false" disableGutters={true}>
+                <Routes>
+                    <Route path="/" element={<RecentPosts />} />
 
-                        <Route path={favorites} exact element={<FavoritePosts userID={user?.result?._id} />} />
+                    <Route path={`${recentPosts}/:id`} element={<PostDetails />} />
 
-                        <Route path={likeds} exact element={<LikedsPosts userID={user?.result?._id} />} />
+                    <Route path={`${searchPosts}`} element={<SearchedPosts />} />
 
-                        <Route path={following} exact element={<UsersCards userID={user?.result?._id}  />} />
+                    <Route path={`${searchUsers}`} element={<SearchedUsers />} />
 
-                        <Route path={createPost} exact element={<CreateAPost />} />
+                    <Route path={`${favorites}`} exact element={<FavoritePosts userID={user?.result?._id} />} />
 
-                        <Route path={`${updatePost}/:id`} exact element={<UpdateUserPost />} />
+                    <Route path={`${likeds}`} exact element={<LikedsPosts userID={user?.result?._id} />} />
 
-                        <Route path={profile} exact element={<UserProfile />} />
+                    <Route path={`${following}`} exact element={<UsersCards userID={user?.result?._id} />} />
 
-                        <Route path={`${userRoute}${search}`} exact element={<Home />} />
+                    <Route path={`${createPost}`} exact element={<CreateAPost />} />
 
-                        <Route path={auth} exact element={!user ? <Auth /> : <Navigate to="/" />} />
-                    </Routes>
-                </Container>
-            </BrowserRouter>
-        </ThemeProvider>
-    )
+                    <Route path={`${updatePost}/:id`} exact element={<UpdateUserPost />} />
+
+                    <Route path={`${profile}`} exact element={<UserProfile />} />
+
+                    <Route path={`${userRoute}${search}`} element={<RecentPosts />} />
+
+                    <Route path={`${auth}`} exact element={!user ? <Auth /> : <Navigate to="/" />} />
+                </Routes>
+            </Container>
+        </BrowserRouter>
+    </ThemeProvider>
+)
 }
 
 export default App;

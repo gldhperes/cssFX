@@ -27,7 +27,7 @@ export default makeStyles((theme) => ({
   // POSTS ================
   postsContainer: {
     width: '100%',
-    padding: "20px",
+    padding: "10px 5px",
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     gap: '25px',

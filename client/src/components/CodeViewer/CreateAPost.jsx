@@ -11,12 +11,15 @@ import useStyles from './styles.js'
 import CodeEditorPanels from './CodeEditorPanels.jsx';
 import OnSubmitCodeMessage from './OnSubmitCodeMessage.jsx';
 import { createPost } from '../../actions/posts.js';
+import { useNavigate } from 'react-router-dom';
+import { recentPosts } from '../../constants/routes.js';
 
 
 const CreateAPost = () => {
 
     const classes = useStyles()
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     
     const user = JSON.parse(localStorage.getItem('profile'))
 
@@ -50,6 +53,8 @@ const CreateAPost = () => {
         e.preventDefault()
         setSubmited(true)
         dispatch(createPost(postData))
+        navigate("/")
+        
     }
 
     if (!user?.result?.name) {
@@ -69,7 +74,7 @@ const CreateAPost = () => {
 
                 {/* TITULO DO POST */}
                 <TextField name="title" variant="outlined" label="Title" fullWidth required value={postData.title} onChange={(e) => setPostData({ ...postData, title: e.target.value })} />
-                <TextField name="tag" variant="outlined" label="Tag" fullWidth required value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })} />
+                {/* <TextField name="tag" variant="outlined" label="Tag" fullWidth required value={postData.tags} onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',') })} /> */}
 
                 <CodeEditorPanels
                     postData={postData}
@@ -78,9 +83,6 @@ const CreateAPost = () => {
                 />
 
                 <CodeViewer htmlCode={postData?.htmlCode} cssCode={postData?.cssCode} />
-
-
-                <FileBase type="file" multiple={false} onDone={({ base64 }) => setPostData({ ...postData, codeImg: base64 })} />
 
                 <Button
                     className={classes.submitBtn}

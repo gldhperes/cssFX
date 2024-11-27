@@ -5,9 +5,6 @@ import { Card, CardActions, Button, Typography, IconButton, Avatar, ThemeProvide
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 
-// import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
-// import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
-
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 // import theme from "../../../colorTheme.js"
@@ -17,14 +14,14 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 // import red from "@mui/material/colors/red";
 // import moment from 'moment'
 import { useNavigate } from 'react-router-dom'
-import { likePost, favoritePost } from "../../../actions/posts"
+import { likePost, favoritePost, getPost } from "../../../actions/posts"
 import { getUserProfile } from "../../../actions/user"
-import { profile } from "../../../constants/routes";
+import { recentPosts, profile } from "../../../constants/routes";
 
 import useStyles from './styles'
 import EditPostMenu from "./EditPostMenu";
-import theme from "../../../colorTheme";
-
+import theme from "../../../theme.js";
+import OnPostCodeViewer from "../../CodeViewer/OnPostCodeViewer.jsx";
 
 const Post = ({ post, favorited }) => {
     const classes = useStyles();
@@ -70,7 +67,7 @@ const Post = ({ post, favorited }) => {
         return (favorite) ?
             (
                 <>
-                    <FavoriteIcon fontSize="small" />   
+                    <FavoriteIcon fontSize="small" />
                 </>
             ) : (
                 <>
@@ -82,7 +79,7 @@ const Post = ({ post, favorited }) => {
 
 
 
-    
+
     // HANDLE LIKES =========================
     const handleLike = async (e) => {
         // e.preventDefault()
@@ -170,65 +167,66 @@ const Post = ({ post, favorited }) => {
     // FUNCTIONS =============================
 
     const openPostDetails = () => {
-
-        navigate(`/posts/${post._id}`)
+        dispatch(getPost(post?._id))
+        navigate(`${recentPosts}/${post?._id}`)
     }
 
+    // console.log(post);
 
     return (
-        <ThemeProvider theme={theme}>
-            <Card className={`${classes.post} ${classes.flex}`} raised elevation={6}
-                sx={{ bgcolor: 'buttons.main', color: "primary.main" }}
-            >
-                <Button className={`${classes.flex} ${classes.postImg}`} onClick={() => openPostDetails()} >
-                    <img className={`${classes.flex} ${classes.PostCodeImg}`} alt="" src={base64codeImg} />
-                </Button>
+        <Card className={`${classes.post} ${classes.flex}`} elevation={6} >
+            <div className={`${classes.flex} ${classes.postImg}`} >
 
-                <div className={`${classes.postDetails} ${classes.flex}`}>
+                {/* <Button className={`${classes.buttonOverride} ${classes.flex}`} onClick={() => openPostDetails()} /> */}
 
-                    <div className={`${classes.tags} ${classes.flex}`}>
-                        <Typography variant="body2" component="h2">
-                            {
-                                post?.tags?.map((tag) => `#${tag} `)
-                            }
-                        </Typography>
+                <OnPostCodeViewer htmlCode={post?.htmlCode} cssCode={post?.cssCode} openPostDetails={openPostDetails} />
+
+            </div>
+
+            <div className={`${classes.postDetails} ${classes.flex}`}>
+
+                <div className={`${classes.tags} ${classes.flex}`}>
+                    <Typography variant="body2" component="h2">
+                        {
+                            post?.tags?.map((tag) => `#${tag} `)
+                        }
+                    </Typography>
+                </div>
+
+                <div className={`${classes.postInfo} ${classes.flex}`}>
+
+                    <Avatar className={`${classes.flex} ${classes.postCreatorIcon}`} src={base64creatorImg} onClick={() => callUserPage(postCreator)} />
+
+                    <div className={`${classes.postContent} ${classes.flex}`}>
+                        <Typography variant="h6"> {post?.title} </Typography>
+
+                        <Typography className={classes.postCreator} variant="h6" onClick={() => callUserPage(postCreator)}> {post.name} </Typography>
                     </div>
 
-                    <div className={`${classes.postInfo} ${classes.flex}`}>
-
-                        <Avatar className={`${classes.flex} ${classes.postCreatorIcon}`} src={base64creatorImg} onClick={() => callUserPage(postCreator)} />
-
-                        <div className={`${classes.postContent} ${classes.flex}`}>
-                            <Typography variant="h6"> {post?.title} </Typography>
-
-                            <Typography className={classes.postCreator} buttons variant="h6" onClick={() => callUserPage(postCreator)}> {post.name} </Typography>
-                        </div>
-
-
-                    </div>
 
                 </div>
 
-                <CardActions className={`${classes.postActions} ${classes.flex}`}>
+            </div>
 
-                    <IconButton size="small" disabled={!user?.result} style={{ color: "white" }} onClick={handleFavorite}>
-                        <Favorite />
-                    </IconButton>
+            <CardActions className={`${classes.postActions} ${classes.flex}`}>
 
-                    <IconButton style={{ color: "white" }} size="small" disabled={!user?.result} onClick={handleLike}>
-                        <Likes />
-                    </IconButton>
+                <IconButton size="small" disabled={!user?.result} style={{ color: "white" }} onClick={handleFavorite}>
+                    <Favorite />
+                </IconButton>
 
-                    {/* SE NAO FOR A PESSOA QUE CRIOU O POST, ENTAO NAO PODERA VER O BOTAO */}
-                    {(user?.result?.googleId || user?.result?._id) === post?.creator && (
-                        <EditPostMenu id={postId} />
-                    )}
+                <IconButton style={{ color: "white" }} size="small" disabled={!user?.result} onClick={handleLike}>
+                    <Likes />
+                </IconButton>
+
+                {/* SE NAO FOR A PESSOA QUE CRIOU O POST, ENTAO NAO PODERA VER O BOTAO */}
+                {(user?.result?.googleId || user?.result?._id) === post?.creator && (
+                    <EditPostMenu id={postId} />
+                )}
 
 
 
-                </CardActions>
-            </Card>
-        </ThemeProvider>
+            </CardActions>
+        </Card>
     )
 }
 

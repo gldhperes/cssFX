@@ -3,8 +3,8 @@ import { CircularProgress } from '@mui/material'
 import { useSelector } from "react-redux";
 import Post from "./Post/Post.jsx";
 
-import useStyle from './styles'
-import { FAVORITES, POSTS, LIKEDS } from "../../constants/pagesTypes";
+import useStyle from './styles.js'
+import { FAVORITES, POSTS, LIKEDS } from "../../constants/pagesTypes.js";
 
 const Posts = ({ posts, favPosts, followed, category, setCurrentId }) => {
     const user = JSON.parse(localStorage.getItem('profile'))

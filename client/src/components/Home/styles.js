@@ -1,4 +1,5 @@
 import { makeStyles } from '@mui/styles';
+import { color } from '@mui/system';
 
 const purple = '#650065'
 const darkPurple = '#1E001E'
@@ -37,79 +38,16 @@ export default makeStyles((theme) => ({
 
 
 
-  // SEARCH SECTION ============
-  searchSection: {
-    width: "100% ",
-
-    padding: "10px 25px ",
-
-    justifyContent: "space-between ",
-
-
-    backgroundColor: purple + "",
-  },
-
+  // SEARCH AREA ============
   searchArea: {
-    gap: "8px ",
+    justifyContent: "flex-start",
+    padding: "10px 15px ",
+
+    backgroundColor: purple,
+
+    gap: "15px ",
   },
 
-  inputComponent: {
-    "& .MuiTextField-root": {
-      outline: "1px solid white ",
-      color: 'white ',
-      borderRadius: '4px ', 
-    },
-
-    "& .MuiInputBase-input .MuiOutlinedInput-input": {
-      color: "white ",
-      borderRadius: "4px ",
-      borderColor: "white ",
-    },
-
-    "& .MuiOutlinedInput-adornedEnd": {
-      outline: "1px solid white ",
-      color: "white ",
-      borderRadius: "4px ",
-      borderColor: "white ",
-    },
-
-    '& .MuiFormLabel-root': {
-      color: "white ",
-      borderRadius: '4px ',
-      borderColor: "white ",
-    },
-
-    "& .MuiInputLabel-outlined.MuiInputLabel-shrink": {
-      color: "white ",
-      backgroundColor: darkPurple + "",
-      padding: " 0px 5px ",
-      borderColor: "white ",
-    },
-
-    "& .MuiFormControl-root": {
-      outline: "1px solid white ",
-      color: 'white ',
-      borderRadius: '4px ',
-      borderColor: "white ",
-    },
-
-    // CHIP INPUT
-
-    "& .WAMuiChipInput-outlined-32.WAMuiChipInput-chipContainer-31.WAMuiChipInput-labeled-35":
-    {
-      outline: "1px solid white ",
-      color: 'white ',
-      borderRadius: '4px ',
-      borderColor: "white ",
-    },
-  },
-
-
-  searchButton: {
-    color: "#650065 ",
-    fontWeight: 'bold ',
-    backgroundColor: 'white ',
-  },
 
 
   // categorySection
@@ -118,16 +56,24 @@ export default makeStyles((theme) => ({
     width: '100% ',
     padding: '5px 10px ',
 
-    justifyContent: 'flex-start ',
-    gap: '10px ',
+    
 
     borderRadius: "0px ",
 
-    backgroundColor: "#470047 ",
+    // backgroundColor: "#470047 ",
+  },
+
+  AppBarBox: {
+    width: "100%",
+    // height: "100%",
+
+    justifyContent: 'flex-start ',
+    gap: '10px ',
   },
 
   categoryBtn: {
     color: 'white ',
+    // background: "red",
     fontWeight: '600 ',
   },
 }));

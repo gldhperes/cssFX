@@ -18,10 +18,10 @@ import "ace-builds/src-noconflict/ext-language_tools"
 
 import useStyles from './styles.js'
 const CodeEditorPanels = ({ post, postData, setPostData, can_edit }) => {
-    
+
     const [editable, SetCanEdit] = useState(can_edit);
     const classes = useStyles()
-    const [htmlCode, setHtmlCode] = useState((postData) ? postData.htmlCode : '');
+    const [htmlCode, setHtmlCode] = useState((postData) ? postData?.htmlCode : '');
     const [cssCode, setCssCode] = useState((postData) ? postData?.cssCode : '');
     const [backendCode, setBackendCode] = useState((postData) ? postData?.backendCode : '');
 
@@ -63,7 +63,8 @@ const CodeEditorPanels = ({ post, postData, setPostData, can_edit }) => {
 
     function onLoadCode(editor) {
         const editorMode = editor.getSession().getMode().$id;
-        // console.log(editorMode);
+        console.log("editorMode", editorMode);
+
         if (editorMode === "ace/mode/html") {
             // log
             editor.setValue(htmlCode);
@@ -74,6 +75,12 @@ const CodeEditorPanels = ({ post, postData, setPostData, can_edit }) => {
         else if (editorMode === "ace/mode/javascript") {
             editor.setValue(backendCode)
         }
+    }
+
+    function onLoadHTML(editor) {
+        // const editorMode = editor.getSession().getMode().$id;
+        editor.setValue(htmlCode);
+
     }
 
 
@@ -109,7 +116,7 @@ const CodeEditorPanels = ({ post, postData, setPostData, can_edit }) => {
                     width='350px'
                     theme="monokai"
                     // style={editorStyle}
-                    onLoad={onLoadCode}
+                    onLoad={onLoadHTML}
                     onChange={onChangeHTML}
 
                     editorProps={{ $blockScrolling: true }}
@@ -141,7 +148,7 @@ const CodeEditorPanels = ({ post, postData, setPostData, can_edit }) => {
 
             <div className={`${classes.editorContent} ${classes.flex}`}>
                 <p className={`${classes.editorName}`}>
-                    Javascript
+                    JS
                 </p>
                 <AceEditor
                     name="backendCode"

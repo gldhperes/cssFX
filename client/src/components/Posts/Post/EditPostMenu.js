@@ -13,7 +13,8 @@ import DeleteIcon from '@mui/icons-material/Delete'
 
 
 import useStyle from './styles'
-import { deletePost } from '../../../actions/posts';
+import { deletePost, getPost } from '../../../actions/posts';
+import { updatePost } from '../../../constants/routes';
 
 const EditPostMenu = ({ id }) => {
     // MENU SETTINGS
@@ -32,8 +33,8 @@ const EditPostMenu = ({ id }) => {
     const handlers = {
 
         [[EDIT]]: () => {
-            // dispatch(getPost(id))
-            navigate(`/update/${id}`)
+            dispatch(getPost(id))
+            navigate(`${updatePost}/${id}`)
         },
 
         [[DELETE]]: () => {

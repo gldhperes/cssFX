@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { TextField, Button, InputAdornment } from '@mui/material';
+import { TextField, Button, InputAdornment, AppBar, Container } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 import { getPostsBySearch } from '../../actions/posts'
 import { getUsersBySearch } from '../../actions/user'
+import { searchPosts, searchUsers } from '../../constants/routes';
 import useStyle from './styles'
+import { red } from '@mui/material/colors';
 
 // import { ThemeProvider } from '@mui/styles';
 // import theme from '../../colorTheme';
@@ -15,7 +17,8 @@ import useStyle from './styles'
 
 // import { makeStyles } from '@mui/styles';
 
-const SearchSection = ({ searchQuery }) => {
+
+const SearchSection = () => {
     const classes = useStyle()
     const dispatch = useDispatch();
     const navigate = useNavigate()
@@ -25,27 +28,32 @@ const SearchSection = ({ searchQuery }) => {
     // const [tags, setTags] = useState([])
 
 
-    const searchPosts = () => {
-        console.log('s: ', searchPost.trim(), ' tags: ', tags.join(','));
-        
+    const Search_Posts = () => {
+        console.log('s: ', searchPost.trim());
+
         // const tagsArray = tags.join(',')
         // console.log(tagsArray);
-        
+
         if (searchPost.trim() || tags) {
             // dispatch -> fetch search post
-            dispatch(getPostsBySearch({ searchPost: searchPost, tags: tags.join(',') }));
-            navigate(`/posts/search?searchQuery=${searchPost || 'none'}&tags=${tags.join(',')}`)
+
+            // dispatch(getPostsBySearch({ searchPost: searchPost, tags: tags.join(',') }));
+            // navigate(`/search?searchQuery=${searchPost || 'none'}&tags=${tags.join(',')}`)
+
+            dispatch(getPostsBySearch({ searchPost: searchPost }));
+            navigate(`${searchPosts}/?searchQuery=${searchPost || 'none'}`)
+
         } else {
             navigate('/')
         }
     }
 
-    const searchUsers = () => {
+    const Search_Users = () => {
         console.log('s: ', searchUser);
         if (searchUser || tags) {
             // dispatch -> fetch search post
             dispatch(getUsersBySearch(searchUser));
-            navigate(`/user/search?searchQuery=${searchUser || 'none'}`)
+            navigate(`${searchUsers}?searchQuery=${searchUser || 'none'}`)
         } else {
             navigate('/')
         }
@@ -53,9 +61,9 @@ const SearchSection = ({ searchQuery }) => {
 
     const Search = () => {
 
-        // if (searchPost !== "" && tags !== []) searchPosts()
-        if (tags ) searchPosts()
-        if (searchUser !== "") searchUsers()
+        if (searchPost !== "" /* && tags !== [] */) Search_Posts()
+        // else if (tags) searchPosts()
+        else if (searchUser !== "") Search_Users()
     }
 
     const handleKeyPress = (e) => {
@@ -69,33 +77,24 @@ const SearchSection = ({ searchQuery }) => {
     // const handleDelete = (tagToDelete) => setTags([tags.filter((tag) => tag !== tagToDelete)]);
 
     return (
-        <div className={`${classes.searchSection} ${classes.flex}`}>
+        <AppBar position="static">
 
-            <div className={`${classes.searchArea} ${classes.flex}`}>
+            <Container maxWidth="xl" className={`${classes.searchArea} ${classes.flex}`}>
 
                 <TextField
                     id="outlined-search"
-                    className={classes.inputComponent}
+                    variant="outlined"
+                    label="Search Post"
 
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <SearchIcon sx={{ color: "white" }} />
-                            </InputAdornment>
-                        ),
-                    }}
-
-                    // inputProps={theme.primary}
+                    sx={customSx}
 
                     type="Search Post"
                     value={searchPost}
 
-                    placeholder="Search Post"
+                    onKeyDown={handleKeyPress}
                     name="SearchPost"
-                    onKeyPress={handleKeyPress}
+                    placeholder="Search Post"
                     onChange={(e) => setSearchPost(e.target.value)}
-                    label="Search Post"
-                    variant="outlined"
 
                 />
 
@@ -111,49 +110,100 @@ const SearchSection = ({ searchQuery }) => {
 
                 <TextField
                     id="outlined-search"
+                    variant="outlined"
+                    label="Search User"
 
-                    className={classes.inputComponent}
-
-                    InputProps={{
-
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <SearchIcon sx={{ color: "white" }} />
-                            </InputAdornment>
-                        ),
-                    }}
+                    sx={customSx}
 
                     type="Search User"
                     value={searchUser}
 
-                    placeholder="Search User"
+                    onKeyDown={handleKeyPress}
                     name="SearchUser"
-                    onKeyPress={handleKeyPress}
+                    placeholder="Search User"
                     onChange={(e) => setSearchUser(e.target.value)}
-                    label="Search User"
-                    variant="outlined"
                 />
 
-                <Button onClick={Search} className={classes.searchButton} variant="contained">
+                <Button
+                    onClick={Search}
+
+                    sx={{
+                        width: "120px",
+                        padding: "15px 20px",
+
+                        color: "#650065",
+                        fontWeight: 'bold',
+                        backgroundColor: 'white',
+                    }}
+                >
                     Search
                 </Button>
-            </div>
+            </Container>
 
 
             {/* <Paper> */}
-                {/* SE NAO TIVERMOS UMA PESQUISA OU TAG ENTAO RENDERIZA A PAGINAÇÃO */}
-                {/* {(!searchQuery && !tags.length) && ( */}
+            {/* SE NAO TIVERMOS UMA PESQUISA OU TAG ENTAO RENDERIZA A PAGINAÇÃO */}
+            {/* {(!searchQuery && !tags.length) && ( */}
 
-                    {/* <Paper className={classes.pagination} elevation={4}> */}
+            {/* <Paper className={classes.pagination} elevation={4}> */}
 
-                        {/* <Pagination page={page} /> */}
+            {/* <Pagination page={page} /> */}
 
-                    {/* </Paper> */}
-                {/* )} */}
+            {/* </Paper> */}
+            {/* )} */}
             {/* </Paper> */}
 
-        </div>
+        </AppBar>
     )
+}
+
+const customSx = {
+    ".MuiInputLabel-root": {
+        color: "white",
+    },
+
+    ".MuiFormControl-root": {
+        backgroundColor: "yellow !important",
+
+        "&.Mui-focused": {
+            border: "1px solid white",
+        },
+    },
+
+    ".MuiOutlinedInput-root": {
+        input: {
+            color: "white",
+
+            '&:selected fieldset': {
+                borderColor: "white",
+            },
+        },
+
+        fieldset: {
+            border: "1px solid white",
+        },
+
+        "&.Mui-focused fieldset": {
+            border: "1px solid white",
+        },
+
+        '&:hover fieldset': {
+            borderColor: "white",
+        },
+
+        // '&:-webkit-autofill': {
+
+        // },
+
+
+        // "&:input:-webkit-autofill:focus": {
+        //     transition: "background-color 600000s 0s, color 600000s 0s"
+        // },
+
+        // "&:input[data-autocompleted]": {
+        //     backgroundColor: "transparent !important"
+        // },
+    },
 }
 
 export default SearchSection

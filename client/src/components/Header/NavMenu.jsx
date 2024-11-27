@@ -72,7 +72,7 @@ const NavMenu = ({ user, logout }) => {
     };
 
     return (
-        <div className={`${classes.flex} ${classes.appBar}`}>
+        <div className={`${classes.flex} ${classes.AppBarContainer}`}>
             <Typography className={classes.userName} variante="h6">
                 {user?.result?.name}
             </Typography>

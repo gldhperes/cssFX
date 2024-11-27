@@ -9,15 +9,17 @@ import thunk from 'redux-thunk'
 
 import reducer from './reducers/index.js'
 import { GoogleOAuthProvider } from '@react-oauth/google';
-
+    
 import App from './functions/App.js';
 import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const store = configureStore({ reducer: reducer }, compose(applyMiddleware(thunk)))
 
+const googleId = "132306028558-ip1jv3f6pj03amoj0fj0qg4fnivi8r2u.apps.googleusercontent.com"
+
 root.render(
-    <GoogleOAuthProvider clientId="132306028558-ip1jv3f6pj03amoj0fj0qg4fnivi8r2u.apps.googleusercontent.com">
+    <GoogleOAuthProvider clientId={googleId}>
         <Provider store={store}>
             <App />
         </Provider>,

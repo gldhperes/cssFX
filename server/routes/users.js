@@ -7,6 +7,7 @@ const router = express.Router()
 router.post('/signin', userController.signin)
 router.post('/signup', userController.signup)
 router.post('/googlesignin', userController.googleSignIn)
+router.get('/checktoken', auth)
 
 router.get('/search', userController.getUsersBySearch)
 

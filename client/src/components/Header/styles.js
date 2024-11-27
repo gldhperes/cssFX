@@ -15,17 +15,17 @@ export default makeStyles((theme) => ({
     alignItems: 'center ',
   },
 
-  appBar: {
+  AppBarContainer: {
     width: '100%',
     justifyContent: 'space-between',
     padding: '10px 20px',
     backgroundColor: darkPurple,
+    gap: "20px",
 
-    // [theme.breakpoints.down('xs')]: {
-    //   flexDirection: 'column',
-    //   justifyContent: 'center',
-    //   alignItems: 'center'
-    // },
+  },
+
+  appBar:{
+    gap: "20px",
   },
 
   image: {

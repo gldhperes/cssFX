@@ -7,22 +7,22 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { getPost } from '../../actions/posts'
 import useStyles from './styles.js'
 
-import { profile } from '../../constants/routes'
+import { profile, recentPosts } from '../../constants/routes'
 import { getUserProfile } from '../../actions/user'
 import CodeEditorPanels from '../CodeViewer/CodeEditorPanels.jsx'
 import CodeViewer from '../CodeViewer/CodeViewer.jsx'
 
-const PostDetails = () => {
+const PostDetails = ({ }) => {
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const { post, posts, isLoading } = useSelector((state) => state.posts)
-  const dispatch = useDispatch()
 
   const [htmlCode, setHtmlCode] = useState(null)
   const [cssCode, setCssCode] = useState(null)
 
-
   // const [codeExemple, setCodeExemple] = useState(null)
-  const navigate = useNavigate()
   const { id } = useParams()
 
   const classes = useStyles()
@@ -32,16 +32,13 @@ const PostDetails = () => {
     if (htmlCode !== null && cssCode !== null) {
       console.log(htmlCode);
       console.log(cssCode);
-      // console.log(typeof (htmlCode));
+
       setHtmlCode(htmlCode)
       setHtmlCode(cssCode)
     }
   }, [htmlCode, cssCode]);
 
 
-  useEffect(() => {
-    dispatch(getPost(id))
-  }, [id, dispatch])
 
   useEffect(() => {
     if (post) {
@@ -66,7 +63,7 @@ const PostDetails = () => {
 
   const openPost = (_id) => {
     dispatch(getPost(_id))
-    navigate(`/posts/${_id}`)
+    navigate(`${recentPosts}/${_id}`)
   }
 
   function callAuthorPage(creatorId) {

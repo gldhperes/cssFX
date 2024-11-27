@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }))
 
 
 app.use(cors({
-    origin: ["https://css-fx.netlify.app", "*" /*, "http://localhost:3000"*/],
+    origin: ["https://css-fx.netlify.app", "*" , "http://localhost:3000"],
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization", "Access-Control-Allow-Origin"],
 }));
@@ -35,7 +35,7 @@ app.get('/teste', (req, res) => {
 
 mongoose.set("strictQuery", true);
 
-mongoose.connect(process.env.CONNECTION_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.CONNECTION_URL || 3334, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => {
         console.log("Conectado com o banco de dados");
         InitializeServer()
